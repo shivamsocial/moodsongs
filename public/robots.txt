@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /login/
+Disallow: /private/
 Allow: /
 
 Sitemap: https://www.moodsongs.net/sitemap.xml
