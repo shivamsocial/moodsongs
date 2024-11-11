@@ -65,7 +65,7 @@
 @media (max-width: 1000px) {
   .gridContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 buttons per row */
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
     grid-column-gap: 5px; /* Space between grid items */
     padding: 0.75rem; /* Slight padding for the grid */
     width: calc(
@@ -73,6 +73,14 @@
     ); /* Ensure the grid does not overflow horizontally */
     margin: 0 auto; /* Center the grid container */
     box-sizing: border-box; /* Include padding in width calculation */
+    justify-items: center; /* Center items in their grid cells */
+    align-self: center;
+    justify-self: center;
+  }
+
+  /* Hide the last item in the grid when the screen size is 1000px or smaller */
+  .gridContainer > *:last-child {
+    display: none; /* Hide the last grid item */
   }
 
   .moodBtn {
