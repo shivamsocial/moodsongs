@@ -22,9 +22,18 @@ function MyApp({ Component, pageProps }) {
           property="og:description"
           content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
         />
-        <meta property="og:image" content="/images/og-image.png" />
-        <meta property="og:url" content="https://www.moodsongs.net" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          property="og:image"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
+        <meta
+          property="og:url"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
+        <meta
+          name="twitter:card"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
         <meta
           name="twitter:title"
           content="MoodSongs - Discover Music for Every Mood"
@@ -33,7 +42,10 @@ function MyApp({ Component, pageProps }) {
           name="twitter:description"
           content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
         />
-        <meta name="twitter:image" content="/images/og-image.png" />
+        <meta
+          name="twitter:image"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
