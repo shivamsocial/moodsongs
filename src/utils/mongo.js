@@ -4,9 +4,14 @@ import { MongoClient } from "mongodb";
 let cachedClient = null;
 let cachedDb = null;
 
-// MongoDB URI (replace <db_password> with your actual MongoDB password)
-const uri =
-  "mongodb+srv://shivamupadhyaysocial:kthrhHJ3cP5lKU81@cluster0.apwo9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// MongoDB URI from environment variables for security
+const uri = process.env.MONGODB_URI; // Store your MongoDB URI in a .env file
+
+if (!uri) {
+  throw new Error(
+    "Please define the MONGODB_URI environment variable inside .env.local"
+  );
+}
 
 // Function to connect to the database
 async function connectToDatabase() {
@@ -17,10 +22,7 @@ async function connectToDatabase() {
 
   console.log("Establishing new database connection.");
   try {
-    const client = new MongoClient(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const client = new MongoClient(uri);
     await client.connect();
     const db = client.db("youtube_data"); // Your database name
     console.log("Database connection established successfully.");
@@ -28,7 +30,7 @@ async function connectToDatabase() {
     cachedDb = db;
     return { client, db };
   } catch (error) {
-    console.error("Error connecting to the database:", error);
+    console.error("Error connecting to the database:", error.message);
     throw new Error("Failed to connect to the database");
   }
 }

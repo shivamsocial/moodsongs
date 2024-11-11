@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head"; // Import Head for SEO meta tags
 import styles from "../styles/grid.module.css";
 
 const MoodGrid = () => {
@@ -44,29 +45,59 @@ const MoodGrid = () => {
   };
 
   return (
-    <div className={styles.background}>
-      <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
-        <div className="text-center">
-          <h1 className={styles.heading1}>
-            MoodSongs - Discover Music for Every Mood
-          </h1>
-          <div className={styles.gridContainer}>
-            {moods.map((mood, index) => (
-              <button
-                key={index}
-                className={styles.moodBtn}
-                onClick={() => handleMoodClick(mood.name)} // Navigate on click
-              >
-                <div className={styles.text}>{mood.emoji}</div>
-                <p className={styles.ptext}>{mood.name}</p>
-              </button>
-            ))}
+    <>
+      <Head>
+        <title>MoodSongs - Discover Music for Every Mood</title>
+        <meta
+          name="description"
+          content="Explore and discover music perfectly suited for your current mood with MoodSongs. From happy and party vibes to relaxing and meditation tunes, find it all here."
+        />
+        <meta
+          property="og:title"
+          content="MoodSongs - Discover Music for Every Mood"
+        />
+        <meta
+          property="og:description"
+          content="Find and play music tailored to your mood on MoodSongs. Enjoy a variety of genres, including EDM, Jazz, Rock, and more."
+        />
+        <meta property="og:image" content="/images/og-image.png" />
+        <meta property="og:url" content="https://www.moodsongs.net" />
+        <meta
+          name="twitter:title"
+          content="MoodSongs - Discover Music for Every Mood"
+        />
+        <meta
+          name="twitter:description"
+          content="Listen to music that fits your mood perfectly. Choose from a variety of moods and enjoy the best music selections on MoodSongs."
+        />
+        <meta name="twitter:image" content="/images/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
+      <div className={styles.background}>
+        <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
+          <div className="text-center">
+            <h1 className={styles.heading1}>
+              MoodSongs - Discover Music for Every Mood
+            </h1>
+            <div className={styles.gridContainer}>
+              {moods.map((mood, index) => (
+                <button
+                  key={index}
+                  className={styles.moodBtn}
+                  onClick={() => handleMoodClick(mood.name)} // Navigate on click
+                >
+                  <div className={styles.text}>{mood.emoji}</div>
+                  <p className={styles.ptext}>{mood.name}</p>
+                </button>
+              ))}
+            </div>
+            {loading && <div className="spinner">Loading...</div>}
+            {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
-          {loading && <div className="spinner">Loading...</div>}
-          {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

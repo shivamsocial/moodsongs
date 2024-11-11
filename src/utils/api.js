@@ -1,7 +1,7 @@
 // utils/api.js
 import axios from "axios";
 
-const API_KEY = "AIzaSyCr6HCvMTAjkJtJLAyt_U1g1U8iiN5Qzpo"; // Your single YouTube API key
+const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
 export const fetchSongsForMood = async (mood, language = "en") => {
   try {

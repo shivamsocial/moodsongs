@@ -1,4 +1,3 @@
-// pages/_app.js
 import Head from "next/head";
 import "../styles/globals.css";
 
@@ -12,8 +11,29 @@ function MyApp({ Component, pageProps }) {
         </title>
         <meta
           name="description"
-          content="Explore your mood with our fun mood buttons!"
+          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
         />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content="MoodSongs - Discover Music for Every Mood"
+        />
+        <meta
+          property="og:description"
+          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
+        />
+        <meta property="og:image" content="/images/og-image.png" />
+        <meta property="og:url" content="https://www.moodsongs.net" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="MoodSongs - Discover Music for Every Mood"
+        />
+        <meta
+          name="twitter:description"
+          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
+        />
+        <meta name="twitter:image" content="/images/og-image.png" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -33,6 +53,7 @@ function MyApp({ Component, pageProps }) {
         />
         <link rel="manifest" href="/images/site.webmanifest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://www.moodsongs.net" />
       </Head>
       <Component {...pageProps} />
     </>

@@ -349,9 +349,6 @@ input:checked + .slider:before {
 
 /* Ensure no horizontal scrolling on small screens */
 @media (max-width: 500px) {
-  body {
-    overflow-x: hidden;
-  }
   .languageText {
     font-size: 0.8rem;
   }

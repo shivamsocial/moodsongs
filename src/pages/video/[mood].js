@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios"; // Import axios
+import Head from "next/head"; // Import Head for SEO meta tags
+import Image from "next/image"; // Import Next.js Image component
 import styles from "../../styles/videoPage.module.css";
 
 const moods = [
@@ -22,7 +24,7 @@ const moods = [
   { emoji: "😌", name: "Relax Chill" },
   { emoji: "📻", name: "Lofi" },
 ];
-// Function to detect the user's location via their IP using ipinfo.io
+
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -44,7 +46,6 @@ const MoodPage = () => {
   const [error, setError] = useState("");
   const [language, setLanguage] = useState("en");
 
-  // Set the language based on location using ipinfo.io
   useEffect(() => {
     const detectLocationAndSetLanguage = async () => {
       const country = await getUserLocation();
@@ -55,12 +56,9 @@ const MoodPage = () => {
     detectLocationAndSetLanguage();
   }, []);
 
-  // Fetch videos based on mood and language using axios
   useEffect(() => {
     if (mood) {
       setLoading(true);
-
-      // Add a timestamp to prevent caching
       const timestamp = new Date().getTime();
 
       axios
@@ -69,7 +67,6 @@ const MoodPage = () => {
         )
         .then((response) => {
           const videos = response.data;
-
           if (Array.isArray(videos)) {
             const embeddableVideos = videos.filter(
               (video) => video.status?.embeddable !== false
@@ -80,7 +77,6 @@ const MoodPage = () => {
           }
         })
         .catch((err) => {
-          console.error("Error fetching videos:", err);
           setError(err.message);
         })
         .finally(() => setLoading(false));
@@ -105,79 +101,119 @@ const MoodPage = () => {
     }
   }, [currentIndex]);
 
+  const currentVideo = videos[currentIndex];
+
   return (
-    <div className={styles.background}>
-      <div className={styles.pageContainer}>
-        <div className={styles.moodAndPlayingContainer}>
-          <h1 className={styles.heading}>
-            Now Playing: {moods.find((m) => m.name === mood)?.emoji || ""}{" "}
-            {mood}
-          </h1>
+    <>
+      <Head>
+        <title>{`${mood} Music Videos - MoodSongs`}</title>
+        <meta
+          name="description"
+          content={`Listen to the best ${mood} music videos on MoodSongs`}
+        />
+        <meta property="og:title" content={`${mood} Music Videos`} />
+        <meta
+          property="og:description"
+          content={`Enjoy ${mood} music on MoodSongs`}
+        />
+        <meta
+          property="og:image"
+          content={
+            currentVideo?.snippet?.thumbnails?.high?.url ||
+            "/images/default-thumbnail.jpg"
+          }
+        />
+        <meta
+          property="og:url"
+          content={`https://www.moodsongs.net/video/${mood}`}
+        />
+        <meta name="twitter:title" content={`${mood} Music Videos`} />
+        <meta
+          name="twitter:description"
+          content={`Enjoy ${mood} music videos`}
+        />
+        <meta
+          name="twitter:image"
+          content={
+            currentVideo?.snippet?.thumbnails?.high?.url ||
+            "/images/default-thumbnail.jpg"
+          }
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
 
-          <Link href="/" className={styles.changeMoodButton}>
-            Change Mood 😀
-          </Link>
-        </div>
+      <div className={styles.background}>
+        <div className={styles.pageContainer}>
+          <div className={styles.moodAndPlayingContainer}>
+            <h1 className={styles.heading}>
+              Now Playing: {moods.find((m) => m.name === mood)?.emoji || ""}{" "}
+              {mood}
+            </h1>
+            <Link href="/" className={styles.changeMoodButton}>
+              Change Mood 😀
+            </Link>
+          </div>
 
-        <div className={styles.languageToggleContainer}>
-          <label className={styles.switch}>
-            <input
-              className={styles.switchInput}
-              type="checkbox"
-              onChange={handleLanguageToggle}
-              checked={language === "hi"}
-            />
-            <span className={styles.slider}></span>
-          </label>
-          <p className={styles.languageText}>
-            {language === "en" ? "Switch to Hindi" : "Switch to English"}
-          </p>
-        </div>
+          <div className={styles.languageToggleContainer}>
+            <label className={styles.switch}>
+              <input
+                className={styles.switchInput}
+                type="checkbox"
+                onChange={handleLanguageToggle}
+                checked={language === "hi"}
+              />
+              <span className={styles.slider}></span>
+            </label>
+            <p className={styles.languageText}>
+              {language === "en" ? "Switch to Hindi" : "Switch to English"}
+            </p>
+          </div>
 
-        <div className={styles.glassEffect}>
-          {loading && <p className={styles.loadingText}>Loading...</p>}
-          {error && <p className={styles.errorText}>{error}</p>}
+          <div className={styles.glassEffect}>
+            {loading && <p className={styles.loadingText}>Loading...</p>}
+            {error && <p className={styles.errorText}>{error}</p>}
 
-          {!loading && !error && videos.length > 0 && (
-            <div className={styles.videoCard}>
-              <iframe
-                key={currentIndex}
-                className={styles.videoFrame}
-                src={`https://www.youtube.com/embed/${videos[currentIndex]?.id}?autoplay=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0`}
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                title={videos[currentIndex]?.snippet.title}
-                loading="lazy"
-              ></iframe>
-              <h3 className={styles.videoTitle}>
-                {videos[currentIndex]?.snippet.title}
-              </h3>
-              <div className={styles.buttonContainer}>
-                <button
-                  className={styles.buttonNextPrev}
-                  onClick={handlePrev}
-                  disabled={currentIndex === 0}
-                >
-                  Previous
-                </button>
-                <button
-                  className={styles.buttonNextPrev}
-                  onClick={handleNext}
-                  disabled={currentIndex === videos.length - 1}
-                >
-                  Next
-                </button>
+            {!loading && !error && videos.length > 0 && (
+              <div className={styles.videoCard}>
+                <iframe
+                  key={currentIndex}
+                  className={styles.videoFrame}
+                  src={`https://www.youtube.com/embed/${currentVideo?.id}?autoplay=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0`}
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title={currentVideo?.snippet.title}
+                  loading="lazy"
+                ></iframe>
+                <h3 className={styles.videoTitle}>
+                  {currentVideo?.snippet.title}
+                </h3>
+                <div className={styles.buttonContainer}>
+                  <button
+                    className={styles.buttonNextPrev}
+                    onClick={handlePrev}
+                    disabled={currentIndex === 0}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    className={styles.buttonNextPrev}
+                    onClick={handleNext}
+                    disabled={currentIndex === videos.length - 1}
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {!loading && !error && videos.length === 0 && (
-            <p className={styles.noVideos}>No embeddable videos available.</p>
-          )}
+            {!loading && !error && videos.length === 0 && (
+              <p className={styles.noVideos}>No embeddable videos available.</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
