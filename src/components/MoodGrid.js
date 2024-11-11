@@ -60,7 +60,14 @@ const MoodGrid = () => {
           property="og:description"
           content="Find and play music tailored to your mood on MoodSongs. Enjoy a variety of genres, including EDM, Jazz, Rock, and more."
         />
-
+        <meta
+          property="og:image"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
+        <meta
+          property="og:url"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
         <meta
           name="twitter:title"
           content="MoodSongs - Discover Music for Every Mood"
