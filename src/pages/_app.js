@@ -1,44 +1,15 @@
 import Head from "next/head";
 import "../styles/globals.css";
+import { Nunito } from "@next/font/google";
+const nunito = Nunito({
+  subset: ["latin"],
+  weight: ["300", "400", "600", "700"],
+});
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>
-          MoodSongs - Discover Music for Every Mood | Happy, Romantic, EDM,
-          Hip-Hop
-        </title>
-        <meta
-          name="description"
-          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
-        />
-        <meta name="robots" content="index, follow" />
-        <meta
-          property="og:title"
-          content="MoodSongs - Discover Music for Every Mood"
-        />
-        <meta
-          property="og:description"
-          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
-        />
-
-        <meta
-          name="twitter:card"
-          content="https://www.moodsongs.net/images/opengraph-image.png"
-        />
-        <meta
-          name="twitter:title"
-          content="MoodSongs - Discover Music for Every Mood"
-        />
-        <meta
-          name="twitter:description"
-          content="Explore music based on your mood. From Happy, Romantic, EDM, Hip-Hop, and more, find the perfect tunes for every moment."
-        />
-        <meta
-          name="twitter:image"
-          content="https://www.moodsongs.net/images/opengraph-image.png"
-        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

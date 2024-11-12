@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import axios from "axios"; // Import axios
-import Head from "next/head"; // Import Head for SEO meta tags
-import Image from "next/image"; // Import Next.js Image component
+import axios from "axios";
+import Head from "next/head";
 import styles from "../../styles/videoPage.module.css";
 
+// Mood definitions
 const moods = [
   { emoji: "😀", name: "Happy" },
   { emoji: "💘", name: "Romantic" },
@@ -25,6 +25,7 @@ const moods = [
   { emoji: "📻", name: "Lofi" },
 ];
 
+// Function to get the user location based on IP
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -32,8 +33,7 @@ const getUserLocation = async () => {
     );
     return response.data.country;
   } catch (error) {
-    console.error("Failed to fetch location", error);
-    return null;
+    return null; // Handle error silently for this case
   }
 };
 
@@ -46,6 +46,7 @@ const MoodPage = () => {
   const [error, setError] = useState("");
   const [language, setLanguage] = useState("en");
 
+  // Detect location and set the language accordingly
   useEffect(() => {
     const detectLocationAndSetLanguage = async () => {
       const country = await getUserLocation();
@@ -56,6 +57,7 @@ const MoodPage = () => {
     detectLocationAndSetLanguage();
   }, []);
 
+  // Fetch videos based on mood and language
   useEffect(() => {
     if (mood) {
       setLoading(true);
@@ -83,10 +85,12 @@ const MoodPage = () => {
     }
   }, [mood, language]);
 
+  // Toggle language between English and Hindi
   const handleLanguageToggle = () => {
     setLanguage((prev) => (prev === "en" ? "hi" : "en"));
   };
 
+  // Handle next video navigation
   const handleNext = useCallback(() => {
     if (currentIndex < videos.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -95,12 +99,14 @@ const MoodPage = () => {
     }
   }, [currentIndex, videos.length]);
 
+  // Handle previous video navigation
   const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   }, [currentIndex]);
 
+  // Current video being played
   const currentVideo = videos[currentIndex];
 
   return (
@@ -109,12 +115,16 @@ const MoodPage = () => {
         <title>{`${mood} Music Videos - MoodSongs`}</title>
         <meta
           name="description"
-          content={`Listen to the best ${mood} music videos on MoodSongs`}
+          content={`Listen to the best ${mood} music videos on MoodSongs. Experience the perfect mood for every moment.`}
         />
-        <meta property="og:title" content={`${mood} Music Videos`} />
+        <meta property="og:type" content="video.other" />
+        <meta
+          property="og:title"
+          content={`${mood} Music Videos - MoodSongs`}
+        />
         <meta
           property="og:description"
-          content={`Enjoy ${mood} music on MoodSongs`}
+          content={`Find and enjoy ${mood} music videos tailored to your vibe at MoodSongs.`}
         />
         <meta
           property="og:image"
@@ -127,10 +137,14 @@ const MoodPage = () => {
           property="og:url"
           content={`https://www.moodsongs.net/video/${mood}`}
         />
-        <meta name="twitter:title" content={`${mood} Music Videos`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={`${mood} Music Videos - MoodSongs`}
+        />
         <meta
           name="twitter:description"
-          content={`Enjoy ${mood} music videos`}
+          content={`Watch the best ${mood} music videos only on MoodSongs.`}
         />
         <meta
           name="twitter:image"
@@ -139,7 +153,10 @@ const MoodPage = () => {
             "/images/default-thumbnail.jpg"
           }
         />
-        <meta name="twitter:card" content="summary_large_image" />
+        <link
+          rel="canonical"
+          href={`https://www.moodsongs.net/video/${mood}`}
+        />
       </Head>
 
       <div className={styles.background}>
@@ -183,7 +200,7 @@ const MoodPage = () => {
                   allow="autoplay; encrypted-media"
                   allowFullScreen
                   title={currentVideo?.snippet.title}
-                  loading="lazy"
+                  loading="lazy" // Lazy loading for iframe
                 ></iframe>
                 <h3 className={styles.videoTitle}>
                   {currentVideo?.snippet.title}

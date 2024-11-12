@@ -47,11 +47,16 @@ const MoodGrid = () => {
   return (
     <>
       <Head>
-        <title>MoodSongs - Discover Music for Every Mood</title>
+        <title>
+          {" "}
+          MoodSongs - Discover Music for Every Mood | Happy, Romantic, EDM,
+          Hip-Hop
+        </title>
         <meta
           name="description"
           content="Explore and discover music perfectly suited for your current mood with MoodSongs. From happy and party vibes to relaxing and meditation tunes, find it all here."
         />
+        <meta property="og:type" content="website" />
         <meta
           property="og:title"
           content="MoodSongs - Discover Music for Every Mood"
@@ -67,7 +72,8 @@ const MoodGrid = () => {
         <meta
           property="og:url"
           content="https://www.moodsongs.net/images/opengraph-image.png"
-        />
+        />{" "}
+        <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
           content="MoodSongs - Discover Music for Every Mood"
@@ -76,6 +82,27 @@ const MoodGrid = () => {
           name="twitter:description"
           content="Listen to music that fits your mood perfectly. Choose from a variety of moods and enjoy the best music selections on MoodSongs."
         />
+        <meta
+          name="twitter:image"
+          content="https://www.moodsongs.net/images/opengraph-image.png"
+        />
+        <link rel="canonical" href="https://www.moodsongs.net" />
+        {/* Structured Data for enhanced SEO */}
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "MoodSongs",
+              "url": "https://www.moodsongs.net",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://www.moodsongs.net/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            }
+          `}
+        </script>
       </Head>
 
       <div className={styles.background}>
@@ -84,14 +111,17 @@ const MoodGrid = () => {
             <h1 className={styles.heading1}>
               MoodSongs - Discover Music for Every Mood
             </h1>
+
             <div className={styles.gridContainer}>
               {moods.map((mood, index) => (
                 <button
                   key={index}
                   className={styles.moodBtn}
                   onClick={() => handleMoodClick(mood.name)} // Navigate on click
+                  aria-label={`Explore ${mood.name} music`}
                 >
                   <div className={styles.text}>{mood.emoji}</div>
+
                   <p className={styles.ptext}>{mood.name}</p>
                 </button>
               ))}
