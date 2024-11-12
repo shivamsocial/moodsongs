@@ -46,12 +46,12 @@
 
 /* Text Styling */
 .text {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
 }
 
 .ptext {
   margin-top: 1rem;
-  font-size: 1.1rem; /* Using rem for consistency */
+  font-size: 1rem; /* Using rem for consistency */
   font-family: "Nunito", sans-serif;
 }
 
@@ -126,7 +126,7 @@
 .heading1 {
   margin-top: 5vh; /* Use vh to make it responsive to screen height */
   text-align: center;
-  font-size: 2.2rem; /* Use rem for text size */
+  font-size: 2rem; /* Use rem for text size */
   font-weight: bold;
   margin-bottom: 2rem; /* Add space between heading and grid */
   color: white;
