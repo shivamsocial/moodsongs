@@ -1,10 +1,5 @@
 import Head from "next/head";
 import "../styles/globals.css";
-import { Nunito } from "next/font/google";
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-});
 
 function MyApp({ Component, pageProps }) {
   return (
