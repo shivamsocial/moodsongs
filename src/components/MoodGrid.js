@@ -84,7 +84,7 @@ const MoodGrid = () => {
         />
         <meta
           name="twitter:image"
-          content="https://www.moodsongs.net/images/opengraph-image.png"
+          content="https://www.moodsongs.net/images/twitter-image.png"
         />
         <link rel="canonical" href="https://www.moodsongs.net" />
         {/* Structured Data for enhanced SEO */}
