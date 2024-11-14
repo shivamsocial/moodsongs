@@ -101,7 +101,7 @@ const MoodPage = ({
       try {
         const timestamp = new Date().getTime();
         const res = await axios.get(
-          `/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
+          `${apiUrl}/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
             (currentPage - 1) * 5
           }&timestamp=${timestamp}`
         );
