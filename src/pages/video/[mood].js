@@ -237,7 +237,7 @@ const MoodPage = ({
                   className={styles.videoFrame}
                   src={`https://www.youtube.com/embed/${currentVideo?.id}?autoplay=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0`}
                   frameBorder="0"
-                  allow="autoplay; encrypted-media"
+                  allow="autoplay; encrypted-media; picture-in-picture; gyroscope; accelerometer"
                   allowFullScreen
                   title={currentVideo?.snippet.title}
                   loading="lazy" // Lazy loading for iframe
