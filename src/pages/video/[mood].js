@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+// pages/[mood].js
+
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
@@ -33,81 +35,96 @@ const getUserLocation = async () => {
     );
     return response.data.country;
   } catch (error) {
-    return null; // Handle error silently for this case
+    return null;
   }
 };
 
-const MoodPage = () => {
+// Server-Side Rendering: Fetch videos on initial page load
+export async function getServerSideProps(context) {
+  const { mood } = context.query;
+
+  // Fetch user location for language detection
+  const country = await getUserLocation();
+  const language = country === "IN" ? "hi" : "en"; // Default to English if not from India
+
+  const timestamp = new Date().getTime();
+
+  const res = await axios.get(
+    `http://localhost:3000/api/mood?mood=${mood}&language=${language}&limit=5&skip=0&timestamp=${timestamp}`
+  );
+
+  const videos = res.data.videos;
+  const totalCount = res.data.totalCount;
+
+  return {
+    props: { videos, totalCount, initialPage: 0, language }, // Pass data as props to the component
+  };
+}
+
+const MoodPage = ({ videos, totalCount, initialPage, language }) => {
   const router = useRouter();
-  const { mood, videoIndex } = router.query;
-  const [videos, setVideos] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(parseInt(videoIndex) || 0);
+  const { mood } = router.query;
+
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [videoList, setVideoList] = useState(videos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [language, setLanguage] = useState("en");
+  const [currentLanguage, setCurrentLanguage] = useState(language);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
-  // Detect location and set the language accordingly
+  // Fetch more videos when the current page changes (client-side)
   useEffect(() => {
-    const detectLocationAndSetLanguage = async () => {
-      const country = await getUserLocation();
-      if (country === "IN") {
-        setLanguage("hi");
+    const fetchVideos = async () => {
+      setLoading(true);
+      try {
+        const timestamp = new Date().getTime();
+        const res = await axios.get(
+          `/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
+            currentPage * 5
+          }&timestamp=${timestamp}`
+        );
+        const videos = res.data.videos;
+        setVideoList(videos);
+        setCurrentVideoIndex(0); // Reset video index when new page is loaded
+      } catch (err) {
+        setError("Failed to load videos.");
+      } finally {
+        setLoading(false);
       }
     };
-    detectLocationAndSetLanguage();
-  }, []);
 
-  // Fetch videos based on mood and language
-  useEffect(() => {
-    if (mood) {
-      setLoading(true);
-      const timestamp = new Date().getTime();
-
-      axios
-        .get(
-          `/api/mood?mood=${mood}&language=${language}&timestamp=${timestamp}`
-        )
-        .then((response) => {
-          const videos = response.data;
-          if (Array.isArray(videos)) {
-            const embeddableVideos = videos.filter(
-              (video) => video.status?.embeddable !== false
-            );
-            setVideos(embeddableVideos);
-          } else {
-            setError("Unexpected data format from API");
-          }
-        })
-        .catch((err) => {
-          setError(err.message);
-        })
-        .finally(() => setLoading(false));
+    if (currentPage !== initialPage) {
+      fetchVideos();
     }
-  }, [mood, language]);
+  }, [currentPage, mood, currentLanguage, initialPage]);
 
-  // Toggle language between English and Hindi
+  // Handle language toggle
   const handleLanguageToggle = () => {
-    setLanguage((prev) => (prev === "en" ? "hi" : "en"));
+    const newLanguage = currentLanguage === "en" ? "hi" : "en";
+    setCurrentLanguage(newLanguage);
   };
 
   // Handle next video navigation
-  const handleNext = useCallback(() => {
-    if (currentIndex < videos.length - 1) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    } else {
-      setError("No more videos available.");
+  const goToNextVideo = () => {
+    if (currentVideoIndex < 4) {
+      setCurrentVideoIndex((prevIndex) => prevIndex + 1);
+    } else if ((currentPage + 1) * 5 < totalCount) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      setCurrentVideoIndex(0); // Reset to the first video of the next page
     }
-  }, [currentIndex, videos.length]);
+  };
 
   // Handle previous video navigation
-  const handlePrev = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
+  const goToPreviousVideo = () => {
+    if (currentVideoIndex > 0) {
+      setCurrentVideoIndex((prevIndex) => prevIndex - 1);
+    } else if (currentPage > 0) {
+      setCurrentPage((prevPage) => prevPage - 1);
+      setCurrentVideoIndex(4); // Set to the last video of the previous page
     }
-  }, [currentIndex]);
+  };
 
-  // Current video being played
-  const currentVideo = videos[currentIndex];
+  const currentVideo = videoList[currentVideoIndex]; // Display the current video
 
   return (
     <>
@@ -177,12 +194,14 @@ const MoodPage = () => {
                 className={styles.switchInput}
                 type="checkbox"
                 onChange={handleLanguageToggle}
-                checked={language === "hi"}
+                checked={currentLanguage === "hi"}
               />
               <span className={styles.slider}></span>
             </label>
             <p className={styles.languageText}>
-              {language === "en" ? "Switch to Hindi" : "Switch to English"}
+              {currentLanguage === "en"
+                ? "Switch to Hindi"
+                : "Switch to English"}
             </p>
           </div>
 
@@ -190,10 +209,10 @@ const MoodPage = () => {
             {loading && <p className={styles.loadingText}>Loading...</p>}
             {error && <p className={styles.errorText}>{error}</p>}
 
-            {!loading && !error && videos.length > 0 && (
+            {!loading && !error && videoList.length > 0 && (
               <div className={styles.videoCard}>
                 <iframe
-                  key={currentIndex}
+                  key={currentVideoIndex}
                   className={styles.videoFrame}
                   src={`https://www.youtube.com/embed/${currentVideo?.id}?autoplay=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0`}
                   frameBorder="0"
@@ -208,15 +227,18 @@ const MoodPage = () => {
                 <div className={styles.buttonContainer}>
                   <button
                     className={styles.buttonNextPrev}
-                    onClick={handlePrev}
-                    disabled={currentIndex === 0}
+                    onClick={goToPreviousVideo}
+                    disabled={currentVideoIndex === 0 && currentPage === 0}
                   >
                     Previous
                   </button>
                   <button
                     className={styles.buttonNextPrev}
-                    onClick={handleNext}
-                    disabled={currentIndex === videos.length - 1}
+                    onClick={goToNextVideo}
+                    disabled={
+                      currentVideoIndex === videoList.length - 1 &&
+                      (currentPage + 1) * 5 >= totalCount
+                    }
                   >
                     Next
                   </button>
@@ -224,7 +246,7 @@ const MoodPage = () => {
               </div>
             )}
 
-            {!loading && !error && videos.length === 0 && (
+            {!loading && !error && videoList.length === 0 && (
               <p className={styles.noVideos}>No embeddable videos available.</p>
             )}
           </div>
