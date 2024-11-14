@@ -73,20 +73,6 @@ const MoodGrid = () => {
           property="og:url"
           content="https://www.moodsongs.net/images/opengraph-image.png"
         />{" "}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="MoodSongs - Discover Music for Every Mood"
-        />
-        <meta
-          name="twitter:description"
-          content="Listen to music that fits your mood perfectly. Choose from a variety of moods and enjoy the best music selections on MoodSongs."
-        />
-        <meta
-          name="twitter:image"
-          content="https://www.moodsongs.net/images/twitter-image.png"
-        />
-        <link rel="canonical" href="https://www.moodsongs.net" />
         {/* Structured Data for enhanced SEO */}
         <script type="application/ld+json">
           {`

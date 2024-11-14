@@ -1,5 +1,3 @@
-// pages/[mood].js
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -41,7 +39,7 @@ const getUserLocation = async () => {
 
 // Server-Side Rendering: Fetch videos on initial page load
 export async function getServerSideProps(context) {
-  const { mood } = context.query;
+  const { mood } = context.params; // Get mood directly from URL params
 
   // Fetch user location for language detection
   const country = await getUserLocation();
@@ -49,30 +47,54 @@ export async function getServerSideProps(context) {
 
   const timestamp = new Date().getTime();
 
+  // Randomize page between 1 and 2, and video index between 0 and 4
+  const initialPage = Math.floor(Math.random() * 3) + 1; // Random between 1 and 3
+  const initialVideoIndex = Math.floor(Math.random() * 5); // Random between 0 and 4
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  // Fetch the first batch of videos
   const res = await axios.get(
-    `http://localhost:3000/api/mood?mood=${mood}&language=${language}&limit=5&skip=0&timestamp=${timestamp}`
+    `${apiUrl}/api/mood?mood=${mood}&language=${language}&limit=5&skip=${
+      (initialPage - 1) * 5
+    }&timestamp=${timestamp}`
   );
 
   const videos = res.data.videos;
   const totalCount = res.data.totalCount;
 
   return {
-    props: { videos, totalCount, initialPage: 0, language }, // Pass data as props to the component
+    props: { videos, totalCount, initialPage, initialVideoIndex, language }, // Pass data as props to the component
   };
 }
 
-const MoodPage = ({ videos, totalCount, initialPage, language }) => {
+const MoodPage = ({
+  videos,
+  totalCount,
+  initialPage,
+  initialVideoIndex,
+  language,
+}) => {
   const router = useRouter();
-  const { mood } = router.query;
+  const { mood, videoIndex } = router.query; // Retrieve query params // Get mood directly from the URL
 
+  // Use effect to remove the query params when the component mounts
+  useEffect(() => {
+    if (videoIndex) {
+      // Remove videoIndex query from the URL using replace
+      router.replace(`/video/${mood}`, undefined, { shallow: true });
+    }
+  }, [router, mood, videoIndex]);
+
+  // State variables
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [videoList, setVideoList] = useState(videos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState(language);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
 
-  // Fetch more videos when the current page changes (client-side)
+  // Fetch more videos when the current page or language changes (client-side)
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
@@ -80,7 +102,7 @@ const MoodPage = ({ videos, totalCount, initialPage, language }) => {
         const timestamp = new Date().getTime();
         const res = await axios.get(
           `/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
-            currentPage * 5
+            (currentPage - 1) * 5
           }&timestamp=${timestamp}`
         );
         const videos = res.data.videos;
@@ -93,15 +115,13 @@ const MoodPage = ({ videos, totalCount, initialPage, language }) => {
       }
     };
 
-    if (currentPage !== initialPage) {
-      fetchVideos();
-    }
-  }, [currentPage, mood, currentLanguage, initialPage]);
+    fetchVideos();
+  }, [currentPage, mood, currentLanguage]); // Run this whenever page or language changes
 
   // Handle language toggle
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
-    setCurrentLanguage(newLanguage);
+    setCurrentLanguage(newLanguage); // Update state with the new language
   };
 
   // Handle next video navigation
@@ -118,7 +138,7 @@ const MoodPage = ({ videos, totalCount, initialPage, language }) => {
   const goToPreviousVideo = () => {
     if (currentVideoIndex > 0) {
       setCurrentVideoIndex((prevIndex) => prevIndex - 1);
-    } else if (currentPage > 0) {
+    } else if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
       setCurrentVideoIndex(4); // Set to the last video of the previous page
     }

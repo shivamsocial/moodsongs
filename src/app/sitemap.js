@@ -19,7 +19,8 @@ export default function sitemap() {
   ];
 
   const urls = moods.map((mood) => ({
-    url: `https://www.moodsongs.net/video/${mood.name}?videoIndex=0`,
+    // Remove the query parameters to clean the URL
+    url: `https://www.moodsongs.net/video/${mood.name}`,
     lastModified: new Date(),
     changeFrequency: "daily",
     priority: 0.8,
