@@ -100,8 +100,9 @@ const MoodPage = ({
       setLoading(true);
       try {
         const timestamp = new Date().getTime();
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
         const res = await axios.get(
-          `/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
+          `${apiUrl}/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
             (currentPage - 1) * 5
           }&timestamp=${timestamp}`
         );
@@ -214,7 +215,7 @@ const MoodPage = ({
                 className={styles.switchInput}
                 type="checkbox"
                 onChange={handleLanguageToggle}
-                checked={currentLanguage === "hi"}
+                checked={currentLanguage === "hi"} // Hindi if checked
               />
               <span className={styles.slider}></span>
             </label>
