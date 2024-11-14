@@ -31,7 +31,6 @@ const getUserLocation = async () => {
     const response = await axios.get(
       "https://ipinfo.io/json?token=633baf5f0e0156"
     );
-    console.log("Country ::", response.data.country);
     return response.data.country;
   } catch (error) {
     console.error("Error fetching location:", error);
@@ -91,7 +90,6 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
       const country = await getUserLocation();
       const language = country === "IN" ? "hi" : "en"; // Hindi for India, otherwise English
       setCurrentLanguage(language);
-      console.log("Client Side language", language);
     };
 
     detectLanguage();

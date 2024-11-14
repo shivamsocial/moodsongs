@@ -6,23 +6,27 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {/* Favicon and icon links */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="icon"
+          href="https://www.moodsongs.net/images/favicon.ico"
+          sizes="any"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/images/apple-touch-icon.png"
+          href="https://www.moodsongs.net/images/apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/images/favicon-32x32.png"
+          href="https://www.moodsongs.net/images/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/images/favicon-16x16.png"
+          href="https://www.moodsongs.net/images/favicon-16x16.png"
         />
         <link rel="manifest" href="/images/site.webmanifest" />
 
