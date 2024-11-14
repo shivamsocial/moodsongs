@@ -2,7 +2,7 @@
 
 import { storeVideosIfNeeded } from "../../utils/fetchAndStoreVideos";
 export default async function handler(req, res) {
-  const { mood, language = "en", limit = 5, skip = 0 } = req.query;
+  const { mood, language, limit = 5, skip = 0 } = req.query;
 
   // Validate input parameters
   if (!mood || !language) {
