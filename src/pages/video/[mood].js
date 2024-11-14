@@ -31,19 +31,17 @@ const getUserLocation = async () => {
     const response = await axios.get(
       "https://ipinfo.io/json?token=633baf5f0e0156"
     );
+    console.log("Country ::", response.data.country);
     return response.data.country;
   } catch (error) {
-    return null;
+    console.error("Error fetching location:", error);
+    return "US"; // Default to 'US' if location fetch fails
   }
 };
 
 // Server-Side Rendering: Fetch videos on initial page load
 export async function getServerSideProps(context) {
   const { mood } = context.params; // Get mood directly from URL params
-
-  // Fetch user location for language detection
-  const country = await getUserLocation();
-  const language = country === "IN" ? "hi" : "en"; // Default to English if not from India
 
   const timestamp = new Date().getTime();
 
@@ -55,7 +53,7 @@ export async function getServerSideProps(context) {
 
   // Fetch the first batch of videos
   const res = await axios.get(
-    `${apiUrl}/api/mood?mood=${mood}&language=${language}&limit=5&skip=${
+    `${apiUrl}/api/mood?mood=${mood}&language=en&limit=5&skip=${
       (initialPage - 1) * 5
     }&timestamp=${timestamp}`
   );
@@ -64,20 +62,15 @@ export async function getServerSideProps(context) {
   const totalCount = res.data.totalCount;
 
   return {
-    props: { videos, totalCount, initialPage, initialVideoIndex, language }, // Pass data as props to the component
+    props: { videos, totalCount, initialPage, initialVideoIndex }, // Pass data as props to the component
   };
 }
 
-const MoodPage = ({
-  videos,
-  totalCount,
-  initialPage,
-  initialVideoIndex,
-  language,
-}) => {
+const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const router = useRouter();
   const { mood, videoIndex } = router.query; // Retrieve query params // Get mood directly from the URL
 
+  const [currentLanguage, setCurrentLanguage] = useState("en"); // Default language is 'en'
   // Use effect to remove the query params when the component mounts
   useEffect(() => {
     if (videoIndex) {
@@ -86,15 +79,25 @@ const MoodPage = ({
     }
   }, [router, mood, videoIndex]);
 
-  // State variables
-  const [currentPage, setCurrentPage] = useState(initialPage);
   const [videoList, setVideoList] = useState(videos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [currentLanguage, setCurrentLanguage] = useState(language);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
 
-  // Fetch more videos when the current page or language changes (client-side)
+  // Detect language client-side based on location
+  useEffect(() => {
+    const detectLanguage = async () => {
+      const country = await getUserLocation();
+      const language = country === "IN" ? "hi" : "en"; // Hindi for India, otherwise English
+      setCurrentLanguage(language);
+      console.log("Client Side language", language);
+    };
+
+    detectLanguage();
+  }, []); // Run only once when the component mounts
+
+  // Fetch videos when page or language changes
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
@@ -117,7 +120,7 @@ const MoodPage = ({
     };
 
     fetchVideos();
-  }, [currentPage, mood, currentLanguage]); // Run this whenever page or language changes
+  }, [currentPage, currentLanguage, mood]);
 
   // Handle language toggle
   const handleLanguageToggle = () => {
@@ -249,7 +252,7 @@ const MoodPage = ({
                   <button
                     className={styles.buttonNextPrev}
                     onClick={goToPreviousVideo}
-                    disabled={currentVideoIndex === 0 && currentPage === 0}
+                    disabled={currentVideoIndex === 0 && currentPage === 1}
                   >
                     Previous
                   </button>
