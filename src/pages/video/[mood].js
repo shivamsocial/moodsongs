@@ -27,11 +27,16 @@ const moods = [
   { emoji: "📻", name: "Lofi" },
 ];
 
+// Constants
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const DEFAULT_LANGUAGE = "en";
+const API_TOKEN = "633baf5f0e0156"; // IPInfo API token
+
 // Function to get user location (same as before)
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
-      "https://ipinfo.io/json?token=633baf5f0e0156"
+      `https://ipinfo.io/json?token=${API_TOKEN}`
     );
     return response.data.country;
   } catch (error) {
@@ -40,38 +45,42 @@ const getUserLocation = async () => {
   }
 };
 
-// Server-Side Rendering: Fetch videos (same as before)
-export async function getServerSideProps(context) {
-  const { mood } = context.params; // Get mood directly from URL params
-
+// This fetches the data at build time and serves it as static HTML.
+export async function getStaticProps({ params }) {
+  const { mood } = params;
   const timestamp = new Date().getTime();
+  const initialPage = 1;
+  const initialVideoIndex = 0;
 
-  // Randomize page between 1 and 2, and video index between 0 and 4
-  const initialPage = Math.floor(Math.random() * 3) + 1; // Random between 1 and 3
-  const initialVideoIndex = Math.floor(Math.random() * 5); // Random between 0 and 4
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  // Fetch the first batch of videos (initially in English)
   const res = await axios.get(
-    `${apiUrl}/api/mood?mood=${mood}&language=en&limit=5&skip=${
+    `${API_URL}/api/mood?mood=${mood}&language=${DEFAULT_LANGUAGE}&limit=5&skip=${
       (initialPage - 1) * 5
     }&timestamp=${timestamp}`
   );
 
-  const videos = res.data.videos;
-  const totalCount = res.data.totalCount;
-
   return {
-    props: { videos, totalCount, initialPage, initialVideoIndex }, // Pass data as props to the component
+    props: {
+      videos: res.data.videos,
+      totalCount: res.data.totalCount,
+      initialPage,
+      initialVideoIndex,
+    },
+    revalidate: 3600, // Optional: Revalidate the static page every hour
   };
+}
+
+export async function getStaticPaths() {
+  const paths = moods.map((mood) => ({
+    params: { mood: mood.name },
+  }));
+  return { paths, fallback: false };
 }
 
 const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const router = useRouter();
   const { mood, videoIndex } = router.query;
 
-  const [currentLanguage, setCurrentLanguage] = useState(null); // Start with null
+  const [currentLanguage, setCurrentLanguage] = useState(null);
   const [videoList, setVideoList] = useState(videos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -89,30 +98,27 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   useEffect(() => {
     const detectLanguage = async () => {
       const country = await getUserLocation();
-      const language = country === "IN" ? "hi" : "en"; // Hindi for India, otherwise English
-      setCurrentLanguage(language); // Set detected language
+      const language = country === "IN" ? "hi" : "en";
+      setCurrentLanguage(language);
     };
-
     detectLanguage();
-  }, []); // This effect runs once when the component mounts
+  }, []);
 
   // Fetch videos once currentLanguage is set
   useEffect(() => {
-    if (currentLanguage === null) return; // Do not fetch before language is set
+    if (currentLanguage === null) return;
 
     const fetchVideos = async () => {
       setLoading(true);
       try {
         const timestamp = new Date().getTime();
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
         const res = await axios.get(
-          `${apiUrl}/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
+          `${API_URL}/api/mood?mood=${mood}&language=${currentLanguage}&limit=5&skip=${
             (currentPage - 1) * 5
           }&timestamp=${timestamp}`
         );
-        const videos = res.data.videos;
-        setVideoList(videos); // Set fetched videos
-        setCurrentVideoIndex(0); // Reset video index
+        setVideoList(res.data.videos);
+        setCurrentVideoIndex(0); // Reset to the first video
       } catch (err) {
         setError("Failed to load videos.");
       } finally {
@@ -121,11 +127,11 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     };
 
     fetchVideos();
-  }, [currentPage, currentLanguage, mood]); // Dependency on currentLanguage
+  }, [currentPage, currentLanguage, mood]);
 
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
-    setCurrentLanguage(newLanguage); // Toggle language
+    setCurrentLanguage(newLanguage);
   };
 
   const goToNextVideo = () => {
