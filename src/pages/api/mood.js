@@ -1,4 +1,4 @@
-// pages/api/mood.js or /api/mood.js
+// pages/api/mood.js
 
 import { storeVideosIfNeeded } from "../../utils/fetchAndStoreVideos";
 export default async function handler(req, res) {

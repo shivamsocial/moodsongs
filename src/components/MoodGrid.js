@@ -37,14 +37,14 @@ const MoodGrid = () => {
       setError(""); // Reset any previous errors
 
       try {
-        // Now navigate to the video page
+        // Navigate to the video page
         router.push({
-          pathname: `/video/[mood]`, // Dynamic route
+          pathname: `/video/[mood]`, // Updated URL structure for "mood-songs"
           query: { mood, videoIndex: 0 }, // Pass the mood and video index to the page
         });
       } catch (err) {
         setError(err.message);
-        setLoading(false); // Hide the spinner if error occurs
+        setLoading(false); // Hide the spinner if an error occurs
       }
     },
     [router]
@@ -77,38 +77,37 @@ const MoodGrid = () => {
     <>
       <Head>
         <title>
-          MoodSongs - Discover Music for Every Mood | Happy, Romantic, EDM,
-          Hip-Hop
+          Mood Songs - Discover the Best MoodSongs and Playlists | Happy,
+          Romantic, EDM, Hip-Hop
         </title>
         <meta
           name="description"
-          content="Explore and discover music perfectly suited for your current mood with MoodSongs. From happy and party vibes to relaxing and meditation tunes, find it all here."
+          content="Discover the best mood songs to match every emotion. Explore playlists like relaxing mood songs, upbeat mood songs, and more to suit your mood on MoodSongs."
         />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="MoodSongs - Discover Music for Every Mood"
+          content="Mood Songs - Discover the Best Mood Songs and Playlists"
         />
         <meta
           property="og:description"
-          content="Find and play music tailored to your mood on MoodSongs. Enjoy a variety of genres, including EDM, Jazz, Rock, and more."
+          content="Explore mood songs and find the perfect playlist for every occasion, whether it's relaxing mood songs or energizing tunes."
         />
         <meta
           property="og:image"
           content="https://www.moodsongs.net/images/opengraph-image.png"
         />
-        <meta
-          property="og:url"
-          content="https://www.moodsongs.net/images/opengraph-image.png"
-        />
-        {/* Structured Data for enhanced SEO */}
+        <meta property="og:url" content="https://www.moodsongs.net" />
+
+        {/* Structured Data for SEO */}
         <script type="application/ld+json">
           {`
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "MoodSongs",
+              "name": "Mood Songs",
               "url": "https://www.moodsongs.net",
+              "description": "Explore a curated collection of mood songs that cater to every emotional state. From calming tunes to energetic beats, discover the best mood songs on MoodSongs.",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": "https://www.moodsongs.net/search?q={search_term_string}",
@@ -123,7 +122,7 @@ const MoodGrid = () => {
         <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
           <div className="text-center">
             <h1 className={styles.heading1}>
-              MoodSongs - Discover Music for Every Mood
+              Mood Songs - Discover the Best Mood Songs for Every Mood
             </h1>
 
             <div className={styles.gridContainer}>
@@ -132,7 +131,7 @@ const MoodGrid = () => {
                   key={index}
                   className={styles.moodBtn}
                   onClick={() => handleMoodClick(mood.name)} // Navigate on click
-                  aria-label={`Explore ${mood.name} music`}
+                  aria-label={`Explore ${mood.name} mood songs`}
                   disabled={loading} // Disable button during loading
                 >
                   <div className={styles.text}>{mood.emoji}</div>
@@ -146,8 +145,7 @@ const MoodGrid = () => {
                 <div className={styles.spinner}></div>
                 <p className={styles.spinnerText}>
                   🤖 AI is curating the perfect playlist for your mood... 🚀🚀
-                </p>{" "}
-                {/* Add the loading text here */}
+                </p>
               </div>
             )}
 
