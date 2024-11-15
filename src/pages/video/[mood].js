@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import axios from "axios";
 import Head from "next/head";
+import VideoPlayer from "../../components/VideoPlayer";
+import MoodDetails from "../../components/MoodDetails";
+import LanguageToggle from "../../components/LanguageToggle";
 import styles from "../../styles/videoPage.module.css";
 
 // Mood definitions
@@ -25,7 +27,7 @@ const moods = [
   { emoji: "📻", name: "Lofi" },
 ];
 
-// Function to get the user location based on IP
+// Function to get user location (same as before)
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -38,7 +40,7 @@ const getUserLocation = async () => {
   }
 };
 
-// Server-Side Rendering: Fetch videos on initial page load
+// Server-Side Rendering: Fetch videos (same as before)
 export async function getServerSideProps(context) {
   const { mood } = context.params; // Get mood directly from URL params
 
@@ -69,8 +71,13 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const router = useRouter();
   const { mood, videoIndex } = router.query; // Retrieve query params // Get mood directly from the URL
 
-  const [currentLanguage, setCurrentLanguage] = useState("en"); // Default language is 'en'
-  // Use effect to remove the query params when the component mounts
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [videoList, setVideoList] = useState(videos);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
+
   useEffect(() => {
     if (videoIndex) {
       // Remove videoIndex query from the URL using replace
@@ -78,13 +85,6 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     }
   }, [router, mood, videoIndex]);
 
-  const [videoList, setVideoList] = useState(videos);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
-
-  // Detect language client-side based on location
   useEffect(() => {
     const detectLanguage = async () => {
       const country = await getUserLocation();
@@ -95,7 +95,6 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     detectLanguage();
   }, []); // Run only once when the component mounts
 
-  // Fetch videos when page or language changes
   useEffect(() => {
     const fetchVideos = async () => {
       setLoading(true);
@@ -120,13 +119,11 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     fetchVideos();
   }, [currentPage, currentLanguage, mood]);
 
-  // Handle language toggle
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
     setCurrentLanguage(newLanguage); // Update state with the new language
   };
 
-  // Handle next video navigation
   const goToNextVideo = () => {
     if (currentVideoIndex < 4) {
       setCurrentVideoIndex((prevIndex) => prevIndex + 1);
@@ -136,17 +133,16 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     }
   };
 
-  // Handle previous video navigation
   const goToPreviousVideo = () => {
     if (currentVideoIndex > 0) {
       setCurrentVideoIndex((prevIndex) => prevIndex - 1);
     } else if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
-      setCurrentVideoIndex(4); // Set to the last video of the previous page
+      setCurrentVideoIndex(4); // Go to the last video of the previous page
     }
   };
 
-  const currentVideo = videoList[currentVideoIndex]; // Display the current video
+  const currentVideo = videoList[currentVideoIndex];
 
   return (
     <>
@@ -200,77 +196,23 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
 
       <div className={styles.background}>
         <div className={styles.pageContainer}>
-          <div className={styles.moodAndPlayingContainer}>
-            <h1 className={styles.heading}>
-              Now Playing: {moods.find((m) => m.name === mood)?.emoji || ""}{" "}
-              {mood}
-            </h1>
-            <Link href="/" className={styles.changeMoodButton}>
-              Change Mood 😀
-            </Link>
-          </div>
-
-          <div className={styles.languageToggleContainer}>
-            <label className={styles.switch}>
-              <input
-                className={styles.switchInput}
-                type="checkbox"
-                onChange={handleLanguageToggle}
-                checked={currentLanguage === "hi"} // Hindi if checked
-              />
-              <span className={styles.slider}></span>
-            </label>
-            <p className={styles.languageText}>
-              {currentLanguage === "en"
-                ? "Switch to Hindi"
-                : "Switch to English"}
-            </p>
-          </div>
-
+          <MoodDetails mood={mood} moods={moods} />
+          <LanguageToggle
+            currentLanguage={currentLanguage}
+            handleLanguageToggle={handleLanguageToggle}
+          />
           <div className={styles.glassEffect}>
-            {loading && <p className={styles.loadingText}>Loading...</p>}
-            {error && <p className={styles.errorText}>{error}</p>}
-
-            {!loading && !error && videoList.length > 0 && (
-              <div className={styles.videoCard}>
-                <iframe
-                  key={currentVideoIndex}
-                  className={styles.videoFrame}
-                  src={`https://www.youtube.com/embed/${currentVideo?.id}?autoplay=1&enablejsapi=1&modestbranding=1&rel=0&showinfo=0`}
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media; picture-in-picture; gyroscope; accelerometer"
-                  allowFullScreen
-                  title={currentVideo?.snippet.title}
-                  loading="lazy" // Lazy loading for iframe
-                ></iframe>
-                <h3 className={styles.videoTitle}>
-                  {currentVideo?.snippet.title}
-                </h3>
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={styles.buttonNextPrev}
-                    onClick={goToPreviousVideo}
-                    disabled={currentVideoIndex === 0 && currentPage === 1}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    className={styles.buttonNextPrev}
-                    onClick={goToNextVideo}
-                    disabled={
-                      currentVideoIndex === videoList.length - 1 &&
-                      (currentPage + 1) * 5 >= totalCount
-                    }
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {!loading && !error && videoList.length === 0 && (
-              <p className={styles.noVideos}>No embeddable videos available.</p>
-            )}
+            <VideoPlayer
+              video={currentVideo}
+              currentVideoIndex={currentVideoIndex}
+              goToNextVideo={goToNextVideo}
+              goToPreviousVideo={goToPreviousVideo}
+              videoListLength={videoList.length}
+              currentPage={currentPage}
+              totalCount={totalCount}
+              loading={loading}
+              error={error}
+            />
           </div>
         </div>
       </div>
