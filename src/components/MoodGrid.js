@@ -1,12 +1,12 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head"; // Import Head for SEO meta tags
 import styles from "../styles/grid.module.css";
 
 const MoodGrid = () => {
   const router = useRouter();
-  const loadingRef = useRef(false);
-  const errorRef = useRef("");
+  const [loading, setLoading] = useState(false); // State for loading
+  const [error, setError] = useState(""); // State for error message
 
   // Memoize the moods array to avoid unnecessary re-renders
   const moods = useMemo(
@@ -33,19 +33,24 @@ const MoodGrid = () => {
 
   // Memoize the handleMoodClick function to avoid unnecessary re-creations
   const handleMoodClick = useCallback(
-    (mood) => {
-      loadingRef.current = true;
-      errorRef.current = "";
+    async (mood) => {
+      setLoading(true); // Show loading state
+      setError(""); // Reset any previous errors
+
       try {
-        // Navigate to the video page with the selected mood
+        // Simulate a delay for the loading spinner to show
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Now navigate to the video page
         router.push({
           pathname: `/video/[mood]`, // Dynamic route
           query: { mood, videoIndex: 0 }, // Pass the mood and video index to the page
         });
       } catch (err) {
-        errorRef.current = err.message;
+        setError(err.message);
       } finally {
-        loadingRef.current = false;
+        // Ensure loading state is set back to false
+        setLoading(false);
       }
     },
     [router]
@@ -111,6 +116,7 @@ const MoodGrid = () => {
                   className={styles.moodBtn}
                   onClick={() => handleMoodClick(mood.name)} // Navigate on click
                   aria-label={`Explore ${mood.name} music`}
+                  disabled={loading} // Disable button during loading
                 >
                   <div className={styles.text}>{mood.emoji}</div>
                   <p className={styles.ptext}>{mood.name}</p>
@@ -118,10 +124,14 @@ const MoodGrid = () => {
               ))}
             </div>
 
-            {loadingRef.current && <div className="spinner">Loading...</div>}
-            {errorRef.current && (
-              <p className="text-red-500 mt-4">{errorRef.current}</p>
+            {/* Show loading spinner while loading */}
+            {loading && (
+              <div className={styles.spinner}>
+                {/* Customize with CSS to show a proper spinner */}
+              </div>
             )}
+
+            {error && <p>{error}</p>}
           </div>
         </div>
       </div>
