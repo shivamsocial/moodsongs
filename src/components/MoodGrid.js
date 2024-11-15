@@ -11,6 +11,7 @@ const MoodGrid = () => {
   const moods = [
     { emoji: "😀", name: "Happy" },
     { emoji: "💘", name: "Romantic" },
+    { emoji: "😌", name: "Relax Chill" },
     { emoji: "⚡", name: "EDM" },
     { emoji: "🤘", name: "Hip-Hop" },
     { emoji: "🌟", name: "Motivational" },
@@ -23,7 +24,6 @@ const MoodGrid = () => {
     { emoji: "🕉️✝️", name: "Devotional" },
     { emoji: "🧘‍♂️", name: "Meditation" },
     { emoji: "👶", name: "Children" },
-    { emoji: "😌", name: "Relax Chill" },
     { emoji: "📻", name: "Lofi" },
   ];
 
