@@ -60,7 +60,15 @@ const VideoPlayer = ({
 
   return (
     <div className={styles.videoCard}>
-      {loading && <p className={styles.loadingText}>Loading...</p>}
+      {loading && (
+        <div className={styles.spinnerContainer}>
+          <div className={styles.spinner}></div>
+          <p className={styles.spinnerText}>
+            🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+          </p>{" "}
+          {/* Add the loading text here */}
+        </div>
+      )}
       {error && <p className={styles.errorText}>{error}</p>}
 
       {!loading && !error && video && (
