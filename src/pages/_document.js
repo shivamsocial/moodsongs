@@ -5,6 +5,22 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Google Analytics gtag.js Script */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=G-NLD3F8R8M8`}
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-NLD3F8R8M8');
+              `,
+          }}
+        ></script>
+
         {/* Favicon and icon links */}
         <link
           rel="icon"
