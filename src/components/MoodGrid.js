@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head"; // Import Head for SEO meta tags
 import styles from "../styles/grid.module.css";
@@ -31,16 +31,12 @@ const MoodGrid = () => {
     []
   );
 
-  // Memoize the handleMoodClick function to avoid unnecessary re-creations
   const handleMoodClick = useCallback(
     async (mood) => {
       setLoading(true); // Show loading state
       setError(""); // Reset any previous errors
 
       try {
-        // Simulate a delay for the loading spinner to show
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
         // Now navigate to the video page
         router.push({
           pathname: `/video/[mood]`, // Dynamic route
@@ -48,13 +44,34 @@ const MoodGrid = () => {
         });
       } catch (err) {
         setError(err.message);
-      } finally {
-        // Ensure loading state is set back to false
-        setLoading(false);
+        setLoading(false); // Hide the spinner if error occurs
       }
     },
     [router]
   );
+
+  useEffect(() => {
+    // Listen for route change start and end
+    const handleRouteChangeStart = () => {
+      setLoading(true); // Show spinner when navigation starts
+    };
+
+    const handleRouteChangeComplete = () => {
+      setLoading(false); // Hide spinner when navigation is complete
+    };
+
+    // Register event listeners
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    router.events.on("routeChangeError", handleRouteChangeComplete);
+
+    // Cleanup listeners when the component unmounts
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+      router.events.off("routeChangeError", handleRouteChangeComplete);
+    };
+  }, [router.events]);
 
   return (
     <>
