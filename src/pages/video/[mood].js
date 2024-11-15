@@ -52,7 +52,7 @@ export async function getServerSideProps(context) {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Fetch the first batch of videos
+  // Fetch the first batch of videos (initially in English)
   const res = await axios.get(
     `${apiUrl}/api/mood?mood=${mood}&language=en&limit=5&skip=${
       (initialPage - 1) * 5
@@ -69,33 +69,37 @@ export async function getServerSideProps(context) {
 
 const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const router = useRouter();
-  const { mood, videoIndex } = router.query; // Retrieve query params // Get mood directly from the URL
+  const { mood, videoIndex } = router.query;
 
-  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [currentLanguage, setCurrentLanguage] = useState(null); // Start with null
   const [videoList, setVideoList] = useState(videos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
 
+  // Remove videoIndex from URL query
   useEffect(() => {
     if (videoIndex) {
-      // Remove videoIndex query from the URL using replace
       router.replace(`/video/${mood}`, undefined, { shallow: true });
     }
   }, [router, mood, videoIndex]);
 
+  // Detect user location and language (runs only once)
   useEffect(() => {
     const detectLanguage = async () => {
       const country = await getUserLocation();
       const language = country === "IN" ? "hi" : "en"; // Hindi for India, otherwise English
-      setCurrentLanguage(language);
+      setCurrentLanguage(language); // Set detected language
     };
 
     detectLanguage();
-  }, []); // Run only once when the component mounts
+  }, []); // This effect runs once when the component mounts
 
+  // Fetch videos once currentLanguage is set
   useEffect(() => {
+    if (currentLanguage === null) return; // Do not fetch before language is set
+
     const fetchVideos = async () => {
       setLoading(true);
       try {
@@ -107,8 +111,8 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
           }&timestamp=${timestamp}`
         );
         const videos = res.data.videos;
-        setVideoList(videos);
-        setCurrentVideoIndex(0); // Reset video index when new page is loaded
+        setVideoList(videos); // Set fetched videos
+        setCurrentVideoIndex(0); // Reset video index
       } catch (err) {
         setError("Failed to load videos.");
       } finally {
@@ -117,11 +121,11 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     };
 
     fetchVideos();
-  }, [currentPage, currentLanguage, mood]);
+  }, [currentPage, currentLanguage, mood]); // Dependency on currentLanguage
 
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
-    setCurrentLanguage(newLanguage); // Update state with the new language
+    setCurrentLanguage(newLanguage); // Toggle language
   };
 
   const goToNextVideo = () => {
