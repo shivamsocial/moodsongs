@@ -141,10 +141,13 @@ const MoodGrid = () => {
               ))}
             </div>
 
-            {/* Show loading spinner while loading */}
             {loading && (
-              <div className={styles.spinner}>
-                {/* Customize with CSS to show a proper spinner */}
+              <div className={styles.spinnerContainer}>
+                <div className={styles.spinner}></div>
+                <p className={styles.spinnerText}>
+                  🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+                </p>{" "}
+                {/* Add the loading text here */}
               </div>
             )}
 
