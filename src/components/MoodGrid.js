@@ -1,54 +1,60 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head"; // Import Head for SEO meta tags
 import styles from "../styles/grid.module.css";
 
 const MoodGrid = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const loadingRef = useRef(false);
+  const errorRef = useRef("");
 
-  const moods = [
-    { emoji: "😀", name: "Happy" },
-    { emoji: "💘", name: "Romantic" },
-    { emoji: "😌", name: "Relax Chill" },
-    { emoji: "⚡", name: "EDM" },
-    { emoji: "🤘", name: "Hip-Hop" },
-    { emoji: "🌟", name: "Motivational" },
-    { emoji: "💪", name: "Rap" },
-    { emoji: "🎸", name: "Rock" },
-    { emoji: "🥳", name: "Party" },
-    { emoji: "🎷", name: "Jazz" },
-    { emoji: "😊", name: "Acoustic" },
-    { emoji: "🙏", name: "Folk" },
-    { emoji: "🕉️✝️", name: "Devotional" },
-    { emoji: "🧘‍♂️", name: "Meditation" },
-    { emoji: "👶", name: "Children" },
-    { emoji: "📻", name: "Lofi" },
-  ];
+  // Memoize the moods array to avoid unnecessary re-renders
+  const moods = useMemo(
+    () => [
+      { emoji: "😀", name: "Happy" },
+      { emoji: "💘", name: "Romantic" },
+      { emoji: "😌", name: "Relax Chill" },
+      { emoji: "⚡", name: "EDM" },
+      { emoji: "🤘", name: "Hip-Hop" },
+      { emoji: "🌟", name: "Motivational" },
+      { emoji: "💪", name: "Rap" },
+      { emoji: "🎸", name: "Rock" },
+      { emoji: "🥳", name: "Party" },
+      { emoji: "🎷", name: "Jazz" },
+      { emoji: "😊", name: "Acoustic" },
+      { emoji: "🙏", name: "Folk" },
+      { emoji: "🕉️✝️", name: "Devotional" },
+      { emoji: "🧘‍♂️", name: "Meditation" },
+      { emoji: "👶", name: "Children" },
+      { emoji: "📻", name: "Lofi" },
+    ],
+    []
+  );
 
-  // When a mood is clicked, navigate to the video page with the selected mood
-  const handleMoodClick = (mood) => {
-    setLoading(true);
-    setError("");
-    try {
-      // Navigate to the video page, passing the mood and initial video index
-      router.push({
-        pathname: `/video/[mood]`, // Dynamic route
-        query: { mood, videoIndex: 0 }, // Pass the mood and video index to the page
-      });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Memoize the handleMoodClick function to avoid unnecessary re-creations
+  const handleMoodClick = useCallback(
+    (mood) => {
+      loadingRef.current = true;
+      errorRef.current = "";
+      try {
+        // Navigate to the video page with the selected mood
+        router.push({
+          pathname: `/video/[mood]`, // Dynamic route
+          query: { mood, videoIndex: 0 }, // Pass the mood and video index to the page
+        });
+      } catch (err) {
+        errorRef.current = err.message;
+      } finally {
+        loadingRef.current = false;
+      }
+    },
+    [router]
+  );
 
   return (
     <>
       <Head>
         <title>
-          {" "}
           MoodSongs - Discover Music for Every Mood | Happy, Romantic, EDM,
           Hip-Hop
         </title>
@@ -72,7 +78,7 @@ const MoodGrid = () => {
         <meta
           property="og:url"
           content="https://www.moodsongs.net/images/opengraph-image.png"
-        />{" "}
+        />
         {/* Structured Data for enhanced SEO */}
         <script type="application/ld+json">
           {`
@@ -107,13 +113,15 @@ const MoodGrid = () => {
                   aria-label={`Explore ${mood.name} music`}
                 >
                   <div className={styles.text}>{mood.emoji}</div>
-
                   <p className={styles.ptext}>{mood.name}</p>
                 </button>
               ))}
             </div>
-            {loading && <div className="spinner">Loading...</div>}
-            {error && <p className="text-red-500 mt-4">{error}</p>}
+
+            {loadingRef.current && <div className="spinner">Loading...</div>}
+            {errorRef.current && (
+              <p className="text-red-500 mt-4">{errorRef.current}</p>
+            )}
           </div>
         </div>
       </div>
