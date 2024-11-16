@@ -14,7 +14,7 @@ export const fetchSongsForMood = async (mood, language = "en") => {
           part: "snippet",
           q: `${language === "hi" ? "Hindi" : "English"} ${mood} song`, // Query is based on mood and language
           type: "video",
-          maxResults: 40, // Maximum results to fetch
+          maxResults: 20, // Maximum results to fetch
           key: API_KEY, // API Key for authentication
         },
       }
