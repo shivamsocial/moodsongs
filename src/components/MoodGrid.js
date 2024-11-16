@@ -82,7 +82,7 @@ const MoodGrid = () => {
         </title>
         <meta
           name="description"
-          content="Discover the best mood songs and playlists on MoodSongs 🎧. Whether you're feeling happy 😀, romantic 💘, energized ⚡, or relaxed 🎧, find curated playlists with upbeat, chill, EDM, rock, rap, and lofi music to match your mood."
+          content="Discover the best mood songs and playlists on MoodSongs 🎧. Whether you're feeling happy 😀, romantic 💘, energized ⚡, chill 🍃, or relaxed 🎧, find curated playlists with upbeat, chill, EDM, rock, rap, and lofi music to match your mood."
         />
         <meta name="robots" content="index, follow" />
         <meta http-equiv="content-language" content="en" />
