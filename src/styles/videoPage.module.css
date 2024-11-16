@@ -213,11 +213,6 @@
   border-bottom: 10px solid transparent;
 }
 
-.playButtonContainer:hover {
-  background: #ff416c;
-  transform: scale(1.1); /* Slight zoom on hover */
-}
-
 /* Video Frame */
 .videoFrame,
 .thumbnail {
