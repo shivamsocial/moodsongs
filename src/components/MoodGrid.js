@@ -116,6 +116,7 @@ const MoodGrid = () => {
             }
           `}
         </script>
+        <link rel="canonical" href="https://www.moodsongs.net" />
       </Head>
 
       <div className={styles.background}>

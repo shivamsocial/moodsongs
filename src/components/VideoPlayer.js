@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image"; // Import the Image component from Next.js
 import styles from "../styles/videoPage.module.css";
 
 const VideoPlayer = ({
@@ -16,7 +17,7 @@ const VideoPlayer = ({
   const [isAutoplayTriggered, setAutoplayTriggered] = useState(false);
   const iframeRef = useRef(null);
 
-  // Start a timer to auto-play the video after 6 seconds if no interaction
+  // Start a timer to auto-play the video after 3.5 seconds if no interaction
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!isIframeVisible && !isAutoplayTriggered) {
@@ -25,7 +26,6 @@ const VideoPlayer = ({
       }
     }, 3500);
 
-    // Cleanup timer if the component is unmounted or video is already played
     return () => clearTimeout(timer);
   }, [isIframeVisible, isAutoplayTriggered]);
 
@@ -66,9 +66,9 @@ const VideoPlayer = ({
           <p className={styles.spinnerText}>
             🤖 AI is curating the perfect playlist for your mood... 🚀🚀
           </p>{" "}
-          {/* Add the loading text here */}
         </div>
       )}
+
       {error && <p className={styles.errorText}>{error}</p>}
 
       {!loading && !error && video && (
@@ -78,10 +78,16 @@ const VideoPlayer = ({
             <div
               className={styles.thumbnail}
               onClick={handleIframeClick} // Autoplay when clicked
-              style={{
-                backgroundImage: `url(https://img.youtube.com/vi/${video?.id}/hqdefault.jpg)`,
-              }}
             >
+              {/* Use the Next.js Image component for automatic optimization */}
+              <Image
+                src={`https://img.youtube.com/vi/${video?.id}/hqdefault.jpg`}
+                alt="Video Thumbnail"
+                className={styles.thumbnail}
+                width={480} // Set the width of the thumbnail
+                height={270} // Set the height of the thumbnail (to maintain aspect ratio)
+                priority // Prioritize loading this image to improve LCP
+              />
               <div className={styles.playButtonContainer}>
                 <div className={styles.playButton}></div>
               </div>

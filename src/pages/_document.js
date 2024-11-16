@@ -73,7 +73,6 @@ export default function Document() {
           content="https://www.moodsongs.net/images/twitter-image.png"
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.moodsongs.net" />
       </Head>
       <body className="antialiased">
         <Main />

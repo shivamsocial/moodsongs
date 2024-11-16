@@ -24,14 +24,14 @@
   align-items: center;
   font-family: "Nunito", sans-serif;
   padding: 20px;
-  overflow-x: hidden; /* Prevents horizontal scrolling */
+  overflow-x: hidden;
 }
 
 /* Page Container */
 .pageContainer {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align items to the top */
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   max-width: 1100px;
@@ -43,10 +43,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 700px; /* Matches the .glassEffect */
+  max-width: 700px;
 }
 
-@media (max-width: 800) {
+@media (max-width: 800px) {
   .moodAndPlayingContainer {
     flex-direction: column;
     align-items: center;
@@ -56,7 +56,7 @@
 /* Heading Styling */
 .heading {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
   color: white;
   text-align: left;
@@ -64,7 +64,7 @@
 
 @media (max-width: 800px) {
   .heading {
-    font-size: 1.6rem;
+    font-size: 6vw; /* Dynamic resizing based on viewport width */
     margin-right: 15px;
     margin-top: 0px;
   }
@@ -72,8 +72,7 @@
 
 @media (max-width: 500px) {
   .heading {
-    font-size: 1.5rem;
-
+    font-size: 5vw; /* Dynamic resizing for smaller screens */
     margin-right: 35px;
     margin-top: 0px;
   }
@@ -88,7 +87,7 @@
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
   margin-left: 20px;
 }
@@ -101,7 +100,7 @@
 @media (max-width: 800px) {
   .changeMoodButton {
     margin-right: 30px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-top: 20px;
   }
   .languageText {
@@ -109,7 +108,7 @@
   }
 }
 
-@media (max-width: 500) {
+@media (max-width: 500px) {
   .changeMoodButton {
     margin-right: 30px;
     margin-top: 55px;
@@ -117,6 +116,7 @@
     font-size: 1rem;
   }
 }
+
 /* Glass Effect Container */
 .glassEffect {
   background: rgba(255, 255, 255, 0.1);
@@ -125,8 +125,8 @@
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 700px; /* This is the max width of the glass effect container */
-  margin: 10px auto; /* Centers the container horizontally */
+  max-width: 700px;
+  margin: 10px auto;
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -134,8 +134,40 @@
   justify-content: center;
   position: relative;
   min-height: 450px;
-  box-sizing: border-box; /* Includes padding in the total width/height calculation */
-  overflow: hidden; /* Prevents overflow */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .glassEffect {
+    max-width: 90%;
+    padding: 1.5rem;
+    min-height: 300px;
+    margin-right: 35px;
+  }
+
+  .videoFrame,
+  .thumbnail {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 500px) {
+  .glassEffect {
+    max-width: 90%;
+    padding: 1rem;
+    min-height: 250px;
+    margin-right: 35px;
+  }
+
+  .videoFrame,
+  .thumbnail {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
 }
 
 /* Play button styles */
@@ -155,21 +187,14 @@
   align-items: center;
   width: 60px;
   height: 60px;
-  background: red; /* Dark background */
-  border-radius: 50%; /* Circular background */
+  background: red;
+  border-radius: 50%;
   cursor: pointer;
 }
 
-@media (max-width: 360px) {
-  .heading {
-    font-size: 1.2rem; /* Further decrease font size for small devices */
-    margin-top: 0px; /* Fine-tune the margin-top */
-  }
-}
 .playButton {
   width: 0;
   height: 0;
-
   border-left: 15px solid white;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
@@ -178,45 +203,22 @@
 /* Video Frame */
 .videoFrame,
 .thumbnail {
+  position: relative;
   width: 100%;
-  max-width: 100%; /* Prevents the iframe from exceeding its parent container */
+  height: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 10px;
   border: none;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
-@media (max-width: 800px) {
-  .glassEffect {
-    max-width: 90%; /* Adjusted for smaller screens */
-    padding: 1.5rem;
-    min-height: 300px; /* Reduced height */
-    margin-right: 35px;
-  }
-
-  .videoFrame,
-  .thumbnail {
-    width: 100%; /* Ensures iframe takes full width of the container */
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-  }
-}
-
-@media (max-width: 500px) {
-  .glassEffect {
-    max-width: 90%; /* Adjusted max-width for even smaller screens */
-    padding: 1rem;
-    min-height: 250px; /* Further reduced height */
-    margin-right: 35px;
-  }
-
-  .videoFrame,
-  .thumbnail {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-  }
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Video Title */
@@ -240,71 +242,15 @@
   }
 }
 
-/*/* Button Container */
-.buttonContainer {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
-  padding: 0;
-}
 /* Button Container */
 .buttonContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 30px;
-  padding: 0;
-  gap: 180px; /* Increase the space between buttons */
+  gap: 180px;
 }
 
-/* Button Styling */
-.buttonNextPrev {
-  flex: 1; /* Ensures the buttons share equal space */
-  backdrop-filter: blur(10px);
-  background: linear-gradient(
-    135deg,
-    #ff4b2b,
-    #ff416c
-  ); /* Gradient background */
-  color: white;
-  padding: 10px;
-  border-radius: 12px;
-  font-family: "Nunito", sans-serif;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.buttonNextPrev:hover {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Hover state */
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 5px 15px rgba(255, 65, 108, 0.5);
-}
-
-.buttonNextPrev:active {
-  transform: translateY(0); /* Returns to normal when clicked */
-  box-shadow: 0 3px 10px rgba(255, 65, 108, 0.4);
-}
-
-.buttonNextPrev:disabled {
-  background: #a8a8a8;
-  color: #dddddd;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.buttonNextPrev:focus {
-  outline: 3px solid #2196f3;
-  outline-offset: 2px;
-}
-
-/* Adjust for smaller screens */
 @media (max-width: 768px) {
   .buttonNextPrev {
     font-size: 0.9rem;
@@ -321,6 +267,48 @@
     font-size: 0.8rem;
     padding: 8px;
   }
+}
+
+/* Button Styling */
+.buttonNextPrev {
+  flex: 1;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: white;
+  padding: 10px;
+  border-radius: 12px;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonNextPrev:hover {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 65, 108, 0.5);
+}
+
+.buttonNextPrev:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(255, 65, 108, 0.4);
+}
+
+.buttonNextPrev:disabled {
+  background: #a8a8a8;
+  color: #dddddd;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.buttonNextPrev:focus {
+  outline: 3px solid #2196f3;
+  outline-offset: 2px;
 }
 
 /* Language Toggle */
