@@ -21,12 +21,9 @@
 .moodBtn {
   backdrop-filter: blur(10px);
   border: 3px solid #ffea00; /* Yellow border */
-  background: linear-gradient(
-    135deg,
-    #222222,
-    #555555
-  ); /* Dark gradient background */
-  z-index: 5;
+  background: #0a0a0a;
+
+  z-index: 10;
   color: white;
   transition: transform 0.3s ease, background-color 0.3s ease,
     box-shadow 0.3s ease, filter 0.3s ease;
