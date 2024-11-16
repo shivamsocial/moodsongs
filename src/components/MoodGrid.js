@@ -126,7 +126,7 @@ const MoodGrid = () => {
         <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
           <div className="text-center">
             <h1 className={styles.heading1}>
-              Mood Songs - Discover the Best Music Every Mood
+              Mood Songs - Discover the Best Music Every Mood 💫
             </h1>
 
             <div className={styles.gridContainer}>

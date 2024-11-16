@@ -1,6 +1,8 @@
 /* Background Styling */
 .background {
-  background-image: url("/images/background.jpg");
+  /* background-image: url("/images/background.jpg"); */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url("/images/background.jpg");
   height: auto; /* Allow the background to cover the content */
   min-height: 100vh; /* Ensure it covers at least the viewport height */
   width: 100%;
@@ -18,30 +20,51 @@
 /* Mood button styling */
 .moodBtn {
   backdrop-filter: blur(10px);
-  border: 1px solid #ffea00 !important;
-  background: rgba(0, 0, 0, 0.4);
+  border: 3px solid #ffea00; /* Yellow border */
+  background: linear-gradient(
+    135deg,
+    #222222,
+    #555555
+  ); /* Dark gradient background */
+  z-index: 5;
   color: white;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease, filter 0.3s ease;
   cursor: pointer;
-  padding-left: 2rem; /* Convert to rem */
-  padding-right: 2rem; /* Convert to rem */
-  padding-top: 1rem; /* Adjust padding to ensure it scales properly */
-  padding-bottom: 1rem; /* Adjust padding to ensure it scales properly */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   text-align: center;
-  border-radius: 12px;
-  font-size: 1.2rem; /* Use rem for text size */
+  border-radius: 20px;
+  font-size: 1.2rem;
   width: auto;
-  max-width: 90%; /* Allow buttons to scale depending on screen width */
-  margin: 0.5rem; /* Give some space around buttons */
+  max-width: 90%;
+  margin: 0.5rem;
+  transform: translateY(-3px); /* Simulate lifting the button */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(220, 20, 60, 0.6); /* 3D shadow effect */
 }
 
+/* Active state: simulate pressing the button */
+.moodBtn:active {
+  transform: translateY(2px); /* Simulate pressing the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 5px rgba(220, 20, 60, 0.5); /* Shrink the shadow when pressed */
+}
+
+/* Focus state for better accessibility */
+.moodBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 234, 0, 0.8); /* Yellow outline on focus */
+}
+
+/* Hover effect */
 .moodBtn:hover {
-  transform: scale(1.2);
-  background-color: red;
-  border: 2px solid #dc143c;
-  box-shadow: 0 0 15px #dc143c;
+  transform: scale(1.1); /* Slightly enlarge the button */
+  background-color: #dc143c; /* Red background on hover */
+  border: 2px solid #dc143c; /* Dark red border */
+  box-shadow: 0 0 15px #dc143c, 0 0 20px #dc143c; /* Glowing red shadow */
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  filter: brightness(1.1); /* Brighten the button on hover */
 }
 
 /* Text Styling */
@@ -53,6 +76,7 @@
   margin-top: 1rem;
   font-size: 1.2rem; /* Using rem for consistency */
   font-family: "Nunito", sans-serif;
+  font-weight: bold;
 }
 
 /* Grid Container Styling for Responsive Layout */
@@ -121,17 +145,62 @@
     padding-right: 3rem; /* Increase button padding for larger screens */
   }
 }
-
-/* Heading Styling */
 .heading1 {
   margin-top: 5vh; /* Use vh to make it responsive to screen height */
   text-align: center;
-  font-size: 2rem; /* Use rem for text size */
+  font-size: 3rem; /* Use rem for text size */
   font-weight: bold;
   margin-bottom: 2rem; /* Add space between heading and grid */
-  color: white;
+  color: greenyellow;
+
+  /* Create border around each letter with text-shadow */
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9),
+    /* Top-left border */ -1px -1px 0px rgba(0, 0, 0, 0.9),
+    /* Bottom-right border */ 1px -1px 0px rgba(0, 0, 0, 0.9),
+    /* Top-right border */ -1px 1px 0px rgba(0, 0, 0, 0.9); /* Bottom-left border */
+
+  /* Glow effect animation */
+  animation: glowEffect 1.5s ease-in-out infinite;
 }
 
+/* Glow effect animation */
+@keyframes glowEffect {
+  0% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+  }
+  50% {
+    text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(255, 255, 255, 1);
+  }
+  100% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+  }
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1200px) {
+  .heading1 {
+    font-size: 2.5rem; /* Reduce font size for medium screens */
+    margin-top: 8vh; /* Adjust margin for better spacing */
+    margin-bottom: 1.5rem; /* Slightly reduce bottom margin */
+  }
+}
+
+@media (max-width: 800px) {
+  .heading1 {
+    font-size: 2rem; /* Reduce font size for smaller screens */
+    margin-top: 10vh; /* Adjust top margin for small screens */
+    margin-bottom: 1rem; /* Adjust bottom margin */
+  }
+}
+
+@media (max-width: 600px) {
+  .heading1 {
+    font-size: 1.5rem; /* Further reduce font size for mobile */
+    margin-top: 12vh; /* Adjust top margin for very small screens */
+    margin-bottom: 0.8rem; /* Reduce bottom margin */
+  }
+}
 /* Add footer image when content overflows */
 .pageContainer:after {
   content: "";

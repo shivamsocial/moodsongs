@@ -12,12 +12,12 @@
 
 /* Background Styling */
 .background {
-  background-image: url("/images/background.jpg");
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url("/images/background.jpg");
   min-height: 100vh;
   width: 100%;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
@@ -25,6 +25,17 @@
   font-family: "Nunito", sans-serif;
   padding: 20px;
   overflow-x: hidden;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text contrast */
+  z-index: -1;
 }
 
 /* Page Container */
@@ -55,11 +66,32 @@
 
 /* Heading Styling */
 .heading {
-  margin: 0;
-  font-size: 2rem;
+  font-size: 2rem; /* Use rem for text size */
   font-weight: bold;
-  color: white;
-  text-align: left;
+  color: greenyellow;
+
+  /* Create border around each letter with text-shadow */
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9),
+    /* Top-left border */ -1px -1px 0px rgba(0, 0, 0, 0.9),
+    /* Bottom-right border */ 1px -1px 0px rgba(0, 0, 0, 0.9),
+    /* Top-right border */ -1px 1px 0px rgba(0, 0, 0, 0.9); /* Bottom-left border */
+
+  /* Glow effect animation */
+  animation: glowEffect 1.5s ease-in-out infinite;
+}
+
+/* Glow effect animation */
+@keyframes glowEffect {
+  0% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+  }
+  50% {
+    text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(255, 255, 255, 1);
+  }
+  100% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+  }
 }
 
 @media (max-width: 800px) {
@@ -82,14 +114,15 @@
 .changeMoodButton {
   background: linear-gradient(135deg, #ff4b2b, #ff416c);
   color: white;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 1px 15px 1px; /* Adjusted bottom padding to 3px */
+  border-radius: 25px;
+  padding: 12px 10px 12px;
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .changeMoodButton:hover {
@@ -100,11 +133,8 @@
 @media (max-width: 800px) {
   .changeMoodButton {
     margin-right: 30px;
-    font-size: 1rem;
-    margin-top: 20px;
-  }
-  .languageText {
-    font-size: 1rem;
+    margin-left: 0;
+    font-size: 1.2rem;
   }
 }
 
@@ -127,13 +157,12 @@
   width: 100%;
   max-width: 700px;
   margin: 10px auto;
-  transition: all 0.3s ease-in-out;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 450px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -143,14 +172,6 @@
     max-width: 90%;
     padding: 1.5rem;
     min-height: 300px;
-    margin-right: 35px;
-  }
-
-  .videoFrame,
-  .thumbnail {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
   }
 }
 
@@ -159,14 +180,6 @@
     max-width: 90%;
     padding: 1rem;
     min-height: 250px;
-    margin-right: 35px;
-  }
-
-  .videoFrame,
-  .thumbnail {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
   }
 }
 
@@ -198,6 +211,11 @@
   border-left: 15px solid white;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
+}
+
+.playButtonContainer:hover {
+  background: #ff416c;
+  transform: scale(1.1); /* Slight zoom on hover */
 }
 
 /* Video Frame */
@@ -354,7 +372,6 @@
   background-color: white;
   transition: 0.4s;
 }
-
 input:checked + .slider {
   background-color: #2196f3;
 }
