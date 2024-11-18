@@ -2,7 +2,7 @@ import { fetchSongsForMood } from "./api"; // Import the function to fetch songs
 import { connectToDatabase } from "./mongo"; // Import the database connection function
 
 // Cache expiration time (1 week in milliseconds)
-const CACHE_EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000;
+const CACHE_EXPIRATION_TIME = 2 * 24 * 60 * 60 * 1000;
 
 export const storeVideosIfNeeded = async (mood, language = "en") => {
   try {
