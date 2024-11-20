@@ -22,17 +22,17 @@ const moods = [
   { emoji: "🙏", name: "Folk" },
   { emoji: "🕉️✝️", name: "Devotional" },
   { emoji: "🧘‍♂️", name: "Meditation" },
-  { emoji: "👶", name: "Children" },
+  { emoji: "👶", name: "Kids" },
   { emoji: "😌", name: "Relax Chill" },
   { emoji: "📻", name: "Lofi" },
 ];
 
 // Constants
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 const DEFAULT_LANGUAGE = "en";
 const API_TOKEN = "633baf5f0e0156"; // IPInfo API token
 
-// Function to get user location (same as before)
+// Function to get user location
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -45,30 +45,43 @@ const getUserLocation = async () => {
   }
 };
 
-// This fetches the data at build time and serves it as static HTML.
+// Fetch data during build time
 export async function getStaticProps({ params }) {
   const { mood } = params;
   const timestamp = new Date().getTime();
   const initialPage = 1;
   const initialVideoIndex = 0;
 
-  const res = await axios.get(
-    `${API_URL}/api/mood?mood=${mood}&language=${DEFAULT_LANGUAGE}&limit=5&skip=${
-      (initialPage - 1) * 5
-    }&timestamp=${timestamp}`
-  );
+  try {
+    const res = await axios.get(
+      `${API_URL}/api/mood?mood=${mood}&language=${DEFAULT_LANGUAGE}&limit=5&skip=${
+        (initialPage - 1) * 5
+      }&timestamp=${timestamp}`
+    );
 
-  return {
-    props: {
-      videos: res.data.videos,
-      totalCount: res.data.totalCount,
-      initialPage,
-      initialVideoIndex,
-    },
-    revalidate: 3600, // Optional: Revalidate the static page every hour
-  };
+    return {
+      props: {
+        videos: res.data.videos,
+        totalCount: res.data.totalCount,
+        initialPage,
+        initialVideoIndex,
+      },
+      revalidate: 3600, // Optional: Revalidate the static page every hour
+    };
+  } catch (error) {
+    console.error("Error fetching data for mood:", error);
+    return {
+      props: {
+        videos: [],
+        totalCount: 0,
+        initialPage,
+        initialVideoIndex,
+      },
+    };
+  }
 }
 
+// Generate paths for each mood
 export async function getStaticPaths() {
   const paths = moods.map((mood) => ({
     params: { mood: mood.name },
@@ -120,6 +133,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
         setVideoList(res.data.videos);
         setCurrentVideoIndex(0); // Reset to the first video
       } catch (err) {
+        console.error("Error fetching videos:", err);
         setError("Failed to load videos.");
       } finally {
         setLoading(false);
@@ -140,6 +154,9 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     } else if ((currentPage + 1) * 5 < totalCount) {
       setCurrentPage((prevPage) => prevPage + 1);
       setCurrentVideoIndex(0); // Reset to the first video of the next page
+      router.push(`/video/${mood}?page=${currentPage + 1}`, undefined, {
+        shallow: true,
+      });
     }
   };
 
@@ -149,6 +166,9 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     } else if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
       setCurrentVideoIndex(4); // Go to the last video of the previous page
+      router.push(`/video/${mood}?page=${currentPage - 1}`, undefined, {
+        shallow: true,
+      });
     }
   };
 

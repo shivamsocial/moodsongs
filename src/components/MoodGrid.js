@@ -26,7 +26,7 @@ const MoodGrid = () => {
       { emoji: "🙏", name: "Folk" },
       { emoji: "🕉️✝️", name: "Devotional" },
       { emoji: "🧘‍♂️", name: "Meditation" },
-      { emoji: "👶", name: "Children" },
+      { emoji: "👶", name: "Kids" },
     ],
     []
   );
@@ -85,7 +85,7 @@ const MoodGrid = () => {
           content="Enjoy watching and listening to 15 mood and genre-based playlists songs. Whether your mood is happy, romantic, energized, or motivated, explore playlists with genres like EDM, Chill, Rap, Lofi, and more to match your vibe"
         />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="content-language" content="en" />
+        <meta httpEquiv="content-language" content="en" />
 
         <meta property="og:type" content="website" />
         <meta
