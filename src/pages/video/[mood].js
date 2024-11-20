@@ -7,7 +7,7 @@ import MoodDetails from "../../components/MoodDetails";
 import LanguageToggle from "../../components/LanguageToggle";
 import styles from "../../styles/videoPage.module.css";
 
-// Mood definitions
+// Mood definitions (no change)
 const moods = [
   { emoji: "😀", name: "Happy" },
   { emoji: "💘", name: "Romantic" },
@@ -27,12 +27,12 @@ const moods = [
   { emoji: "📻", name: "Lofi" },
 ];
 
-// Constants
+// Constants (no change)
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const DEFAULT_LANGUAGE = "en";
 const API_TOKEN = "633baf5f0e0156"; // IPInfo API token
 
-// Function to get user location (same as before)
+// Function to get user location (no change)
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -45,7 +45,7 @@ const getUserLocation = async () => {
   }
 };
 
-// This fetches the data at build time and serves it as static HTML.
+// Fetch initial data (no change)
 export async function getStaticProps({ params }) {
   const { mood } = params;
   const timestamp = new Date().getTime();
@@ -69,6 +69,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
+// Fetch paths (no change)
 export async function getStaticPaths() {
   const paths = moods.map((mood) => ({
     params: { mood: mood.name },
@@ -87,14 +88,14 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
 
-  // Remove videoIndex from URL query
+  // Remove videoIndex from URL query (no change)
   useEffect(() => {
     if (videoIndex) {
       router.replace(`/video/${mood}`, undefined, { shallow: true });
     }
   }, [router, mood, videoIndex]);
 
-  // Detect user location and language (runs only once)
+  // Detect user location and language (no change)
   useEffect(() => {
     const detectLanguage = async () => {
       const country = await getUserLocation();
@@ -104,11 +105,11 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     detectLanguage();
   }, []);
 
-  // Fetch videos once currentLanguage is set
+  // Fetch videos once currentLanguage is set (no change)
   useEffect(() => {
-    if (currentLanguage === null) return;
-
     const fetchVideos = async () => {
+      if (!currentLanguage) return;
+
       setLoading(true);
       try {
         const timestamp = new Date().getTime();
@@ -127,7 +128,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     };
 
     fetchVideos();
-  }, [currentPage, currentLanguage, mood]);
+  }, [currentLanguage, currentPage, mood]);
 
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
@@ -153,6 +154,16 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   };
 
   const currentVideo = videoList[currentVideoIndex];
+
+  if (loading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <p className={styles.spinnerText}>
+          🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -212,17 +223,21 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
             handleLanguageToggle={handleLanguageToggle}
           />
           <div className={styles.glassEffect}>
-            <VideoPlayer
-              video={currentVideo}
-              currentVideoIndex={currentVideoIndex}
-              goToNextVideo={goToNextVideo}
-              goToPreviousVideo={goToPreviousVideo}
-              videoListLength={videoList.length}
-              currentPage={currentPage}
-              totalCount={totalCount}
-              loading={loading}
-              error={error}
-            />
+            {currentVideo ? (
+              <VideoPlayer
+                video={currentVideo}
+                currentVideoIndex={currentVideoIndex}
+                goToNextVideo={goToNextVideo}
+                goToPreviousVideo={goToPreviousVideo}
+                videoListLength={videoList.length}
+                currentPage={currentPage}
+                totalCount={totalCount}
+                loading={loading}
+                error={error}
+              />
+            ) : (
+              <div>No videos available for this mood.</div>
+            )}
           </div>
         </div>
       </div>

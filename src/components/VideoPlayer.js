@@ -15,7 +15,45 @@ const VideoPlayer = ({
 }) => {
   const [isIframeVisible, setIframeVisible] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
+  const [isAutoplayTriggered, setAutoplayTriggered] = useState(false);
+
   const iframeRef = useRef(null);
+
+  // Start a timer to auto-play the video after 3.5 seconds if no interaction
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isIframeVisible && !isAutoplayTriggered) {
+        setIframeVisible(true);
+        setAutoplayTriggered(true);
+      }
+    }, 3500);
+
+    return () => clearTimeout(timer);
+  }, [isIframeVisible, isAutoplayTriggered]);
+
+  // Intersection Observer to load iframe when it comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isIframeVisible) {
+          setIframeVisible(true);
+        }
+      },
+      {
+        rootMargin: "200px", // Trigger loading 200px before the video enters the viewport
+      }
+    );
+
+    if (iframeRef.current) {
+      observer.observe(iframeRef.current);
+    }
+
+    return () => {
+      if (iframeRef.current) {
+        observer.unobserve(iframeRef.current);
+      }
+    };
+  }, [isIframeVisible]);
 
   // Load YouTube Iframe API
   useEffect(() => {
@@ -35,12 +73,14 @@ const VideoPlayer = ({
 
   // Initialize YouTube Player
   useEffect(() => {
+    let player;
+
     if (playerReady && isIframeVisible && video?.id) {
-      const player = new window.YT.Player(`youtube-player-${video.id}`, {
+      player = new window.YT.Player(`youtube-player-${video.id}`, {
         videoId: video.id,
         playerVars: {
           autoplay: 1,
-          mute: 1, // Start muted for autoplay to work
+          mute: 0, // Start muted for autoplay to work
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
@@ -57,8 +97,11 @@ const VideoPlayer = ({
         },
       });
 
+      // Cleanup player properly when the component unmounts or before reinitialization
       return () => {
-        player.destroy();
+        if (player) {
+          player.destroy();
+        }
       };
     }
   }, [playerReady, isIframeVisible, video?.id, goToNextVideo]);
@@ -82,6 +125,7 @@ const VideoPlayer = ({
 
       {!loading && !error && video && (
         <>
+          {/* Show Thumbnail and Play Button */}
           {!isIframeVisible ? (
             <div className={styles.thumbnail} onClick={handleIframeClick}>
               <Image
@@ -100,6 +144,7 @@ const VideoPlayer = ({
             <div
               id={`youtube-player-${video.id}`}
               className={styles.videoFrame}
+              ref={iframeRef}
             ></div>
           )}
 

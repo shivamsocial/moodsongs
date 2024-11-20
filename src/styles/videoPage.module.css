@@ -449,6 +449,19 @@ input:checked + .slider:before {
   padding: 10px;
 }
 
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 /* Optional: Add glow effect to the spinner for a more dynamic look */
 .spinner::before {
   content: "";
