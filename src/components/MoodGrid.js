@@ -77,12 +77,12 @@ const MoodGrid = () => {
     <>
       <Head>
         <title>
-          Mood Songs - Discover the Best Music Every Mood 🎸 | Happy 😀,
-          Romantic 💘, EDM ⚡, Chill 🍃, Rap 💪, Lofi 📻
+          15 Mood and Genre Based Playlists Songs – Happy, Romantic, EDM, Chill,
+          Rap, Lofi, Motivational
         </title>
         <meta
           name="description"
-          content="Discover the best mood songs and playlists on MoodSongs 🎧. Whether you're feeling happy 😀, romantic 💘, energized ⚡, chill 🍃, or relaxed 🎧, find curated playlists with upbeat, chill, EDM, rock, rap, and lofi music to match your mood."
+          content="Enjoy watching and listening to 15 mood and genre-based playlists songs. Whether your mood is happy, romantic, energized, or motivated, explore playlists with genres like EDM, Chill, Rap, Lofi, and more to match your vibe"
         />
         <meta name="robots" content="index, follow" />
         <meta http-equiv="content-language" content="en" />
