@@ -1,4 +1,3 @@
-// utils/api.js
 import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
@@ -8,7 +7,14 @@ export const fetchSongsForMood = async (mood, language = "en") => {
     console.log("Connecting API");
 
     // Set regionCode based on language
-    const regionCode = language === "hi" ? "IN" : "US"; // "IN" for Hindi (India), "US" for English (USA)
+    let regionCode = language === "hi" ? "IN" : "US"; // "IN" for Hindi (India), "US" for English (USA)
+
+    // Adjust query based on mood
+    let query = `Best ${mood} songs`; // Default query
+    if (mood.toLowerCase() === "kids" && language === "hi") {
+      query = "hindi kids songs"; // Specific query for Hindi kids songs
+      regionCode = "IN";
+    }
 
     // Make a request to the YouTube search API to get video IDs based on mood, language, and region
     const response = await axios.get(
@@ -16,7 +22,7 @@ export const fetchSongsForMood = async (mood, language = "en") => {
       {
         params: {
           part: "snippet",
-          q: `Best ${mood} songs`, // Query based on mood and language
+          q: query, // Query based on mood and language
           type: "video",
           maxResults: 20, // Maximum results to fetch
           key: API_KEY, // API Key for authentication
