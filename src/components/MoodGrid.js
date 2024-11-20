@@ -26,7 +26,7 @@ const MoodGrid = () => {
       { emoji: "🙏", name: "Folk" },
       { emoji: "🕉️✝️", name: "Devotional" },
       { emoji: "🧘‍♂️", name: "Meditation" },
-      { emoji: "👶", name: "Children" },
+      { emoji: "👶", name: "Kids" },
     ],
     []
   );
