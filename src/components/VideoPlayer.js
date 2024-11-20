@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image"; // Import the Image component from Next.js
+import Image from "next/image";
 import styles from "../styles/videoPage.module.css";
 
 const VideoPlayer = ({
@@ -14,48 +14,57 @@ const VideoPlayer = ({
   error,
 }) => {
   const [isIframeVisible, setIframeVisible] = useState(false);
-  const [isAutoplayTriggered, setAutoplayTriggered] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const iframeRef = useRef(null);
 
-  // Start a timer to auto-play the video after 3.5 seconds if no interaction
+  // Load YouTube Iframe API
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isIframeVisible && !isAutoplayTriggered) {
-        setIframeVisible(true);
-        setAutoplayTriggered(true);
-      }
-    }, 3500);
+    if (typeof window.YT === "undefined") {
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      script.async = true;
+      document.body.appendChild(script);
 
-    return () => clearTimeout(timer);
-  }, [isIframeVisible, isAutoplayTriggered]);
-
-  // Intersection Observer to load iframe when it comes into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isIframeVisible) {
-          setIframeVisible(true);
-        }
-      },
-      {
-        rootMargin: "200px", // Trigger loading 200px before the video enters the viewport
-      }
-    );
-
-    if (iframeRef.current) {
-      observer.observe(iframeRef.current);
+      window.onYouTubeIframeAPIReady = () => {
+        setPlayerReady(true);
+      };
+    } else {
+      setPlayerReady(true);
     }
+  }, []);
 
-    return () => {
-      if (iframeRef.current) {
-        observer.unobserve(iframeRef.current);
-      }
-    };
-  }, [isIframeVisible]);
+  // Initialize YouTube Player
+  useEffect(() => {
+    if (playerReady && isIframeVisible && video?.id) {
+      const player = new window.YT.Player(`youtube-player-${video.id}`, {
+        videoId: video.id,
+        playerVars: {
+          autoplay: 1,
+          mute: 1, // Start muted for autoplay to work
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+        },
+        events: {
+          onReady: (event) => {
+            event.target.playVideo();
+          },
+          onStateChange: (event) => {
+            if (event.data === window.YT.PlayerState.ENDED) {
+              goToNextVideo();
+            }
+          },
+        },
+      });
+
+      return () => {
+        player.destroy();
+      };
+    }
+  }, [playerReady, isIframeVisible, video?.id, goToNextVideo]);
 
   const handleIframeClick = () => {
     setIframeVisible(true);
-    setAutoplayTriggered(true); // Autoplay triggered immediately on click
   };
 
   return (
@@ -65,7 +74,7 @@ const VideoPlayer = ({
           <div className={styles.spinner}></div>
           <p className={styles.spinnerText}>
             🤖 AI is curating the perfect playlist for your mood... 🚀🚀
-          </p>{" "}
+          </p>
         </div>
       )}
 
@@ -73,37 +82,25 @@ const VideoPlayer = ({
 
       {!loading && !error && video && (
         <>
-          {/* Show Thumbnail and Play Button */}
           {!isIframeVisible ? (
-            <div
-              className={styles.thumbnail}
-              onClick={handleIframeClick} // Autoplay when clicked
-            >
-              {/* Use the Next.js Image component for automatic optimization */}
+            <div className={styles.thumbnail} onClick={handleIframeClick}>
               <Image
                 src={`https://img.youtube.com/vi/${video?.id}/hqdefault.jpg`}
                 alt="Video Thumbnail"
                 className={styles.thumbnail}
-                width={480} // Set the width of the thumbnail
-                height={270} // Set the height of the thumbnail (to maintain aspect ratio)
-                priority // Prioritize loading this image to improve LCP
+                width={480}
+                height={270}
+                priority
               />
               <div className={styles.playButtonContainer}>
                 <div className={styles.playButton}></div>
               </div>
             </div>
           ) : (
-            <iframe
-              ref={iframeRef}
-              key={currentVideoIndex}
+            <div
+              id={`youtube-player-${video.id}`}
               className={styles.videoFrame}
-              src={`https://www.youtube.com/embed/${video?.id}?autoplay=1&modestbranding=1&rel=0&showinfo=0`}
-              frameBorder="0"
-              allow="autoplay; encrypted-media; picture-in-picture; gyroscope; accelerometer"
-              allowFullScreen
-              title={video?.snippet.title}
-              loading="lazy"
-            ></iframe>
+            ></div>
           )}
 
           <h3 className={styles.videoTitle}>{video?.snippet.title}</h3>
