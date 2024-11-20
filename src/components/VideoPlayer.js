@@ -36,7 +36,7 @@ const VideoPlayer = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isIframeVisible) {
-          setIframeVisible(true);
+          setIframeVisible(true); // Set iframe visible once it's in view
         }
       },
       {
@@ -79,7 +79,7 @@ const VideoPlayer = ({
       player = new window.YT.Player(`youtube-player-${video.id}`, {
         videoId: video.id,
         playerVars: {
-          autoplay: 1,
+          autoplay: 1, // Enable autoplay
           mute: 0, // Start muted for autoplay to work
           modestbranding: 1,
           rel: 0,
@@ -91,7 +91,7 @@ const VideoPlayer = ({
           },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.ENDED) {
-              goToNextVideo();
+              goToNextVideo(); // Go to next video once the current video ends
             }
           },
         },
@@ -107,7 +107,7 @@ const VideoPlayer = ({
   }, [playerReady, isIframeVisible, video?.id, goToNextVideo]);
 
   const handleIframeClick = () => {
-    setIframeVisible(true);
+    setIframeVisible(true); // Ensures the video plays as soon as the iframe is clicked
   };
 
   return (
