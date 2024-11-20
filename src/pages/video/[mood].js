@@ -22,7 +22,7 @@ const moods = [
   { emoji: "🙏", name: "Folk" },
   { emoji: "🕉️✝️", name: "Devotional" },
   { emoji: "🧘‍♂️", name: "Meditation" },
-  { emoji: "👶", name: "Children" },
+  { emoji: "👶", name: "Kids" },
   { emoji: "😌", name: "Relax Chill" },
   { emoji: "📻", name: "Lofi" },
 ];
