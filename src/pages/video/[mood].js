@@ -158,6 +158,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   if (loading) {
     return (
       <div className={styles.spinnerContainer}>
+        <div className={styles.spinner}></div>
         <p className={styles.spinnerText}>
           🤖 AI is curating the perfect playlist for your mood... 🚀🚀
         </p>
