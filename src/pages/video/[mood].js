@@ -131,7 +131,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
           }&timestamp=${timestamp}`
         );
         setVideoList(res.data.videos);
-        setCurrentVideoIndex(0); // Reset to the first video
+        if (currentPage == 1 && currentVideoIndex == 1) setCurrentVideoIndex(0);
       } catch (err) {
         console.error("Error fetching videos:", err);
         setError("Failed to load videos.");
@@ -151,27 +151,24 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const goToNextVideo = () => {
     if (currentVideoIndex < 4) {
       setCurrentVideoIndex((prevIndex) => prevIndex + 1);
-    } else if ((currentPage + 1) * 5 < totalCount) {
+    } else if (currentPage * 5 < totalCount) {
       setCurrentPage((prevPage) => prevPage + 1);
       setCurrentVideoIndex(0); // Reset to the first video of the next page
-      router.push(`/video/${mood}?page=${currentPage + 1}`, undefined, {
-        shallow: true,
-      });
     }
   };
 
   const goToPreviousVideo = () => {
     if (currentVideoIndex > 0) {
+      // If not the first video, just move to the previous video
       setCurrentVideoIndex((prevIndex) => prevIndex - 1);
-    } else if (currentPage > 1) {
+    } else {
+      // If at the first video of a page and not on the first page, go to the previous page
+      setCurrentVideoIndex(4); // Go to the last video of the previous page
+
       setCurrentPage((prevPage) => prevPage - 1);
       setCurrentVideoIndex(4); // Go to the last video of the previous page
-      router.push(`/video/${mood}?page=${currentPage - 1}`, undefined, {
-        shallow: true,
-      });
     }
   };
-
   const currentVideo = videoList[currentVideoIndex];
 
   return (

@@ -121,7 +121,7 @@ const VideoPlayer = ({
               onClick={goToNextVideo}
               disabled={
                 currentVideoIndex === videoListLength - 1 &&
-                (currentPage + 1) * 5 >= totalCount
+                currentPage * 5 >= totalCount
               }
             >
               Next
