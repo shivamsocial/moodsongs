@@ -77,7 +77,7 @@ const MoodGrid = () => {
     <>
       <Head>
         <title>
-          Mood Songs & Music - Top 15 Playlists for Every Mood | Happy,
+          Mood Songs & Music - Top 20 Playlists for Every Mood | Happy,
           Romantic, Chill, EDM, Lofi & More
         </title>
         <meta

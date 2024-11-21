@@ -174,7 +174,9 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   return (
     <>
       <Head>
-        <title>{`${mood} Music Videos - MoodSongs`}</title>
+        <title>
+          Top 20 {`${mood} Songs & Music`} Videos Playlist - MoodSongs
+        </title>
         <meta
           name="description"
           content={`Listen to the best ${mood} music videos on MoodSongs. Experience the perfect mood for every moment.`}
