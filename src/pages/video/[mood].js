@@ -231,17 +231,30 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
             handleLanguageToggle={handleLanguageToggle}
           />
           <div className={styles.glassEffect}>
-            <VideoPlayer
-              video={currentVideo}
-              currentVideoIndex={currentVideoIndex}
-              goToNextVideo={goToNextVideo}
-              goToPreviousVideo={goToPreviousVideo}
-              videoListLength={videoList.length}
-              currentPage={currentPage}
-              totalCount={totalCount}
-              loading={loading}
-              error={error}
-            />
+            {loading ? (
+              <div className={styles.spinnerContainer}>
+                <div className={styles.spinner}></div>
+                <p className={styles.spinnerText}>
+                  🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+                </p>
+              </div>
+            ) : error ? (
+              <p className={styles.errorText}>{error}</p>
+            ) : currentVideo ? (
+              <VideoPlayer
+                video={currentVideo}
+                currentVideoIndex={currentVideoIndex}
+                goToNextVideo={goToNextVideo}
+                goToPreviousVideo={goToPreviousVideo}
+                videoListLength={videoList.length}
+                currentPage={currentPage}
+                totalCount={totalCount}
+                loading={loading}
+                error={error}
+              />
+            ) : (
+              <p className={styles.noVideos}>No embeddable videos available.</p>
+            )}
           </div>
         </div>
       </div>
