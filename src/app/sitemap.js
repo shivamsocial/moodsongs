@@ -23,7 +23,7 @@ export default function sitemap() {
     url: `https://www.moodsongs.net/video/${mood.name}`,
     lastModified: new Date(),
     changeFrequency: "daily",
-    priority: 0.8,
+    priority: 0.9,
   }));
 
   // Add homepage URL
