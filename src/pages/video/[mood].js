@@ -49,9 +49,13 @@ const getUserLocation = async () => {
 export async function getStaticProps({ params }) {
   const { mood } = params;
   const timestamp = new Date().getTime();
-  const initialPage = 1;
-  const initialVideoIndex = 0;
+  const randomPage = Math.floor(Math.random() * 2) + 1;
 
+  // Randomize a video index between 0 and 4
+  const randomVideoIndex = Math.floor(Math.random() * 5);
+
+  const initialPage = randomPage;
+  const initialVideoIndex = randomVideoIndex;
   try {
     const res = await axios.get(
       `${API_URL}/api/mood?mood=${mood}&language=${DEFAULT_LANGUAGE}&limit=5&skip=${
