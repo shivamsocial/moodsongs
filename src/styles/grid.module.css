@@ -195,7 +195,7 @@
 @media (max-width: 600px) {
   .heading1 {
     font-size: 1.5rem; /* Further reduce font size for mobile */
-    margin-top: 0vh; /* Adjust top margin for very small screens */
+    margin-top: 1.5vh; /* Adjust top margin for very small screens */
     margin-bottom: 0.8rem; /* Reduce bottom margin */
   }
 }
