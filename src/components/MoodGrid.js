@@ -1,14 +1,14 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head"; // Import Head for SEO meta tags
+import Head from "next/head";
 import styles from "../styles/grid.module.css";
 
 const MoodGrid = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false); // State for loading
-  const [error, setError] = useState(""); // State for error message
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // For mood search
 
-  // Memoize the moods array to avoid unnecessary re-renders
   const moods = useMemo(
     () => [
       { emoji: "😀", name: "Happy" },
@@ -20,7 +20,6 @@ const MoodGrid = () => {
       { emoji: "🌟", name: "Motivational" },
       { emoji: "🎸", name: "Rock" },
       { emoji: "💪", name: "Rap" },
-
       { emoji: "⚡", name: "EDM" },
       { emoji: "🤘", name: "Hip-Hop" },
       { emoji: "🙏", name: "Folk" },
@@ -32,41 +31,58 @@ const MoodGrid = () => {
     []
   );
 
+  // Filter moods based on the search query
+  const filteredMoods = useMemo(() => {
+    return moods.filter((mood) =>
+      mood.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, moods]);
+
   const handleMoodClick = useCallback(
     async (mood) => {
-      setLoading(true); // Show loading state
-      setError(""); // Reset any previous errors
+      setLoading(true);
+      setError("");
 
       try {
-        // Navigate to the video page
         router.push({
-          pathname: `/video/[mood]`, // Updated URL structure for "mood-songs"
-          query: { mood, videoIndex: 0 }, // Pass the mood and video index to the page
+          pathname: `/video/[mood]`,
+          query: { mood, videoIndex: 0 },
         });
       } catch (err) {
         setError(err.message);
-        setLoading(false); // Hide the spinner if an error occurs
+        setLoading(false);
       }
     },
     [router]
   );
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value); // Update search query
+  };
+
+  const handleInputSubmit = () => {
+    // Check if the searchQuery matches any existing mood
+    const foundMood = moods.find(
+      (mood) => mood.name.toLowerCase() === searchQuery.toLowerCase()
+    );
+
+    if (foundMood) {
+      // If mood found, navigate to that mood's page
+      handleMoodClick(foundMood.name);
+    } else if (searchQuery.trim()) {
+      // If no mood found, treat it as a custom mood and navigate
+      handleMoodClick(searchQuery.trim());
+    }
+  };
+
   useEffect(() => {
-    // Listen for route change start and end
-    const handleRouteChangeStart = () => {
-      setLoading(true); // Show spinner when navigation starts
-    };
+    const handleRouteChangeStart = () => setLoading(true);
+    const handleRouteChangeComplete = () => setLoading(false);
 
-    const handleRouteChangeComplete = () => {
-      setLoading(false); // Hide spinner when navigation is complete
-    };
-
-    // Register event listeners
     router.events.on("routeChangeStart", handleRouteChangeStart);
     router.events.on("routeChangeComplete", handleRouteChangeComplete);
     router.events.on("routeChangeError", handleRouteChangeComplete);
 
-    // Cleanup listeners when the component unmounts
     return () => {
       router.events.off("routeChangeStart", handleRouteChangeStart);
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
@@ -130,19 +146,41 @@ const MoodGrid = () => {
               Mood Songs - Discover the Best Music Every Mood 💫
             </h1>
 
+            {/* Unified Input for Search & Describe Mood */}
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Search or describe your mood..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className={styles.searchInput}
+              />
+            </div>
             <div className={styles.gridContainer}>
-              {moods.map((mood, index) => (
-                <button
-                  key={index}
-                  className={styles.moodBtn}
-                  onClick={() => handleMoodClick(mood.name)} // Navigate on click
-                  aria-label={`Explore ${mood.name} mood songs`}
-                  disabled={loading} // Disable button during loading
-                >
-                  <div className={styles.text}>{mood.emoji}</div>
-                  <p className={styles.ptext}>{mood.name}</p>
-                </button>
-              ))}
+              {filteredMoods.length > 0 ? (
+                filteredMoods.map((mood, index) => (
+                  <button
+                    key={index}
+                    className={styles.moodBtn}
+                    onClick={() => handleMoodClick(mood.name)} // Navigate on click
+                    aria-label={`Explore ${mood.name} mood songs`}
+                    disabled={loading} // Disable button during loading
+                  >
+                    <div className={styles.text}>{mood.emoji}</div>
+                    <p className={styles.ptext}>{mood.name}</p>
+                  </button>
+                ))
+              ) : (
+                <div className={styles.buttonWrapper}>
+                  <button
+                    onClick={handleInputSubmit}
+                    className={styles.searchButton}
+                    disabled={loading || !searchQuery.trim()}
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
             </div>
 
             {loading && (

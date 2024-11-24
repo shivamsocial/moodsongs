@@ -79,6 +79,8 @@
 /* Grid Container Styling for Responsive Layout */
 .gridContainer {
   display: grid;
+  justify-items: center; /* Center all items in the grid */
+
   grid-column-gap: 2rem; /* Use rem for consistent spacing */
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   padding: 1rem; /* Use rem for consistent padding */
@@ -100,9 +102,6 @@
   }
 
   /* Hide the last item in the grid when the screen size is 1000px or smaller */
-  .gridContainer > *:last-child {
-    display: none; /* Hide the last grid item */
-  }
 
   .moodBtn {
     padding: 0.1rem; /* Adjust padding for smaller screens */
@@ -140,6 +139,9 @@
   .moodBtn {
     padding-left: 3rem; /* Increase button padding for larger screens */
     padding-right: 3rem; /* Increase button padding for larger screens */
+  }
+  .gridContainer > :nth-last-child(-n + 4) {
+    justify-self: center; /* Center last row items */
   }
 }
 .heading1 {
@@ -287,5 +289,136 @@
   50% {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
+  }
+}
+/* Container for input and button */
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+/* Search Input Styling */
+.searchInput {
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  outline: none;
+
+  width: 100%;
+  max-width: 450px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(0, 0, 0, 0.4)
+  );
+  color: white;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: purple;
+  box-shadow: 5px 12px 45px rgba(0, 0, 0, 0.4);
+}
+
+/* Placeholder Text Styling */
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-weight: 300;
+  font-weight: bold;
+  font-style: italic;
+
+  transition: all 0.3s ease-in-out;
+}
+
+/* Focus Effect for Search Input */
+.searchInput:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #8e7bff;
+  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.4);
+}
+.searchInput:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #8e7bff;
+  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.4);
+}
+.buttonWrapper {
+  position: absolute;
+  top: 70%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Offset by 50% of its own size to truly center */
+  z-index: 10; /* Ensure it appears above other content */
+}
+/* Basic button styling */
+.searchButton {
+  padding: 12px 30px; /* Increase padding for a more balanced look */
+  font-size: 1rem; /* Font size */
+  font-weight: bold; /* Make the text bold */
+  cursor: pointer; /* Pointer cursor on hover */
+  border: none; /* Remove default border */
+  background: linear-gradient(
+    145deg,
+    #4caf50,
+    #81c784
+  ); /* Gradient background */
+  color: white; /* Button text color */
+  border-radius: 30px; /* Rounded corners for a modern look */
+  transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+  text-transform: uppercase; /* Uppercase text for a cleaner look */
+  letter-spacing: 1px; /* Slight letter spacing for readability */
+  width: auto; /* Make sure the width adjusts based on content */
+}
+
+/* Hover effect */
+.searchButton:hover {
+  background: linear-gradient(
+    145deg,
+    #81c784,
+    #4caf50
+  ); /* Reverse gradient on hover */
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Active effect when clicking */
+.searchButton:active {
+  transform: translateY(1px); /* Simulate pressing the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduced shadow on press */
+  background: linear-gradient(
+    145deg,
+    #4caf50,
+    #81c784
+  ); /* Keep gradient consistent */
+}
+
+/* Focus effect for accessibility */
+.searchButton:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.5); /* Green glow on focus */
+}
+
+/* Disabled button styling */
+.searchButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none; /* Remove shadow for disabled state */
+  transform: none; /* Remove any transform effects */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .searchButton {
+    margin-top: 15px;
+    padding: 12px 20px; /* Adjust padding for smaller screens */
+    font-size: 1rem; /* Ensure readable font size */
+    width: 100%; /* Make sure button takes full width on small screens */
   }
 }

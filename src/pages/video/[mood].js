@@ -27,12 +27,11 @@ const moods = [
   { emoji: "📻", name: "Lofi" },
 ];
 
-// Constants
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 const DEFAULT_LANGUAGE = "en";
 const API_TOKEN = "633baf5f0e0156"; // IPInfo API token
 
-// Function to get user location
+// Helper to get user location
 const getUserLocation = async () => {
   try {
     const response = await axios.get(
@@ -41,11 +40,18 @@ const getUserLocation = async () => {
     return response.data.country;
   } catch (error) {
     console.error("Error fetching location:", error);
-    return "US"; // Default to 'US' if location fetch fails
+    return "US"; // Default to 'US'
   }
 };
 
-// Fetch data during build time
+// Pre-fetch data for each mood
+export async function getStaticPaths() {
+  const paths = moods.map((mood) => ({
+    params: { mood: mood.name },
+  }));
+  return { paths, fallback: true };
+}
+
 export async function getStaticProps({ params }) {
   const { mood } = params;
   const timestamp = new Date().getTime();
@@ -56,6 +62,7 @@ export async function getStaticProps({ params }) {
 
   const initialPage = randomPage;
   const initialVideoIndex = randomVideoIndex;
+
   try {
     const res = await axios.get(
       `${API_URL}/api/mood?mood=${mood}&language=${DEFAULT_LANGUAGE}&limit=5&skip=${
@@ -70,10 +77,10 @@ export async function getStaticProps({ params }) {
         initialPage,
         initialVideoIndex,
       },
-      revalidate: 3600, // Optional: Revalidate the static page every hour
+      revalidate: 3600,
     };
   } catch (error) {
-    console.error("Error fetching data for mood:", error);
+    console.error("Error fetching data:", error);
     return {
       props: {
         videos: [],
@@ -83,14 +90,6 @@ export async function getStaticProps({ params }) {
       },
     };
   }
-}
-
-// Generate paths for each mood
-export async function getStaticPaths() {
-  const paths = moods.map((mood) => ({
-    params: { mood: mood.name },
-  }));
-  return { paths, fallback: false };
 }
 
 const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
@@ -104,14 +103,14 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex);
 
-  // Remove videoIndex from URL query
+  // Remove query from URL
   useEffect(() => {
     if (videoIndex) {
       router.replace(`/video/${mood}`, undefined, { shallow: true });
     }
   }, [router, mood, videoIndex]);
 
-  // Detect user location and language (runs only once)
+  // Detect language based on location
   useEffect(() => {
     const detectLanguage = async () => {
       const country = await getUserLocation();
@@ -121,7 +120,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     detectLanguage();
   }, []);
 
-  // Fetch videos once currentLanguage is set
+  // Fetch videos when language or page changes
   useEffect(() => {
     if (currentLanguage === null) return;
 
@@ -147,6 +146,7 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
     fetchVideos();
   }, [currentPage, currentLanguage, mood]);
 
+  // Handlers
   const handleLanguageToggle = () => {
     const newLanguage = currentLanguage === "en" ? "hi" : "en";
     setCurrentLanguage(newLanguage);
@@ -173,6 +173,18 @@ const MoodPage = ({ videos, totalCount, initialPage, initialVideoIndex }) => {
       setCurrentVideoIndex(4); // Go to the last video of the previous page
     }
   };
+  useEffect(() => {
+    // Check if currentVideoIndex is undefined or null
+    if (currentVideoIndex === undefined || currentVideoIndex === null) {
+      // Redirect to home screen if undefined or null
+      router.push("/");
+    }
+  }, [currentVideoIndex, router]);
+
+  // If the currentVideoIndex is not defined, don't render the component yet
+  if (currentVideoIndex === undefined || currentVideoIndex === null) {
+    return null; // Or a loading indicator, depending on your use case
+  }
   const currentVideo = videoList[currentVideoIndex];
 
   return (
