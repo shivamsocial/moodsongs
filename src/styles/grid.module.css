@@ -145,7 +145,6 @@
   }
 }
 .heading1 {
-  margin-top: 5vh; /* Use vh to make it responsive to screen height */
   text-align: center;
   font-size: 3rem; /* Use rem for text size */
   font-weight: bold;
@@ -180,7 +179,7 @@
 @media (max-width: 1200px) {
   .heading1 {
     font-size: 2.5rem; /* Reduce font size for medium screens */
-    margin-top: 8vh; /* Adjust margin for better spacing */
+    margin-top: 6vh; /* Adjust margin for better spacing */
     margin-bottom: 1.5rem; /* Slightly reduce bottom margin */
   }
 }
@@ -188,7 +187,7 @@
 @media (max-width: 800px) {
   .heading1 {
     font-size: 2rem; /* Reduce font size for smaller screens */
-    margin-top: 10vh; /* Adjust top margin for small screens */
+    margin-top: 4vh; /* Adjust top margin for small screens */
     margin-bottom: 1rem; /* Adjust bottom margin */
   }
 }
@@ -196,7 +195,7 @@
 @media (max-width: 600px) {
   .heading1 {
     font-size: 1.5rem; /* Further reduce font size for mobile */
-    margin-top: 12vh; /* Adjust top margin for very small screens */
+    margin-top: 0vh; /* Adjust top margin for very small screens */
     margin-bottom: 0.8rem; /* Reduce bottom margin */
   }
 }

@@ -55,13 +55,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { mood } = params;
   const timestamp = new Date().getTime();
-  const randomPage = Math.floor(Math.random() * 2) + 1;
 
-  // Randomize a video index between 0 and 4
-  const randomVideoIndex = Math.floor(Math.random() * 5);
-
-  const initialPage = randomPage;
-  const initialVideoIndex = randomVideoIndex;
+  const initialPage = 1;
+  const initialVideoIndex = 0;
 
   try {
     const res = await axios.get(

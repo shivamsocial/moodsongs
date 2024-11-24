@@ -150,7 +150,7 @@ const MoodGrid = () => {
             <div className={styles.searchContainer}>
               <input
                 type="text"
-                placeholder="Search or describe your mood..."
+                placeholder="Search or Describe your mood..."
                 value={searchQuery}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
