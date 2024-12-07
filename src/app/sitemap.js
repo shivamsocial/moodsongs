@@ -51,7 +51,7 @@ export default function sitemap() {
         url: `https://www.moodsongs.net/${locale}/${moodSlug}`, // Dynamic mood page route
         lastModified: new Date().toISOString(),
         changeFrequency: "daily",
-        priority: 0.9,
+        priority: 1.0,
       });
     });
 
