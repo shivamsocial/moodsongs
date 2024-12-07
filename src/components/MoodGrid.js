@@ -1,76 +1,88 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useTranslations } from "next-intl";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import styles from "../styles/grid.module.css";
 
 const MoodGrid = () => {
-  const router = useRouter();
+  const router = useRouter(); // Ensure this is declared at the top
+  const t = useTranslations(); // Use the `t` function from next-intl
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); // For mood search
+  const [searchQuery, setSearchQuery] = useState("");
 
   const moods = useMemo(
     () => [
-      { emoji: "😀", name: "Happy" },
-      { emoji: "💘", name: "Romantic" },
-      { emoji: "😌", name: "Relax Chill" },
-      { emoji: "📻", name: "Lofi" },
-      { emoji: "🥳", name: "Party" },
-      { emoji: "👶", name: "Kids" },
-      { emoji: "🌟", name: "Motivational" },
-      { emoji: "🎸", name: "Rock" },
-      { emoji: "💪", name: "Rap" },
-      { emoji: "⚡", name: "EDM" },
-      { emoji: "🤘", name: "Hip-Hop" },
-      { emoji: "🙏", name: "Folk" },
-      { emoji: "🕉️✝️", name: "Devotional" },
-      { emoji: "😊", name: "Acoustic" },
-      { emoji: "🎷", name: "Jazz" },
-      { emoji: "🧘‍♂️", name: "Meditation" },
+      { emoji: "😀", name: t("happy") },
+      { emoji: "👍", name: t("good") },
+      { emoji: "💘", name: t("romantic") },
+      { emoji: "😢", name: t("sad") },
+      { emoji: "😌", name: t("relax_chill") },
+      { emoji: "📻", name: t("lofi") },
+      { emoji: "🥳", name: t("party") },
+      { emoji: "✈️", name: t("travel") },
+      { emoji: "🚗", name: t("driving") },
+      { emoji: "👶", name: t("kids") },
+      { emoji: "🌟", name: t("motivational") },
+      { emoji: "🎸", name: t("rock") },
+      { emoji: "💪", name: t("rap") },
+      { emoji: "⚡", name: t("edm") },
+      { emoji: "🤘", name: t("hip_hop") },
+      { emoji: "🙏", name: t("folk") },
+      { emoji: "🕉️✝️", name: t("devotional") },
+      { emoji: "😊", name: t("acoustic") },
+      { emoji: "🎷", name: t("jazz") },
+      { emoji: "🧘‍♂️", name: t("meditation") },
     ],
-    []
+    [t]
   );
 
-  // Filter moods based on the search query
   const filteredMoods = useMemo(() => {
     return moods.filter((mood) =>
       mood.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery, moods]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleInputSubmit();
+    }
+  };
+
   const handleMoodClick = useCallback(
     async (mood) => {
       setLoading(true);
-      setError("");
 
       try {
         router.push({
-          pathname: `/video/[mood]`,
-          query: { mood, videoIndex: 0 },
+          pathname: `/${mood.toLowerCase().replace(/\s+/g, "-")}`, // Make sure the mood is formatted correctly
+          query: {
+            mood: mood.toLowerCase().replace(/\s+/g, "-"), // Only pass the mood here without '-songs'
+            videoIndex: 0,
+            language: router.locale, // Pass the current language
+          },
         });
       } catch (err) {
-        setError(err.message);
         setLoading(false);
       }
     },
-    [router]
+    [router] // `router` dependency to avoid stale closures
   );
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value); // Update search query
+    setSearchQuery(e.target.value);
   };
 
   const handleInputSubmit = () => {
-    // Check if the searchQuery matches any existing mood
     const foundMood = moods.find(
       (mood) => mood.name.toLowerCase() === searchQuery.toLowerCase()
     );
 
     if (foundMood) {
-      // If mood found, navigate to that mood's page
       handleMoodClick(foundMood.name);
     } else if (searchQuery.trim()) {
-      // If no mood found, treat it as a custom mood and navigate
       handleMoodClick(searchQuery.trim());
     }
   };
@@ -93,78 +105,127 @@ const MoodGrid = () => {
   return (
     <>
       <Head>
-        <title>
-          Mood Songs & Music - Top 20 Playlists for Every Mood | Happy,
-          Romantic, Chill, EDM, Lofi & More
-        </title>
-        <meta
-          name="description"
-          content="Discover and Listen to the best mood songs and music for every occasion. Explore top playlists for every mood—happy, romantic, chill, energized—and genres like EDM, Rap, Lofi, and more to match your vibe. Start listening now!"
-        />
+        <title>{t("title")}</title>
+        <meta name="description" content={t("description")} />
         <meta name="robots" content="index, follow" />
-        <meta httpEquiv="content-language" content="en" />
-
+        <meta httpEquiv="content-language" content={router.locale} />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:title"
-          content="Mood Songs - Discover the Best Mood Songs and Playlists"
-        />
-        <meta
-          property="og:description"
-          content="Explore mood songs and find the perfect playlist for every occasion, whether it's relaxing mood songs or energizing tunes."
-        />
+        <meta property="og:title" content={t("title")} />
+        <meta property="og:description" content={t("description")} />
         <meta
           property="og:image"
           content="https://www.moodsongs.net/images/opengraph-image.png"
         />
         <meta property="og:url" content="https://www.moodsongs.net" />
 
+        <link
+          rel="alternate"
+          href={`https://www.moodsongs.net/${router.locale}`}
+          hrefLang={router.locale}
+        />
+        <link rel="alternate" href="https://www.moodsongs.net" hrefLang="en" />
+        <link
+          rel="alternate"
+          href="https://www.moodsongs.net/de"
+          hrefLang="de"
+        />
+        <link
+          rel="alternate"
+          href="https://www.moodsongs.net/pt"
+          hrefLang="pt"
+        />
+        <link
+          rel="alternate"
+          href="https://www.moodsongs.net/it"
+          hrefLang="it"
+        />
+        <link
+          rel="alternate"
+          href="https://www.moodsongs.net/es"
+          hrefLang="es"
+        />
+        <link
+          rel="alternate"
+          href="https://www.moodsongs.net/fr"
+          hrefLang="fr"
+        />
+
         {/* Structured Data for SEO */}
-        <script type="application/ld+json">
-          {`
-            {
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "Mood Songs",
-              "url": "https://www.moodsongs.net",
-              "description": "Explore a curated collection of mood songs that cater to every emotional state. From calming tunes to energetic beats, discover the best mood songs on MoodSongs.",
-              "potentialAction": {
+              name: "Mood Songs",
+              url: "https://www.moodsongs.net",
+              description:
+                "Discover the best mood songs and curated mood music playlists for every feeling and occasion. From happy tunes to relaxing beats, find the perfect playlist for every mood.",
+              potentialAction: {
                 "@type": "SearchAction",
-                "target": "https://www.moodsongs.net/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              }
-            }
-          `}
-        </script>
+                target: [
+                  "https://www.moodsongs.net/{search_term_string}-mood-music",
+                  "https://www.moodsongs.net/{search_term_string}-mood-songs",
+                ],
+                "query-input": "required name=search_term_string",
+              },
+              mainEntityOfPage: "https://www.moodsongs.net",
+              publisher: {
+                "@type": "Organization",
+                name: "Mood Songs",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://www.moodsongs.net/images/favicon-32x32.png",
+                },
+              },
+              image: {
+                "@type": "ImageObject",
+                url: "https://www.moodsongs.net/images/opengraph-image.png",
+                height: "630",
+                width: "1200",
+              },
+              keywords:
+                "mood songs, mood music, playlists, happy mood songs, good mood songs, relaxing music, chill music, uplifting mood music, music for every mood",
+              language: "en",
+              alternateName: [
+                { lang: "de", url: "https://www.moodsongs.net/de" },
+                { lang: "pt", url: "https://www.moodsongs.net/pt" },
+                { lang: "it", url: "https://www.moodsongs.net/it" },
+                { lang: "es", url: "https://www.moodsongs.net/es" },
+                { lang: "fr", url: "https://www.moodsongs.net/fr" },
+              ],
+            }),
+          }}
+        />
         <link rel="canonical" href="https://www.moodsongs.net" />
       </Head>
-
+      <Navbar />
       <div className={styles.background}>
         <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
           <div className="text-center">
-            <h1 className={styles.heading1}>
-              Mood Songs - Discover the Best Music Every Mood 💫
-            </h1>
+            <h1 className={styles.heading1}>{t("heading1")}</h1>
+            <h2 className={styles.heading2}>{t("heading2")}</h2>
 
-            {/* Unified Input for Search & Describe Mood */}
             <div className={styles.searchContainer}>
               <input
                 type="text"
-                placeholder="Search or Describe your mood..."
+                placeholder={t("search_placeholder")}
                 value={searchQuery}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
+                onKeyDown={handleKeyDown}
               />
             </div>
+
             <div className={styles.gridContainer}>
               {filteredMoods.length > 0 ? (
                 filteredMoods.map((mood, index) => (
                   <button
                     key={index}
                     className={styles.moodBtn}
-                    onClick={() => handleMoodClick(mood.name)} // Navigate on click
+                    onClick={() => handleMoodClick(mood.name)}
                     aria-label={`Explore ${mood.name} mood songs`}
-                    disabled={loading} // Disable button during loading
+                    disabled={loading}
                   >
                     <div className={styles.text}>{mood.emoji}</div>
                     <p className={styles.ptext}>{mood.name}</p>
@@ -177,7 +238,7 @@ const MoodGrid = () => {
                     className={styles.searchButton}
                     disabled={loading || !searchQuery.trim()}
                   >
-                    Submit
+                    {t("button_submit")}
                   </button>
                 </div>
               )}
@@ -186,16 +247,13 @@ const MoodGrid = () => {
             {loading && (
               <div className={styles.spinnerContainer}>
                 <div className={styles.spinner}></div>
-                <p className={styles.spinnerText}>
-                  🤖 AI is curating the perfect playlist for your mood... 🚀🚀
-                </p>
+                <p className={styles.spinnerText}>{t("ai_loading")}</p>
               </div>
             )}
-
-            {error && <p>{error}</p>}
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

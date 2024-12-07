@@ -97,7 +97,6 @@
 @media (max-width: 800px) {
   .heading {
     font-size: 6vw; /* Dynamic resizing based on viewport width */
-    margin-right: 15px;
     margin-top: 0px;
   }
 }
@@ -105,7 +104,6 @@
 @media (max-width: 500px) {
   .heading {
     font-size: 5vw; /* Dynamic resizing for smaller screens */
-    margin-right: 35px;
     margin-top: 0px;
   }
 }
@@ -155,8 +153,9 @@
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 700px;
+  max-width: 1500px;
   margin: 10px auto;
+  margin-right: 50px;
   min-height: 450px;
   display: flex;
   flex-direction: column;
@@ -473,5 +472,164 @@ input:checked + .slider:before {
   50% {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
+  }
+} /* General Styles */
+/* General Styling for Queue Section */
+.queueSection {
+  margin-top: 40px;
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Deeper shadow for a more modern look */
+  overflow-x: auto;
+  white-space: nowrap;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Header Styling */
+.queueHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  -webkit-background-clip: text; /* Vendor prefix for WebKit-based browsers (Chrome, Safari) */
+  background-clip: text; /* Standard property for better compatibility */
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.3s ease; /* Smooth animation */
+}
+
+.queueHeading:hover {
+  transform: scale(1.05); /* Subtle scale on hover */
+}
+/* Queue Item Styling */
+.queueItem {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  margin-right: 20px;
+  width: 150px !important; /* Adjusted width for better visuals */
+  background-color: black;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  text-align: center; /* Center text and content within the card */
+}
+
+.queueItem:hover {
+  background-color: black;
+  transform: translateY(-5px) scale(1.05); /* Floating effect */
+}
+
+.queueItem.active {
+  background-color: #444444;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); /* Active item highlight */
+}
+
+/* Thumbnail Styling */
+.thumbnailQueue {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio, crop to cover the space */
+  border-radius: 10px; /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block; /* Block display ensures the image fills the container properly */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+/* Hover effect for thumbnails */
+.thumbnailQueue:hover {
+  transform: scale(1.1); /* Zoom effect */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); /* Glowing hover effect */
+}
+
+/* Video Info (Title & Channel) */
+.videoInfo {
+  text-align: center;
+
+  color: #fff;
+}
+
+.videoInfo h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate text that overflows */
+  max-width: 100%;
+  transition: color 0.3s ease-in-out;
+}
+
+.videoInfo h4:hover {
+  color: #ff5722; /* Hover color change */
+}
+
+.videoInfo p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Mobile and Tablet Styling */
+@media (max-width: 768px) {
+  .queueSection {
+    padding: 20px;
+  }
+
+  .queueItem {
+    width: 160px; /* Smaller width on smaller screens */
+    margin-right: 12px;
+  }
+
+  .thumbnailQueue {
+    height: 112px; /* Adjusted thumbnail size */
+  }
+
+  .videoInfo h4 {
+    font-size: 0.95rem;
+  }
+
+  .videoInfo p {
+    font-size: 0.8rem;
+  }
+}
+
+/* TV Styling (Larger fonts and space) */
+@media (min-width: 1200px) {
+  .queueSection {
+    padding: 35px;
+    margin-top: 60px;
+  }
+
+  .queueHeading {
+    font-size: 3.2rem; /* Larger heading */
+  }
+
+  .queueItem {
+    width: 320px; /* Wider items on larger screens */
+    margin-right: 25px;
+    padding: 25px;
+  }
+
+  .thumbnailQueue {
+    height: 180px; /* Larger thumbnails */
+  }
+
+  .videoInfo h4 {
+    font-size: 1.4rem;
+  }
+
+  .videoInfo p {
+    font-size: 1.1rem;
   }
 }

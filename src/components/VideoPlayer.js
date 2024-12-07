@@ -8,7 +8,6 @@ const VideoPlayer = ({
   goToNextVideo,
   goToPreviousVideo,
   videoListLength,
-  currentPage,
   totalCount,
   loading,
   error,
@@ -26,7 +25,7 @@ const VideoPlayer = ({
         setIframeVisible(true);
         setAutoplayTriggered(true);
       }
-    }, 3500);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [isIframeVisible, isAutoplayTriggered]);
@@ -44,13 +43,14 @@ const VideoPlayer = ({
       }
     );
 
-    if (iframeRef.current) {
-      observer.observe(iframeRef.current);
+    const iframeNode = iframeRef.current;
+    if (iframeNode) {
+      observer.observe(iframeNode);
     }
 
     return () => {
-      if (iframeRef.current) {
-        observer.unobserve(iframeRef.current);
+      if (iframeNode) {
+        observer.unobserve(iframeNode);
       }
     };
   }, [isIframeVisible]);
@@ -71,39 +71,42 @@ const VideoPlayer = ({
     }
   }, []);
 
-  // Initialize YouTube Player
   useEffect(() => {
     let player;
 
-    if (playerReady && isIframeVisible && video?.id) {
+    if (playerReady && isIframeVisible && video?.id && iframeRef.current) {
+      // Initialize the player
       player = new window.YT.Player(`youtube-player-${video.id}`, {
         videoId: video.id,
         playerVars: {
-          autoplay: 1,
-          mute: 0, // Start muted for autoplay to work
+          autoplay: 1, // Autoplay enabled
+          mute: 0, // Start unmuted to allow autoplay to work
           modestbranding: 1,
           rel: 0,
           showinfo: 0,
         },
         events: {
           onReady: (event) => {
-            event.target.playVideo();
+            event.target.playVideo(); // Ensure autoplay triggers as soon as the video is ready
           },
           onStateChange: (event) => {
+            // Check for the "ENDED" state
             if (event.data === window.YT.PlayerState.ENDED) {
-              goToNextVideo();
+              goToNextVideo(); // Automatically go to the next video when the current one ends
             }
           },
         },
       });
 
-      // Cleanup player properly when the component unmounts or before reinitialization
+      // Cleanup function to destroy the player when the component unmounts or before reinitialization
       return () => {
         if (player) {
           player.destroy();
         }
       };
     }
+
+    return () => {};
   }, [playerReady, isIframeVisible, video?.id, goToNextVideo]);
 
   const handleIframeClick = () => {
@@ -155,17 +158,14 @@ const VideoPlayer = ({
             <button
               className={styles.buttonNextPrev}
               onClick={goToPreviousVideo}
-              disabled={currentVideoIndex === 0 && currentPage === 1}
+              disabled={currentVideoIndex === 0}
             >
               Previous
             </button>
             <button
               className={styles.buttonNextPrev}
               onClick={goToNextVideo}
-              disabled={
-                currentVideoIndex === videoListLength - 1 &&
-                currentPage * 5 >= totalCount
-              }
+              disabled={currentVideoIndex === videoListLength - 1}
             >
               Next
             </button>

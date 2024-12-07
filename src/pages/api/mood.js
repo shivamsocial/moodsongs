@@ -1,12 +1,7 @@
-// pages/api/mood.js
-
 import { storeVideosIfNeeded } from "../../utils/fetchAndStoreVideos";
+
 export default async function handler(req, res) {
   const { mood, language } = req.query;
-
-  // Parse and validate limit and skip as integers
-  const limit = parseInt(req.query.limit, 10) || 5;
-  const skip = parseInt(req.query.skip, 10) || 0;
 
   // Validate required parameters
   if (!mood || !language) {
@@ -14,7 +9,7 @@ export default async function handler(req, res) {
   }
 
   // Debug logging
-  console.log("Received request:", { mood, language, limit, skip });
+  console.log("Received request:", { mood, language });
 
   try {
     console.log("Fetching videos for mood:", mood, "and language:", language);
@@ -25,12 +20,8 @@ export default async function handler(req, res) {
     // Get the total count of videos
     const totalCount = videos.length;
 
-    // Pagination logic: slice the videos array for the current page
-    const paginatedVideos = videos.slice(skip, skip + limit);
-    console.log({ skip, limit, totalVideos: videos.length, paginatedVideos });
-
     return res.status(200).json({
-      videos: paginatedVideos,
+      videos, // Return all videos
       totalCount, // Return total count of videos
     });
   } catch (error) {

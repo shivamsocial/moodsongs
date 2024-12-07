@@ -12,8 +12,15 @@ export const storeVideosIfNeeded = async (mood, language = "en") => {
 
     console.log(`Checking cache for mood: ${mood}, language: ${language}`);
 
-    // Check if cached data exists and is still valid
-    const existingData = await collection.findOne({ mood, language });
+    // Create a regex pattern to match the mood (case-insensitive)
+    const moodRegex = new RegExp(mood, "i"); // 'i' makes it case-insensitive
+
+    // Check if cached data exists and is still valid using regex for flexible matching
+    const existingData = await collection.findOne({
+      mood: { $regex: moodRegex }, // Use regex to find moods that match
+      language,
+    });
+
     const isCacheValid =
       existingData &&
       existingData.timestamp > Date.now() - CACHE_EXPIRATION_TIME;
