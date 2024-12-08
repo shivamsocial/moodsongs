@@ -222,18 +222,28 @@ const MoodGrid = () => {
 
             <div className={styles.gridContainer}>
               {filteredMoods.length > 0 ? (
-                filteredMoods.map((mood, index) => (
-                  <button
-                    key={index}
-                    className={styles.moodBtn}
-                    onClick={() => handleMoodClick(mood.name)}
-                    aria-label={`Explore ${mood.name} mood songs`}
-                    disabled={loading}
-                  >
-                    <div className={styles.text}>{mood.emoji}</div>
-                    <p className={styles.ptext}>{mood.name}</p>
-                  </button>
-                ))
+                filteredMoods.map((mood, index) => {
+                  const moodPath = `/${mood.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`;
+                  const localePath =
+                    router.locale !== "en"
+                      ? `/${router.locale}${moodPath}`
+                      : moodPath;
+
+                  return (
+                    <a
+                      key={index}
+                      href={localePath}
+                      className={styles.moodBtn}
+                      aria-label={`Explore ${mood.name} mood songs`}
+                      disabled={loading}
+                    >
+                      <div className={styles.text}>{mood.emoji}</div>
+                      <p className={styles.ptext}>{mood.name}</p>
+                    </a>
+                  );
+                })
               ) : (
                 <div className={styles.buttonWrapper}>
                   <button
