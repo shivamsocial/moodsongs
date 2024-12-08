@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/grid.module.css";
+import styles1 from "../styles/videoPage.module.css";
 
 const MoodGrid = () => {
   const router = useRouter(); // Ensure this is declared at the top
@@ -12,6 +13,7 @@ const MoodGrid = () => {
 
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [translationsLoaded, setTranslationsLoaded] = useState(false);
 
   const moods = useMemo(
     () => [
@@ -101,6 +103,26 @@ const MoodGrid = () => {
       router.events.off("routeChangeError", handleRouteChangeComplete);
     };
   }, [router.events]);
+  useEffect(() => {
+    if (t) {
+      setTranslationsLoaded(true);
+    }
+  }, [t]);
+
+  if (!translationsLoaded) {
+    return (
+      <div className={styles1.spinnerContainer}>
+        {
+          <>
+            <div className={styles1.spinner}></div>
+            <p className={styles1.spinnerText}>
+              🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+            </p>
+          </>
+        }
+      </div>
+    );
+  }
 
   return (
     <>
@@ -270,5 +292,12 @@ const MoodGrid = () => {
     </>
   );
 };
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: require(`../../public/locales/${locale}.json`), // Loading your translations
+    },
+  };
+}
 
 export default MoodGrid;
