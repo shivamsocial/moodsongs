@@ -256,7 +256,15 @@ const MoodPage = ({ videos, totalCount }) => {
             "/images/default-thumbnail.jpg"
           }
         />
-        <link rel="canonical" href={`https://www.moodsongs.net/${mood}`} />
+        <link
+          rel="canonical"
+          href={`https://www.moodsongs.net${
+            router.locale === "en" ? "" : `/${router.locale}`
+          }/${slugify(mood, {
+            lower: true,
+            remove: /[^\w\s\-\u0900-\u097Föäüß]/g,
+          })}`}
+        />
       </Head>
       <Navbar mood={mood} moods={moods} />
       <div className={styles.background}>

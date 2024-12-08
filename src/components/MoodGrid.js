@@ -117,7 +117,6 @@ const MoodGrid = () => {
           content="https://www.moodsongs.net/images/opengraph-image.png"
         />
         <meta property="og:url" content="https://www.moodsongs.net" />
-
         <link
           rel="alternate"
           href={`https://www.moodsongs.net/${router.locale}`}
@@ -149,7 +148,6 @@ const MoodGrid = () => {
           href="https://www.moodsongs.net/fr"
           hrefLang="fr"
         />
-
         {/* Structured Data for SEO */}
         <script
           type="application/ld+json"
@@ -197,7 +195,12 @@ const MoodGrid = () => {
             }),
           }}
         />
-        <link rel="canonical" href="https://www.moodsongs.net" />
+        <link
+          rel="canonical"
+          href={`https://www.moodsongs.net${
+            router.locale === "en" ? "" : `/${router.locale}`
+          }`}
+        />{" "}
       </Head>
       <Navbar />
       <div className={styles.background}>
