@@ -265,6 +265,16 @@ const MoodPage = ({ videos, totalCount }) => {
             remove: /[^\w\s\-\u0900-\u097Föäüß]/g,
           })}`}
         />
+        <link
+          rel="alternate"
+          href={`https://www.moodsongs.net${
+            router.locale === "en" ? "" : `/${router.locale}`
+          }/${slugify(mood, {
+            lower: true,
+            remove: /[^\w\s\-\u0900-\u097Föäüß]/g,
+          })}`}
+          hreflang={router.locale}
+        />
       </Head>
       <Navbar mood={mood} moods={moods} />
       <div className={styles.background}>
