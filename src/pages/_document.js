@@ -4,8 +4,8 @@ class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
 
-    // Retrieve the locale from the request (for server-side rendering)
-    const locale = ctx.req?.locale || "en"; // Fallback to "en" if locale is not provided
+    // Retrieve locale directly from context
+    const locale = ctx.locale || "en"; // Default to 'en' if locale is not available
 
     return { ...initialProps, locale };
   }

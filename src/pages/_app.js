@@ -9,35 +9,33 @@ import styles1 from "../styles/videoPage.module.css"; // Import custom loading s
 
 function MyApp({ Component, pageProps }) {
   const { locale } = useRouter();
-  const [messages, setMessages] = useState(null); // This holds the messages
-  const [isLoading, setIsLoading] = useState(true); // To manage loading state
+  const [messages, setMessages] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Dynamically load the translation files based on the current locale
+  // Fetch messages instead of importing
   const loadMessages = async () => {
     try {
-      const messages = await import(
-        `../../public/locales/${locale}/common.json`
-      );
-      return messages.default;
+      const res = await fetch(`/locales/${locale}/common.json`);
+      if (!res.ok) throw new Error("Failed to load messages");
+      return await res.json();
     } catch (error) {
       console.error("Error loading locale messages:", error);
-      return import("../../public/locales/en/common.json").then(
-        (messages) => messages.default
-      ); // Fallback to English if loading fails
+      const fallbackRes = await fetch("/locales/en/common.json");
+      return await fallbackRes.json();
     }
   };
 
   useEffect(() => {
-    const loadLocaleMessages = async () => {
+    const fetchMessages = async () => {
+      setIsLoading(true);
       const loadedMessages = await loadMessages();
       setMessages(loadedMessages);
-      setIsLoading(false); // Once messages are loaded, set loading to false
+      setIsLoading(false);
     };
 
-    loadLocaleMessages();
-  }, [locale]); // Re-run when the locale changes
+    fetchMessages();
+  }, [locale]);
 
-  // Display spinner if still loading
   if (isLoading) {
     return (
       <div className={styles1.spinnerContainer}>
