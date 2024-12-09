@@ -3,22 +3,24 @@ import styles from "../styles/grid.module.css"; // Import the updated styles
 import Image from "next/image"; // Importing Image component from Next.js
 import { useRouter } from "next/router"; // Import the useRouter hook
 import MoodDetails from "./MoodDetails"; // Import the MoodDetails component
+import Link from "next/link"; // Import Link component for static navigation
 
 const Navbar = ({ mood, moods }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { locale, push, asPath, pathname, query } = useRouter(); // Get router properties
+  const { locale, asPath, pathname, query } = useRouter(); // Get router properties
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Handle language change by updating the URL with the new locale
-  const handleLanguageChange = (newLocale) => {
-    push(asPath, undefined, { locale: newLocale });
-  };
-
   // Check if the current page is the mood page by checking if the 'mood' query exists
   const isMoodPage = query.mood !== undefined; // Only on pages where 'mood' is part of the URL
+
+  // Function to construct the language switch URLs
+  const getLocalizedUrl = (newLocale) => {
+    const basePath = pathname.replace(`/${locale}`, "") || "/";
+    return `/${newLocale}${basePath}`;
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -54,8 +56,10 @@ const Navbar = ({ mood, moods }) => {
               <span>Language:</span>
               <select
                 value={locale}
-                onChange={(e) => handleLanguageChange(e.target.value)}
                 className={styles.languageSelect}
+                onChange={(e) =>
+                  (window.location.href = getLocalizedUrl(e.target.value))
+                }
               >
                 <option value="en">English</option>
                 <option value="de">Deutsch</option>

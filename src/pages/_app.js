@@ -5,10 +5,10 @@ import Head from "next/head";
 import { IntlProvider } from "next-intl";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import styles1 from "../styles/videoPage.module.css"; // Import custom loading styles
 
 function MyApp({ Component, pageProps }) {
   const { locale } = useRouter();
-
   const [messages, setMessages] = useState(null); // This holds the messages
   const [isLoading, setIsLoading] = useState(true); // To manage loading state
 
@@ -18,9 +18,6 @@ function MyApp({ Component, pageProps }) {
       const messages = await import(
         `../../public/locales/${locale}/common.json`
       );
-      console.log("Current Locale:", locale);
-      console.log("Loaded Messages:", messages);
-
       return messages.default;
     } catch (error) {
       console.error("Error loading locale messages:", error);
@@ -39,6 +36,18 @@ function MyApp({ Component, pageProps }) {
 
     loadLocaleMessages();
   }, [locale]); // Re-run when the locale changes
+
+  // Display spinner if still loading
+  if (isLoading) {
+    return (
+      <div className={styles1.spinnerContainer}>
+        <div className={styles1.spinner}></div>
+        <p className={styles1.spinnerText}>
+          🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+        </p>
+      </div>
+    );
+  }
 
   return (
     <IntlProvider
