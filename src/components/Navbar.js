@@ -61,13 +61,16 @@ const Navbar = ({ mood, moods }) => {
                   (window.location.href = getLocalizedUrl(e.target.value))
                 }
               >
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
+                <option value="en">English </option>
                 <option value="es">Español</option>
+                <option value="hi">हिंदी</option>
+                <option value="ko">한국어</option>
+                <option value="ja">日本語</option>
+                <option value="zh">简体中文</option>
+                <option value="de">Deutsch</option>
                 <option value="fr">Français</option>
                 <option value="it">Italiano</option>
                 <option value="pt">Português</option>
-                <option value="hi">हिंदी</option>
               </select>
             </div>
           </li>
