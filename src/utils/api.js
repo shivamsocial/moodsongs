@@ -6,12 +6,15 @@ const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 // Language mappings for YouTube query
 const LANGUAGE_MAP = {
   en: "English",
+  es: "Español", // Spanish
+  hi: "हिंदी", // Hindi
+  ko: "한국어", // Korean
+  ja: "日本語", // Japanese
+  zh: "简体中文", // Simplified Chinese
   de: "Deutsch", // German
   fr: "Français", // French
   it: "Italiano", // Italian
   pt: "Português", // Portuguese
-  es: "Español", // Spanish
-  hi: "हिंदी", // Hindi
 };
 
 // Utility to convert a mood to snake_case

@@ -59,7 +59,8 @@ export async function getStaticPaths() {
     params: {
       mood: slugify(mood.name, {
         lower: true,
-        remove: /[^\w\s\-\u0900-\u097Föäüß]/g, // Handle special characters for Hindi and German
+        remove:
+          /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g, // Handle special characters for Hindi and German
       }),
     },
   }));
@@ -134,18 +135,25 @@ const MoodPage = ({ videos, totalCount }) => {
       // Construct the new URL with the clean mood
       const newUrl = `/${slugify(cleanMood, {
         lower: true, // Convert to lowercase
-        remove: /[^\w\s\-\u0900-\u097Föäüß]/g, // Keep Hindi characters and German umlauts
-        strict: false, // Allow non-ASCII characters (Hindi and German)
+        remove:
+          /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g, // Keep Hindi, German, Chinese, Japanese, and Korean characters
+        strict: false, // Allow non-ASCII characters
       })}`;
 
       // Check if it's Hindi language and if the URL hasn't been replaced yet
-      if (router.locale === "hi" && !hasReplacedUrlRef.current) {
-        // Replace URL only once for Hindi
+      if (
+        (router.locale === "hi" ||
+          router.locale === "ja" ||
+          router.locale === "ko" ||
+          router.locale === "zh") &&
+        !hasReplacedUrlRef.current
+      ) {
+        // Replace URL only once for Hindi, Japanese, Korean, and Chinese
         if (router.asPath !== newUrl) {
           router.replace(newUrl);
           hasReplacedUrlRef.current = true; // Mark as replaced
         }
-      } else if (router.locale !== "hi") {
+      } else if (!["hi", "ja", "ko", "zh"].includes(router.locale)) {
         // For other languages, replace the URL normally
         if (router.asPath !== newUrl) {
           router.replace(newUrl);
@@ -262,7 +270,8 @@ const MoodPage = ({ videos, totalCount }) => {
             router.locale === "en" ? "" : `/${router.locale}`
           }/${slugify(mood, {
             lower: true,
-            remove: /[^\w\s\-\u0900-\u097Föäüß]/g,
+            remove:
+              /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
           })}`}
         />
         <link
@@ -271,7 +280,8 @@ const MoodPage = ({ videos, totalCount }) => {
             router.locale === "en" ? "" : `/${router.locale}`
           }/${slugify(mood, {
             lower: true,
-            remove: /[^\w\s\-\u0900-\u097Föäüß]/g,
+            remove:
+              /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
           })}`}
           hreflang={router.locale}
         />
