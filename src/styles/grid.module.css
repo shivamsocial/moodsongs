@@ -71,17 +71,6 @@
   animation: bounce 2s infinite; /* Bounce animation */
 }
 
-/* Keyframes for the bounce animation */
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0); /* Start and end at original position */
-  }
-  50% {
-    transform: translateY(-12px); /* Move up */
-  }
-}
-
 .ptext {
   margin-top: 1rem;
   font-size: 1.2rem; /* Using rem for consistency */
@@ -149,6 +138,16 @@
     grid-column-gap: 3rem; /* Increase spacing for larger screens */
     grid-row-gap: 2rem;
     padding: 3rem; /* Larger padding for bigger screens */
+  }
+  /* Keyframes for the bounce animation */
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0); /* Start and end at original position */
+    }
+    50% {
+      transform: translateY(-12px); /* Move up */
+    }
   }
 
   .moodBtn {
