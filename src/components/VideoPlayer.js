@@ -120,7 +120,7 @@ const VideoPlayer = ({
         <div className={styles.spinnerContainer}>
           <div className={styles.spinner}></div>
           <p className={styles.spinnerText}>
-            🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+            🤖 Mood Songs is curating the perfect playlist for your mood... 🚀🚀
           </p>
         </div>
       )}

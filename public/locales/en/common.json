@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 Best Mood Songs & Music Playlists for Every Mood | Happy, Romantic, Chill, EDM, Lofi & More - Mood Music for Every Vibe",
-  "description": "Discover the Top 20 mood songs and curated mood music playlists for every occasion and vibe! Whether you're seeking happy mood songs, chill EDM beats, relaxing tunes for rainy days, or motivational tracks to boost your spirits, our playlists cover it all.",
+  "title": "Mood Songs - Best Music for Every Mood & Genre",
+  "description": "Mood Songs is your music recommendation assistant that matches your mood and genre. With just one click, you’ll get 20 top songs for any mood or genre in 10 languages. You can also search for custom moods, genres, or your favorite artists.",
   "search_placeholder": "Search for your mood, genre, artist, playlist anything....",
   "button_submit": "Submit",
-  "ai_loading": "🤖 AI is curating the perfect playlist for your mood... 🚀🚀",
+  "ai_loading": "🤖 Mood Songs is curating the perfect playlist for your mood... 🚀🚀",
   "heading1": "Mood Songs & Mood Music - Discover the Best Music for Every Mood and Vibe",
-  "heading2": "🤖 AI Generated Mood Music Search 🤖",
+  "heading2": "🤖 Search for Custom Mood, Genre or Artist🤖",
   "happy": "Happy Music",
   "romantic": "Romantic Music",
   "relax_chill": "Relax Chill Music",
@@ -25,5 +25,13 @@
   "good": "Good Mood",
   "driving": "Driving Music",
   "travel": "Travel Music",
-  "sad": "Sad Music"
+  "sad": "Sad Music",
+  "home": "Home",
+  "about": "About Us",
+  "contact": "Contact",
+  "languageLabel": "Language",
+  "changeMood": "Change Mood",
+  "privacyPolicy": "Privacy Policy",
+  "termsAndConditions": "Terms and Conditions",
+  "disclaimer": "Disclaimer"
 }

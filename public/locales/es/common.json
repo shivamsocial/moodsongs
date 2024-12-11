@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 Mejores Canciones de Ánimo y Playlists para Cada Estado de Ánimo | Feliz, Romántico, Chill, EDM, Lofi y Más - Música de Ánimo para Cada Vibra",
-  "description": "Descubre las 20 mejores canciones de ánimo y playlists curadas para cada ocasión y estado de ánimo. Ya sea que busques canciones felices, beats EDM relajantes, melodías para días lluviosos o pistas motivacionales para levantar tu ánimo, nuestras playlists lo cubren todo.",
-  "search_placeholder": "Busca tu estado de ánimo, género, artista, playlist, ¡todo....!",
+  "title": "Mood Songs - La mejor música para cada estado de ánimo y género",
+  "description": "Mood Songs es tu asistente de recomendaciones musicales que se adapta a tu estado de ánimo y género. Con un solo clic, obtendrás 20 canciones destacadas para cualquier estado de ánimo o género en 10 idiomas. También puedes buscar estados de ánimo, géneros o artistas personalizados.",
+  "search_placeholder": "Busca tu estado de ánimo, género, artista, lista de reproducción... lo que sea...",
   "button_submit": "Enviar",
-  "ai_loading": "🤖 La IA está creando la playlist perfecta para tu estado de ánimo... 🚀🚀",
-  "heading1": "Canciones de Ánimo y Música de Ánimo - Descubre la Mejor Música para Cada Estado de Ánimo y Vibra",
-  "heading2": "🤖 Búsqueda de Música de Ánimo Generada por IA 🤖",
+  "ai_loading": "🤖 Mood Songs está creando la lista de reproducción perfecta para tu estado de ánimo... 🚀🚀",
+  "heading1": "Mood Songs & Mood Music - Descubre la mejor música para cada estado de ánimo y vibra",
+  "heading2": "🤖 Busca estado de ánimo, género o artista personalizado 🤖",
   "happy": "Canciones Felices",
   "romantic": "Canciones Románticas",
   "relax_chill": "Canciones Relax Chill",
@@ -25,5 +25,13 @@
   "good": "Canciones Buenas",
   "driving": "Canciones para Conducir",
   "travel": "Canciones de Viaje",
-  "sad": "Canciones Tristes"
+  "sad": "Canciones Tristes",
+  "home": "Inicio",
+  "about": "Sobre nosotros",
+  "contact": "Contacto",
+  "languageLabel": "Idioma",
+  "changeMood": "Cambiar estado de ánimo",
+  "privacyPolicy": "Política de privacidad",
+  "termsAndConditions": "Términos y condiciones",
+  "disclaimer": "Aviso legal"
 }

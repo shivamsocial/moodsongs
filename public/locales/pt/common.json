@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 Melhores Canções e Playlists de Humor para Cada Estado de Espírito | Felizes, Românticas, Relaxantes, EDM, Lofi e Mais - Música para Cada Vibe",
-  "description": "Descubra as Top 20 canções de humor e playlists de música curadas para cada ocasião e estado de espírito! Se você está procurando canções felizes, batidas EDM relaxantes, músicas para dias chuvosos ou faixas motivacionais para animar seu espírito, nossas playlists cobrem tudo.",
-  "search_placeholder": "Busque seu humor, gênero, artista, playlist, qualquer coisa....",
+  "title": "Mood Songs - A melhor música para qualquer estado de espírito e gênero",
+  "description": "Mood Songs é o seu assistente de recomendação musical que combina com seu estado de espírito e gênero. Com um clique, você obtém 20 das melhores músicas para qualquer estado de espírito ou gênero em 10 idiomas. Você também pode pesquisar por estados de espírito, gêneros ou artistas personalizados.",
+  "search_placeholder": "Pesquise seu estado de espírito, gênero, artista, playlist... o que quiser...",
   "button_submit": "Enviar",
-  "ai_loading": "🤖 A IA está criando a playlist perfeita para o seu humor... 🚀🚀",
-  "heading1": "Canções de Humor & Música de Humor - Descubra a Melhor Música para Cada Estado de Espírito e Vibe",
-  "heading2": "🤖 Pesquisa de Música de Humor Gerada pela IA 🤖",
+  "ai_loading": "🤖 Mood Songs está criando a playlist perfeita para seu estado de espírito... 🚀🚀",
+  "heading1": "Mood Songs & Mood Music - Descubra a melhor música para cada estado de espírito e vibração",
+  "heading2": "🤖 Pesquisar estado de espírito, gênero ou artista personalizado 🤖",
   "happy": "Canções Felizes",
   "romantic": "Canções Românticas",
   "relax_chill": "Canções Relaxantes e Chill",
@@ -25,5 +25,13 @@
   "good": "Boas Canções",
   "driving": "Canções para Dirigir",
   "travel": "Canções para Viajar",
-  "sad": "Canções Tristes"
+  "sad": "Canções Tristes",
+  "home": "Início",
+  "about": "Sobre nós",
+  "contact": "Contato",
+  "languageLabel": "Idioma",
+  "changeMood": "Mudar humor",
+  "privacyPolicy": "Política de Privacidade",
+  "termsAndConditions": "Termos e Condições",
+  "disclaimer": "Aviso Legal"
 }

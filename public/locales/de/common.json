@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 Beste Stimmungslieder & Musik-Playlists für jede Stimmung | Fröhlich, Romantisch, Entspannt, EDM, Lofi & Mehr - Musik für jede Stimmung",
-  "description": "Entdecke die Top 20 Stimmungslieder und kuratierte Musik-Playlists für jede Gelegenheit und Stimmung! Ob du fröhliche Stimmungslieder suchst, entspannte EDM-Beats, beruhigende Melodien für Regentage oder motivierende Tracks, um deine Stimmung zu heben – unsere Playlists decken alles ab.",
-  "search_placeholder": "Suche nach deiner Stimmung, Genre, Künstler, Playlist – alles....",
+  "title": "Mood Songs - Die beste Musik für jede Stimmung & Genre",
+  "description": "Mood Songs ist dein Musikempfehlungsassistent, der perfekt zu deiner Stimmung und deinem Genre passt. Mit einem Klick erhältst du 20 Top-Songs für jede Stimmung oder jedes Genre in 10 Sprachen. Du kannst auch nach individuellen Stimmungen, Genres oder deinen Lieblingskünstlern suchen.",
+  "search_placeholder": "Suche nach deiner Stimmung, Genre, Künstler, Playlist... alles...",
   "button_submit": "Absenden",
-  "ai_loading": "🤖 KI stellt gerade die perfekte Playlist für deine Stimmung zusammen... 🚀🚀",
-  "heading1": "Stimmungslieder & Musik – Entdecke die beste Musik für jede Stimmung und Stimmungslage",
-  "heading2": "🤖 KI-generierte Musiksuche für deine Stimmung 🤖",
+  "ai_loading": "🤖 Mood Songs stellt die perfekte Playlist für deine Stimmung zusammen... 🚀🚀",
+  "heading1": "Mood Songs & Mood Music - Entdecke die beste Musik für jede Stimmung und Atmosphäre",
+  "heading2": "🤖 Suche nach Stimmung, Genre oder Künstler angepasst 🤖",
   "happy": "Fröhliche Lieder",
   "romantic": "Romantische Lieder",
   "relax_chill": "Entspannte Chill Lieder",
@@ -25,5 +25,13 @@
   "good": "Gute Lieder",
   "driving": "Fahr Lieder",
   "travel": "Reiselieder",
-  "sad": "Traurige Lieder"
+  "sad": "Traurige Lieder",
+  "home": "Startseite",
+  "about": "Über uns",
+  "contact": "Kontakt",
+  "languageLabel": "Sprache",
+  "changeMood": "Stimmung ändern",
+  "privacyPolicy": "Datenschutzrichtlinie",
+  "termsAndConditions": "Geschäftsbedingungen",
+  "disclaimer": "Haftungsausschluss"
 }

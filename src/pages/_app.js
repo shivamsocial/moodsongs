@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
       <div className={styles1.spinnerContainer}>
         <div className={styles1.spinner}></div>
         <p className={styles1.spinnerText}>
-          🤖 AI is curating the perfect playlist for your mood... 🚀🚀
+          🤖 Mood Songs is curating the perfect playlist for your mood... 🚀🚀
         </p>
       </div>
     );

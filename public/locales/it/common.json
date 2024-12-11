@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 delle Migliori Canzoni e Playlist Mood per Ogni Stato d'Animo | Felici, Romantiche, Rilassanti, EDM, Lofi e Altro - Musica Mood per Ogni Vibe",
-  "description": "Scopri le Top 20 canzoni mood e playlist musicali curate per ogni occasione e stato d'animo! Che tu stia cercando canzoni felici, beat EDM rilassanti, brani per giornate piovose o tracce motivazionali per sollevare il tuo spirito, le nostre playlist coprono tutto.",
-  "search_placeholder": "Cerca il tuo stato d'animo, genere, artista, playlist, qualsiasi cosa....",
+  "title": "Mood Songs - La migliore musica per ogni stato d'animo e genere",
+  "description": "Mood Songs è il tuo assistente musicale che trova la musica perfetta per il tuo stato d'animo e genere. Con un clic, ricevi 20 canzoni top per ogni stato d'animo o genere in 10 lingue. Puoi anche cercare stati d'animo, generi o artisti personalizzati.",
+  "search_placeholder": "Cerca il tuo stato d'animo, genere, artista, playlist... qualsiasi cosa...",
   "button_submit": "Invia",
-  "ai_loading": "🤖 L'AI sta curando la playlist perfetta per il tuo stato d'animo... 🚀🚀",
-  "heading1": "Canzoni Mood e Musica Mood - Scopri la Migliore Musica per Ogni Stato d'Animo e Vibe",
-  "heading2": "🤖 Ricerca Musica Mood Generata dall'AI 🤖",
+  "ai_loading": "🤖 Mood Songs sta creando la playlist perfetta per il tuo stato d'animo... 🚀🚀",
+  "heading1": "Mood Songs & Mood Music - Scopri la migliore musica per ogni stato d'animo e vibe",
+  "heading2": "🤖 Cerca stato d'animo, genere o artista personalizzato 🤖",
   "happy": "Canzoni Felici",
   "romantic": "Canzoni Romantiche",
   "relax_chill": "Canzoni Rilassanti e Chill",
@@ -25,5 +25,13 @@
   "good": "Canzoni Belle",
   "driving": "Canzoni da Guida",
   "travel": "Canzoni da Viaggio",
-  "sad": "Canzoni Tristi"
+  "sad": "Canzoni Tristi",
+  "home": "Home",
+  "about": "Chi siamo",
+  "contact": "Contatto",
+  "languageLabel": "Lingua",
+  "changeMood": "Cambia umore",
+  "privacyPolicy": "Informativa sulla Privacy",
+  "termsAndConditions": "Termini e Condizioni",
+  "disclaimer": "Esclusione di responsabilità"
 }

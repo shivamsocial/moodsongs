@@ -1,11 +1,11 @@
 {
-  "title": "Top 20 des Meilleures Chansons et Playlists Mood pour Chaque Humeur | Heureuses, Romantiques, Relaxantes, EDM, Lofi & Plus - Musique Mood pour Chaque Ambiance",
-  "description": "Découvrez les 20 meilleures chansons mood et playlists musicales curatées pour chaque occasion et ambiance ! Que vous recherchiez des chansons joyeuses, des beats EDM relaxants, des morceaux apaisants pour les jours de pluie, ou des morceaux motivants pour rehausser votre humeur, nos playlists couvrent tout.",
-  "search_placeholder": "Recherchez votre humeur, genre, artiste, playlist, tout...",
+  "title": "Mood Songs - La meilleure musique pour chaque humeur et genre",
+  "description": "Mood Songs est votre assistant musical qui correspond à votre humeur et genre. En un clic, vous obtenez 20 chansons parmi les meilleures pour n'importe quelle humeur ou genre en 10 langues. Vous pouvez également rechercher des humeurs, genres ou artistes personnalisés.",
+  "search_placeholder": "Recherchez votre humeur, genre, artiste, playlist... tout ce que vous voulez...",
   "button_submit": "Soumettre",
-  "ai_loading": "🤖 L'IA est en train de créer la playlist parfaite pour votre humeur... 🚀🚀",
-  "heading1": "Chansons Mood & Musique Mood - Découvrez la Meilleure Musique pour Chaque Humeur et Ambiance",
-  "heading2": "🤖 Recherche de Musique Mood Générée par l'IA 🤖",
+  "ai_loading": "🤖 Mood Songs est en train de créer la playlist parfaite pour votre humeur... 🚀🚀",
+  "heading1": "Mood Songs & Mood Music - Découvrez la meilleure musique pour chaque humeur et ambiance",
+  "heading2": "🤖 Recherchez humeur, genre ou artiste personnalisé 🤖",
   "happy": "Chansons Joyeuses",
   "romantic": "Chansons Romantiques",
   "relax_chill": "Chansons Relaxantes et Chill",
@@ -25,5 +25,13 @@
   "good": "Bonnes Chansons",
   "driving": "Chansons pour Conduire",
   "travel": "Chansons de Voyage",
-  "sad": "Chansons Tristes"
+  "sad": "Chansons Tristes",
+  "home": "Accueil",
+  "about": "À propos",
+  "contact": "Contact",
+  "languageLabel": "Langue",
+  "changeMood": "Changer d'humeur",
+  "privacyPolicy": "Politique de confidentialité",
+  "termsAndConditions": "Conditions générales",
+  "disclaimer": "Avertissement"
 }

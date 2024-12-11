@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styles from "../styles/grid.module.css"; // Import the updated styles
 import Image from "next/image"; // Importing Image component from Next.js
 import { useRouter } from "next/router"; // Import the useRouter hook
+import { useTranslations } from "next-intl"; // Import useTranslations from next-intl
 import MoodDetails from "./MoodDetails"; // Import the MoodDetails component
 import Link from "next/link"; // Import Link component for static navigation
 
 const Navbar = ({ mood, moods }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { locale, asPath, pathname, query } = useRouter(); // Get router properties
+  const t = useTranslations(); // Load translations for the 'Navbar' namespace
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -45,15 +47,15 @@ const Navbar = ({ mood, moods }) => {
       {isMoodPage && mood && <MoodDetails mood={mood} moods={moods} />}
       {/* Centered Navigation Links on larger screens, right-aligned on mobile */}
       <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
+        <li>{t("home")}</li>
+        <li>{t("about")}</li>
+        <li>{t("contact")}</li>
 
         {/* Only show language switcher if it's not a mood page */}
         {!isMoodPage && (
           <li className={styles.languageSwitcher}>
             <div className={styles.languageWrapper}>
-              <span>Language:</span>
+              <span>{t("languageLabel")}:</span>
               <select
                 value={locale}
                 className={styles.languageSelect}
