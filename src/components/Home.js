@@ -24,7 +24,7 @@ const Home = () => {
           <strong className={styles.strong}>{t("domain")}</strong>{" "}
           {t("hero_paragraph_2")}
         </p>
-        <Image
+        <img
           src="/images/land1.jpg"
           alt="Illustration of music's impact on the brain"
           width={900}
@@ -99,7 +99,7 @@ const Home = () => {
         <h3 className={styles.whyMoodSongsHeading}>
           {t("why_moodsongs_heading")}
         </h3>
-        <Image
+        <img
           src="/images/land.jpg"
           alt="Illustration of music's impact on the brain"
           width={1000}

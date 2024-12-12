@@ -11,7 +11,7 @@ const AboutPage = () => {
         alignItems: "flex-start",
         justifyContent: "space-between",
         padding: "40px",
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "inherit",
         flexWrap: "wrap", // Allows wrapping on smaller screens
       }}
     >
@@ -24,7 +24,7 @@ const AboutPage = () => {
           minWidth: "300px", // Prevents the content from becoming too narrow
         }}
       >
-        <h1 style={{ fontSize: "36px", color: "#333", fontWeight: "bold" }}>
+        <h1 style={{ fontSize: "36px", color: "white", fontWeight: "bold" }}>
           Welcome to Mood Songs
         </h1>
 
@@ -94,7 +94,7 @@ const AboutPage = () => {
             fontSize: "20px",
             fontStyle: "italic",
             margin: "20px 0",
-            color: "#555",
+            color: "yellow",
             borderLeft: "4px solid #4CAF50",
             paddingLeft: "20px",
           }}
@@ -107,7 +107,7 @@ const AboutPage = () => {
             fontSize: "20px",
             fontStyle: "italic",
             margin: "20px 0",
-            color: "#555",
+            color: "yellow",
             borderLeft: "4px solid #4CAF50",
             paddingLeft: "20px",
           }}
@@ -130,7 +130,7 @@ const AboutPage = () => {
           minWidth: "250px", // Ensures sidebar doesn't collapse too much on mobile
         }}
       >
-        <Image
+        <img
           src="/images/shivam.jpg"
           alt="Shivam Upadhyay Photo"
           width={200}

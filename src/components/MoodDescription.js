@@ -115,7 +115,7 @@ const MoodDescription = () => {
       >
         {t("explore_our_moods")}
       </h1>
-      <Image
+      <img
         src="/images/land3.jpg"
         alt="Illustration of music's impact on the brain"
         width={1000}

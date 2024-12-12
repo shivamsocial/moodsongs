@@ -16,7 +16,7 @@ const Contact = () => {
         minWidth: "250px", // Ensures sidebar doesn't collapse too much on mobile
       }}
     >
-      <Image
+      <img
         src="/images/shivam.jpg"
         alt="Shivam Upadhyay Photo"
         width={200}
