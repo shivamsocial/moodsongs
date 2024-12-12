@@ -86,7 +86,6 @@ export async function getStaticPaths() {
       paths.push(path);
 
       // Log each generated path
-      console.log("Generated Path:", path);
     });
   });
 

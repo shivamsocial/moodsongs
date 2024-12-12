@@ -87,7 +87,6 @@
 
 .scienceImage {
   flex: 1;
-  background: url("/path-to-image.jpg") no-repeat center center;
   background-size: cover;
   height: 250px;
 }
