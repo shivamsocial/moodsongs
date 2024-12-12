@@ -9,7 +9,8 @@ import styles from "../styles/videoPage.module.css";
 import { useRef } from "react";
 import slugify from "slugify"; // Import slugify
 import Image from "next/image";
-
+import SimplifiedMoodGrid from "../components/SimplifiedMoodGrid";
+import MoodDescription from "../components/MoodDescription";
 // Modify slugify to allow German umlauts and Hindi characters
 
 // Constants
@@ -55,32 +56,66 @@ const fetchUserLocation = async () => {
 
 // Next.js functions for static generation
 export async function getStaticPaths() {
-  const paths = moods.map((mood) => ({
-    params: {
-      mood: slugify(mood.name, {
+  const languages = [
+    "en",
+    "de",
+    "fr",
+    "es",
+    "it",
+    "pt",
+    "zh",
+    "ja",
+    "ko",
+    "hi",
+  ];
+  const paths = [];
+
+  moods.forEach((mood) => {
+    languages.forEach((language) => {
+      const moodSlug = slugify(mood.name, {
         lower: true,
         remove:
-          /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g, // Handle special characters for Hindi and German
-      }),
-    },
-  }));
+          /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
+      });
+      const path = {
+        params: {
+          mood: `${moodSlug}-songs`,
+        },
+        locale: language, // Generate for all languages
+      };
+      paths.push(path);
 
-  // Use fallback: 'blocking' to ensure the page is pre-rendered on first request
-  return { paths, fallback: "blocking" };
+      // Log each generated path
+      console.log("Generated Path:", path);
+    });
+  });
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
 }
 
-export async function getStaticProps({ params }) {
-  const { mood } = params;
-  // Remove the "-songs" suffix from the URL parameter
-  const moodName = mood.replace("-songs", "");
+export async function getStaticProps({ params, locale }) {
+  const { mood } = params || {}; // Safe destructuring
+  if (!mood) {
+    return {
+      props: {
+        videos: [],
+        totalCount: 0,
+      },
+    };
+  }
 
+  const moodName = mood.replace("-songs", ""); // Clean the mood name
   const timestamp = new Date().getTime();
 
   try {
+    // Make your API request for videos based on mood and language
     const { data } = await axios.get(`${API_URL}/api/mood`, {
       params: {
-        mood: moodName, // Use the original mood name here
-        language: router.locale,
+        mood: moodName,
+        language: locale, // Pass the locale directly to get the right language
         timestamp,
       },
     });
@@ -90,7 +125,7 @@ export async function getStaticProps({ params }) {
         videos: data.videos || [],
         totalCount: data.totalCount || 0,
       },
-      revalidate: 3600,
+      revalidate: 3600, // Revalidate every hour
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -343,6 +378,8 @@ const MoodPage = ({ videos, totalCount }) => {
           </div>
         </div>
       </div>
+      <SimplifiedMoodGrid />
+      <MoodDescription />
       <Footer />
     </>
   );

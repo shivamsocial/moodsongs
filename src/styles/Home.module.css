@@ -1,0 +1,319 @@
+/* Home Page */
+.home-page {
+  margin: 0;
+  padding: 0;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the left */
+  text-align: left; /* Ensure text aligns to the left */
+  padding: 50px;
+}
+
+.heroHeading {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: yellowgreen;
+}
+
+.heroText {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.ctaButton {
+  color: #fff;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.ctaButton:hover {
+  background-color: #4a90e2;
+}
+
+.science {
+  padding: 50px;
+  text-align: left;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.scienceHeading {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.scienceContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.scienceText {
+  text-align: left;
+}
+
+.scienceParagraph {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.em {
+  font-style: italic;
+}
+
+.scienceList {
+  list-style: none;
+  padding: 0;
+}
+
+.scienceListItem {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.scienceImage {
+  flex: 1;
+  background: url("/path-to-image.jpg") no-repeat center center;
+  background-size: cover;
+  height: 250px;
+}
+
+.playlist-challenge {
+  padding: 50px;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.playlistChallengeHeading {
+  font-size: 2.2rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.playlistChallengeText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.playlistChallengeList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.playlistChallengeListItem {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.why-moodsongs {
+  padding: 50px;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.whyMoodSongsHeading {
+  font-size: 2.2rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.whyMoodSongsList {
+  list-style: none;
+  padding: 0;
+}
+
+.whyMoodSongsListItem {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.mood-songs-emotional-wellbeing {
+  padding: 50px;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.moodSongsEmotionalWellbeingHeading {
+  font-size: 2.2rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.moodSongsEmotionalWellbeingText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.moodSongsEmotionalWellbeingList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.moodSongsEmotionalWellbeingListItem {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.researchLinksHeading {
+  font-size: 1.8rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.researchLinksList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.researchLinksListItem {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.researchLink {
+  color: orange;
+  text-decoration: none;
+}
+
+.researchLink:hover {
+  text-decoration: underline;
+}
+
+.faq {
+  padding: 50px;
+  background-color: inherit; /* Inherit background from parent */
+}
+
+.faqHeading {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: yellowgreen;
+}
+
+.faqList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.faqItem {
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.faqItem::before {
+  content: "+"; /* Add "+" sign before the FAQ item */
+  margin-right: 10px;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.active {
+  color: #fff;
+}
+
+.faqAnswer {
+  display: none;
+  font-size: 1rem;
+  line-height: 1.8;
+  padding-left: 20px;
+  margin-bottom: 1rem;
+}
+
+.show {
+  display: block;
+}
+
+.show + .faqItem::before {
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .scienceContent {
+    flex-direction: column;
+  }
+
+  .scienceImage {
+    height: 200px;
+  }
+
+  .faqItem {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .faqAnswer {
+    font-size: 0.95rem;
+  }
+
+  .heroHeading {
+    font-size: 2rem;
+    color: yellowgreen;
+  }
+
+  .heroText {
+    font-size: 1rem;
+  }
+
+  .ctaButton {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .playlistChallengeText {
+    font-size: 1rem;
+  }
+
+  .playlistChallengeList {
+    text-align: left;
+  }
+
+  .whyMoodSongsListItem,
+  .moodSongsEmotionalWellbeingListItem {
+    font-size: 1rem;
+  }
+
+  .moodSongsEmotionalWellbeingText {
+    font-size: 1rem;
+  }
+
+  .researchLinksListItem {
+    font-size: 1rem;
+  }
+
+  .researchLink {
+    font-size: 1rem;
+  }
+}

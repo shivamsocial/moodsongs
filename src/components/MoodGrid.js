@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/grid.module.css";
 import styles1 from "../styles/videoPage.module.css";
+import Home from "../components/Home";
 
 const MoodGrid = () => {
   const router = useRouter(); // Ensure this is declared at the top
@@ -289,6 +290,8 @@ const MoodGrid = () => {
           </div>
         </div>
       </div>
+      <Home />
+
       <Footer />
     </>
   );

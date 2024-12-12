@@ -1,6 +1,13 @@
 import React from "react";
 import styles from "../styles/grid.module.css"; // Import updated styles
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa"; // Social media icons
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaTelegram,
+} from "react-icons/fa"; // Social media icons
+import Link from "next/link"; // Importing Link component
 
 const Footer = () => {
   return (
@@ -12,30 +19,31 @@ const Footer = () => {
       </div>
 
       <div className={styles.socialLinks}>
-        <a
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaFacebook aria-label="Facebook" />
-        </a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-          <FaTwitter aria-label="Twitter" />
-        </a>
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaInstagram aria-label="Instagram" />
-        </a>
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaLinkedin aria-label="LinkedIn" />
-        </a>
+        <Link href="https://x.com/shivamupdate" passHref>
+          <div>
+            <FaTwitter aria-label="Twitter" />
+          </div>
+        </Link>
+        <Link href="https://www.linkedin.com/in/shivupa/" passHref>
+          <div>
+            <FaLinkedin aria-label="LinkedIn" />
+          </div>
+        </Link>
+        <div>
+          <Link href="https://t.me/moodsongsmusic" passHref>
+            <FaTelegram aria-label="Telegram" />
+          </Link>
+        </div>
+      </div>
+
+      <div className={styles.legalLinks}>
+        <Link href="/privacy" className={styles.link}>
+          Privacy Policy
+        </Link>
+        <span className={styles.separator}>|</span>
+        <Link href="/terms-and-conditions" className={styles.link}>
+          Terms and Conditions
+        </Link>
       </div>
     </footer>
   );

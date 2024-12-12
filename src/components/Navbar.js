@@ -47,10 +47,15 @@ const Navbar = ({ mood, moods }) => {
       {isMoodPage && mood && <MoodDetails mood={mood} moods={moods} />}
       {/* Centered Navigation Links on larger screens, right-aligned on mobile */}
       <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
-        <li>{t("home")}</li>
-        <li>{t("about")}</li>
-        <li>{t("contact")}</li>
-
+        <li>
+          <Link href="/">{t("home")}</Link>
+        </li>
+        <li>
+          <Link href="/about">{t("about")}</Link>
+        </li>
+        <li>
+          <Link href="/contact">{t("contact")}</Link>
+        </li>
         {/* Only show language switcher if it's not a mood page */}
         {!isMoodPage && (
           <li className={styles.languageSwitcher}>

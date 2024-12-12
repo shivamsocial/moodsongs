@@ -12,3 +12,23 @@ body {
 body {
   font-family: "Nunito", sans-serif;
 }
+
+body {
+  /* Apply linear gradient and background image */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url("/images/background.jpg"); /* Make sure this path is correct */
+
+  height: 100%; /* Ensure it covers the viewport height */
+  width: 100%;
+  background-size: cover; /* Ensures it covers the entire page */
+  background-position: center; /* Centers the background */
+  background-repeat: no-repeat; /* Prevents repeating of the image */
+  background-attachment: fixed; /* Parallax effect when scrolling */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white; /* Text color for all content inside body */
+  font-family: "Nunito", sans-serif; /* Global font-family */
+}
