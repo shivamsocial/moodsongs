@@ -54,7 +54,7 @@ const MoodDescription = () => {
           src="/images/land3.jpg"
           alt="Illustration of music's impact on the brain"
           style={{
-            width: "100%", // Ensure it is responsive and takes full width
+            width: "80%", // Ensure it is responsive and takes full width
             height: "auto", // Maintain aspect ratio
             objectFit: "cover", // This ensures the image covers the area without stretching
           }}
