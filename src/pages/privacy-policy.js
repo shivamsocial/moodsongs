@@ -1,4 +1,4 @@
-import PrivacyPolicy from "../../src/components/Privacy";
+import PrivacyPolicy from "../components/Privacy";
 
 const Privacy = () => <PrivacyPolicy />;
 
