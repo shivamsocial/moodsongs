@@ -15,27 +15,47 @@ import MoodDescription from "../components/MoodDescription";
 
 // Constants
 const moods = [
-  { emoji: "😀", name: "Happy" },
-  { emoji: "💘", name: "Romantic" },
-  { emoji: "⚡", name: "EDM" },
-  { emoji: "🤘", name: "Hip-Hop" },
-  { emoji: "🌟", name: "Motivational" },
-  { emoji: "💪", name: "Rap" },
-  { emoji: "🎸", name: "Rock" },
-  { emoji: "🥳", name: "Party" },
-  { emoji: "🎷", name: "Jazz" },
-  { emoji: "😊", name: "Acoustic" },
-  { emoji: "🙏", name: "Folk" },
-  { emoji: "🕉️✝️", name: "Devotional" },
-  { emoji: "🧘‍♂️", name: "Meditation" },
-  { emoji: "👶", name: "Kids" },
-  { emoji: "😌", name: "Relax Chill" },
-  { emoji: "📻", name: "Lofi" },
-  { emoji: "👍", name: "Good" },
-  { emoji: "🚗", name: "Driving" },
-  { emoji: "✈️", name: "Travel" },
-  { emoji: "😢", name: "Sad" },
+  { emoji: "😀", name: "happy" },
+  { emoji: "👍", name: "good" },
+  { emoji: "💘", name: "romantic" },
+  { emoji: "😢", name: "sad" },
+  { emoji: "😌", name: "relax_chill" },
+  { emoji: "📻", name: "lofi" },
+  { emoji: "🥳", name: "party" },
+  { emoji: "✈️", name: "travel" },
+  { emoji: "🚗", name: "driving" },
+  { emoji: "👶", name: "kids" },
+  { emoji: "🌟", name: "motivational" },
+  { emoji: "🎸", name: "rock" },
+  { emoji: "💪", name: "rap" },
+  { emoji: "⚡", name: "edm" },
+  { emoji: "🤘", name: "hip_hop" },
+  { emoji: "🙏", name: "folk" },
+  { emoji: "🕉️✝️", name: "devotional" },
+  { emoji: "😊", name: "acoustic" },
+  { emoji: "🎷", name: "jazz" },
+  { emoji: "🧘‍♂️", name: "meditation" },
 ];
+
+const fs = require("fs");
+const path = require("path");
+
+const loadTranslations = (locale) => {
+  const filePath = path.join(
+    process.cwd(),
+    "public",
+    "locales",
+    locale,
+    "common.json"
+  );
+  try {
+    const translations = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(translations);
+  } catch (error) {
+    console.error(`Error loading translations for ${locale}:`, error);
+    return {};
+  }
+};
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 const DEFAULT_LANGUAGE = "en";
@@ -68,26 +88,35 @@ export async function getStaticPaths() {
     "ko",
     "hi",
   ];
+
   const paths = [];
 
-  moods.forEach((mood) => {
-    languages.forEach((language) => {
-      const moodSlug = slugify(mood.name, {
+  // Loop through each language and generate paths
+  for (const language of languages) {
+    const translations = loadTranslations(language);
+    const translatedMoods = translations; // Default to empty object if no translations are found
+
+    moods.forEach((mood) => {
+      // Translate the mood name or use the default
+      const translatedMood = translations[mood.name] || mood.name;
+
+      // Generate the slugified path
+      const moodSlug = slugify(translatedMood, {
         lower: true,
         remove:
           /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
       });
+
+      // Create the path for this mood and locale
       const path = {
         params: {
           mood: `${moodSlug}-songs`,
         },
-        locale: language, // Generate for all languages
+        locale: language, // Specify locale for the generated path
       };
       paths.push(path);
-
-      // Log each generated path
     });
-  });
+  }
 
   return {
     paths,
