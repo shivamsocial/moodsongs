@@ -37,7 +37,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.legalLinks}>
-        <Link href="/privacy" className={styles.link}>
+        <Link href="/privacy-policy" className={styles.link}>
           Privacy Policy
         </Link>
         <span className={styles.separator}>|</span>
