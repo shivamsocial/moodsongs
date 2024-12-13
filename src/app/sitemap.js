@@ -32,6 +32,14 @@ export default function sitemap() {
     { emoji: "🧘‍♂️", key: "meditation" },
   ];
 
+  // Static pages to include in the sitemap
+  const staticPages = [
+    "about",
+    "privacy-policy",
+    "terms-and-conditions",
+    "contact",
+  ];
+
   const urls = [];
 
   locales.forEach((locale) => {
@@ -43,6 +51,7 @@ export default function sitemap() {
       fs.readFileSync(translationFilePath, "utf-8")
     );
 
+    // Add mood pages
     moods.forEach((mood) => {
       const translatedName = translations[mood.key] || mood.key; // Fallback to key if no translation exists
       const moodSlug = translatedName.toLowerCase().replace(/\s+/g, "-"); // Create slug-friendly URL
@@ -61,6 +70,16 @@ export default function sitemap() {
       lastModified: new Date().toISOString(),
       changeFrequency: "daily",
       priority: 1.0,
+    });
+
+    // Add static pages for each locale
+    staticPages.forEach((page) => {
+      urls.push({
+        url: `https://www.moodsongs.net/${locale}/${page}`, // Static page route
+        lastModified: new Date().toISOString(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
     });
   });
 
