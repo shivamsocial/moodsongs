@@ -27,9 +27,12 @@ const Home = () => {
         <img
           src="/images/land1.jpg"
           alt="Illustration of music's impact on the brain"
-          width={900}
-          height={400}
-          style={{ display: "block", margin: "0 auto" }}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            margin: "0 auto",
+          }}
         />
       </section>
 
@@ -102,9 +105,12 @@ const Home = () => {
         <img
           src="/images/land.jpg"
           alt="Illustration of music's impact on the brain"
-          width={1000}
-          height={450}
-          style={{ display: "block", margin: "0 auto" }}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            margin: "0 auto",
+          }}
         />
         <ul className={styles.whyMoodSongsList}>
           <li className={styles.whyMoodSongsListItem}>

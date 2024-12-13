@@ -76,61 +76,62 @@ const SimplifiedMoodGrid = () => {
   );
 
   return (
-    <div>
-      <h2 className={styles.heading2}>{t("heading2")}</h2>
-
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder={t("search_placeholder")}
-          value={searchQuery}
-          onChange={handleSearchChange}
-          onKeyDown={handleKeyDown}
-          className={styles.searchInput}
-        />
-      </div>
-
-      <div className={styles.gridContainer}>
-        {filteredMoods.length > 0 ? (
-          filteredMoods.map((mood, index) => {
-            const moodPath = `/${mood.name.toLowerCase().replace(/\s+/g, "-")}`;
-            const localePath =
-              router.locale !== "en"
-                ? `/${router.locale}${moodPath}`
-                : moodPath;
-
-            return (
-              <a
-                key={index}
-                href={localePath}
-                className={styles.moodBtn}
-                aria-label={`Explore ${mood.name} mood songs`}
-                disabled={loading}
-              >
-                <div className={styles.text}>{mood.emoji}</div>
-                <p className={styles.ptext}>{mood.name}</p>
-              </a>
-            );
-          })
-        ) : (
-          <div className={styles.buttonWrapper}>
-            <button
-              onClick={handleInputSubmit}
-              className={styles.searchButton}
-              disabled={loading || !searchQuery.trim()}
-            >
-              {t("button_submit")}
-            </button>
-          </div>
-        )}
-      </div>
-
-      {loading && (
-        <div className={styles.spinnerContainer}>
-          <div className={styles.spinner}></div>
-          <p className={styles.spinnerText}>{t("ai_loading")}</p>
+    <div className={styles.background}>
+      <div className="flex justify-center items-center min-h-screen bg-black bg-opacity-40">
+        <h2 className={styles.heading2}>{t("heading2")}</h2>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder={t("search_placeholder")}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+            className={styles.searchInput}
+          />
         </div>
-      )}
+        <div className={styles.gridContainer}>
+          {filteredMoods.length > 0 ? (
+            filteredMoods.map((mood, index) => {
+              const moodPath = `/${mood.name
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`;
+              const localePath =
+                router.locale !== "en"
+                  ? `/${router.locale}${moodPath}`
+                  : moodPath;
+
+              return (
+                <a
+                  key={index}
+                  href={localePath}
+                  className={styles.moodBtn}
+                  aria-label={`Explore ${mood.name} mood songs`}
+                  disabled={loading}
+                >
+                  <div className={styles.text}>{mood.emoji}</div>
+                  <p className={styles.ptext}>{mood.name}</p>
+                </a>
+              );
+            })
+          ) : (
+            <div className={styles.buttonWrapper}>
+              <button
+                onClick={handleInputSubmit}
+                className={styles.searchButton}
+                disabled={loading || !searchQuery.trim()}
+              >
+                {t("button_submit")}
+              </button>
+            </div>
+          )}
+        </div>
+        {loading && (
+          <div className={styles.spinnerContainer}>
+            <div className={styles.spinner}></div>
+            <p className={styles.spinnerText}>{t("ai_loading")}</p>
+          </div>
+        )}{" "}
+      </div>
     </div>
   );
 };

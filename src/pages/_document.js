@@ -74,11 +74,11 @@ class MyDocument extends Document {
           <meta name="twitter:card" content="summary_large_image" />
           <meta
             name="twitter:title"
-            content="MoodSongs - Discover Music for Every Mood"
+            content="Mood Songs - Discover Music for Every Mood"
           />
           <meta
             name="twitter:description"
-            content="Listen to music that fits your mood perfectly. Choose from a variety of moods and enjoy the best music selections on MoodSongs."
+            content="Listen to music that fits your mood perfectly. Choose from a variety of moods and enjoy the best music selections on Mood Songs."
           />
           <meta
             name="twitter:image"

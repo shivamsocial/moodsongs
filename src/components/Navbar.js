@@ -18,6 +18,9 @@ const Navbar = ({ mood, moods }) => {
   // Check if the current page is the mood page by checking if the 'mood' query exists
   const isMoodPage = query.mood !== undefined; // Only on pages where 'mood' is part of the URL
 
+  // Check if the current page is the homepage
+  const isHomepage = pathname === "/";
+
   // Function to construct the language switch URLs
   const getLocalizedUrl = (newLocale) => {
     const basePath = pathname.replace(`/${locale}`, "") || "/";
@@ -29,7 +32,7 @@ const Navbar = ({ mood, moods }) => {
       <div className={styles.logo}>
         <Image
           src="/images/headphones.png"
-          alt="MoodSongs Logo"
+          alt="Mood Songs Logo"
           width={50} // Adjust logo size for smaller screens
           height={50}
         />
@@ -56,8 +59,8 @@ const Navbar = ({ mood, moods }) => {
         <li>
           <Link href="/contact">{t("contact")}</Link>
         </li>
-        {/* Only show language switcher if it's not a mood page */}
-        {!isMoodPage && (
+        {/* Only show language switcher if it's the homepage */}
+        {isHomepage && (
           <li className={styles.languageSwitcher}>
             <div className={styles.languageWrapper}>
               <span>{t("languageLabel")}:</span>

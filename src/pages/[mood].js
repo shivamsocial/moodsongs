@@ -260,125 +260,127 @@ const MoodPage = ({ videos, totalCount }) => {
 
   return (
     <>
-      <Head>
-        <title>{`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}</title>
-        <meta
-          name="description"
-          content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
-        />
-        <meta property="og:type" content="video.other" />
-        <meta
-          property="og:title"
-          content={`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}
-        />
-        <meta
-          property="og:description"
-          content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
-        />
-        <meta
-          property="og:image"
-          content={
-            currentVideo?.snippet?.thumbnails?.high?.url ||
-            "/images/default-thumbnail.jpg"
-          }
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content={`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}
-        />
-        <meta
-          name="twitter:description"
-          content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
-        />
-        <meta
-          name="twitter:image"
-          content={
-            currentVideo?.snippet?.thumbnails?.high?.url ||
-            "/images/default-thumbnail.jpg"
-          }
-        />
-        <link
-          rel="canonical"
-          href={`https://www.moodsongs.net${
-            router.locale === "en" ? "" : `/${router.locale}`
-          }/${slugify(mood, {
-            lower: true,
-            remove:
-              /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
-          })}`}
-        />
-        <link
-          rel="alternate"
-          href={`https://www.moodsongs.net${
-            router.locale === "en" ? "" : `/${router.locale}`
-          }/${slugify(mood, {
-            lower: true,
-            remove:
-              /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
-          })}`}
-          hreflang={router.locale}
-        />
-      </Head>
-      <Navbar mood={mood} moods={moods} />
-      <div className={styles.background}>
-        <div className={styles.pageContainer}>
-          <div className={styles.glassEffect}>
-            {loading ? (
-              <div className={styles.spinnerContainer}>
-                <div className={styles.spinner}></div>
-                <p className={styles.spinnerText}>
-                  🤖 Mood Songs is curating the perfect playlist for your
-                  mood... 🚀🚀
-                </p>
-              </div>
-            ) : error ? (
-              <p className={styles.errorText}>{error}</p>
-            ) : currentVideo ? (
-              <VideoPlayer
-                video={currentVideo}
-                currentVideoIndex={currentVideoIndex}
-                goToNextVideo={goToNextVideo}
-                goToPreviousVideo={goToPreviousVideo}
-                videoListLength={videoList.length}
-                totalCount={totalCount}
-                loading={loading}
-                error={error}
-              />
-            ) : null}
-
-            <div className={styles.queueSection}>
-              <h3>Up Next</h3>
-              {queueVideos.map((video, index) => (
-                <div
-                  key={index}
-                  className={`${styles.queueItem} ${
-                    index === currentVideoIndex ? styles.active : ""
-                  }`}
-                  onClick={() => selectVideoFromQueue(index)}
-                >
-                  <Image
-                    src={
-                      video.snippet?.thumbnails?.default?.url ||
-                      "/images/default-thumbnail.jpg"
-                    }
-                    alt={video.snippet?.title || "Default Thumbnail"}
-                    width={200} // Set appropriate width for your image
-                    height={100} // Set appropriate height for your image
-                    className={styles.thumbnailQueue}
-                  />
-                  <div className={styles.videoInfo}>
-                    <h4>{video.snippet?.title}</h4>
-                    <p>{video.snippet?.channelTitle}</p>
-                  </div>
+      <>
+        <Head>
+          <title>{`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}</title>
+          <meta
+            name="description"
+            content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
+          />
+          <meta property="og:type" content="video.other" />
+          <meta
+            property="og:title"
+            content={`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}
+          />
+          <meta
+            property="og:description"
+            content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
+          />
+          <meta
+            property="og:image"
+            content={
+              currentVideo?.snippet?.thumbnails?.high?.url ||
+              "/images/default-thumbnail.jpg"
+            }
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content={`Top ${mood} Mood Songs & Music Playlist vibes on Mood Songs`}
+          />
+          <meta
+            name="twitter:description"
+            content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
+          />
+          <meta
+            name="twitter:image"
+            content={
+              currentVideo?.snippet?.thumbnails?.high?.url ||
+              "/images/default-thumbnail.jpg"
+            }
+          />
+          <link
+            rel="canonical"
+            href={`https://www.moodsongs.net${
+              router.locale === "en" ? "" : `/${router.locale}`
+            }/${slugify(mood, {
+              lower: true,
+              remove:
+                /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
+            })}`}
+          />
+          <link
+            rel="alternate"
+            href={`https://www.moodsongs.net${
+              router.locale === "en" ? "" : `/${router.locale}`
+            }/${slugify(mood, {
+              lower: true,
+              remove:
+                /[^\w\s\-\u0900-\u097Föäüß\u4e00-\u9fff\uac00-\ud7af\u3040-\u309f\u30a0-\u30ff]/g,
+            })}`}
+            hreflang={router.locale}
+          />
+        </Head>
+        <Navbar mood={mood} moods={moods} />
+        <div className={styles.background}>
+          <div className={styles.pageContainer}>
+            <div className={styles.glassEffect}>
+              {loading ? (
+                <div className={styles.spinnerContainer}>
+                  <div className={styles.spinner}></div>
+                  <p className={styles.spinnerText}>
+                    🤖 Mood Songs is curating the perfect playlist for your
+                    mood... 🚀🚀
+                  </p>
                 </div>
-              ))}
+              ) : error ? (
+                <p className={styles.errorText}>{error}</p>
+              ) : currentVideo ? (
+                <VideoPlayer
+                  video={currentVideo}
+                  currentVideoIndex={currentVideoIndex}
+                  goToNextVideo={goToNextVideo}
+                  goToPreviousVideo={goToPreviousVideo}
+                  videoListLength={videoList.length}
+                  totalCount={totalCount}
+                  loading={loading}
+                  error={error}
+                />
+              ) : null}
+
+              <div className={styles.queueSection}>
+                <h3>Up Next</h3>
+                {queueVideos.map((video, index) => (
+                  <div
+                    key={index}
+                    className={`${styles.queueItem} ${
+                      index === currentVideoIndex ? styles.active : ""
+                    }`}
+                    onClick={() => selectVideoFromQueue(index)}
+                  >
+                    <Image
+                      src={
+                        video.snippet?.thumbnails?.default?.url ||
+                        "/images/default-thumbnail.jpg"
+                      }
+                      alt={video.snippet?.title || "Default Thumbnail"}
+                      width={200} // Set appropriate width for your image
+                      height={100} // Set appropriate height for your image
+                      className={styles.thumbnailQueue}
+                    />
+                    <div className={styles.videoInfo}>
+                      <h4>{video.snippet?.title}</h4>
+                      <p>{video.snippet?.channelTitle}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <SimplifiedMoodGrid />
-      <MoodDescription />
+        <SimplifiedMoodGrid />
+        <MoodDescription />
+      </>
       <Footer />
     </>
   );

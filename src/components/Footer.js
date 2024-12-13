@@ -12,7 +12,7 @@ import Link from "next/link"; // Importing Link component
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <p>&copy; 2024 MoodSongs. All rights reserved.</p>
+      <p>&copy; 2024 Mood Songs. All rights reserved.</p>
 
       <div className={styles.footerHeading}>
         <h4>Mood Songs and Mood Music</h4> {/* Heading without translation */}
