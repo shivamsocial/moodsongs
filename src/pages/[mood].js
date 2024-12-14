@@ -387,16 +387,15 @@ const MoodPage = ({ videos, totalCount }) => {
                     }`}
                     onClick={() => selectVideoFromQueue(index)}
                   >
-                    <Image
+                    <img
                       src={
                         video.snippet?.thumbnails?.default?.url ||
                         "/images/default-thumbnail.jpg"
                       }
                       alt={video.snippet?.title || "Default Thumbnail"}
-                      width={200} // Set appropriate width for your image
-                      height={100} // Set appropriate height for your image
                       className={styles.thumbnailQueue}
                     />
+
                     <div className={styles.videoInfo}>
                       <h4>{video.snippet?.title}</h4>
                       <p>{video.snippet?.channelTitle}</p>
