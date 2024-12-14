@@ -135,10 +135,6 @@ const Home = () => {
             </strong>{" "}
             {t("research_backed_music_description")}
           </li>
-          <li className={styles.whyMoodSongsListItem}>
-            <strong className={styles.strong}>{t("ad_free_music")}:</strong>{" "}
-            {t("ad_free_music_description")}
-          </li>
         </ul>
       </section>
 
