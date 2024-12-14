@@ -76,7 +76,7 @@ export const fetchSongsForMood = async (mood, language = "en") => {
       {
         params: {
           part: "snippet",
-          q: `${languageName} ${translatedMood} songs`, // Query includes the translated mood and language
+          q: `${translatedMood} songs`, // Query includes the translated mood and language
           type: "video",
           maxResults: 20, // Maximum results to fetch
           regionCode: regionCode, // Specify the region
