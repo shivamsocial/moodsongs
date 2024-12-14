@@ -1,9 +1,6 @@
 import { fetchSongsForMood } from "./api"; // Import the function to fetch songs
 import { connectToDatabase } from "./mongo"; // Import the database connection function
 
-// Cache expiration time (1 week in milliseconds)
-const CACHE_EXPIRATION_TIME = 2 * 24 * 60 * 60 * 1000;
-
 export const storeVideosIfNeeded = async (mood, language = "en") => {
   try {
     // Establish database connection
@@ -15,32 +12,28 @@ export const storeVideosIfNeeded = async (mood, language = "en") => {
     // Create a regex pattern to match the mood (case-insensitive)
     const moodRegex = new RegExp(mood, "i"); // 'i' makes it case-insensitive
 
-    // Check if cached data exists and is still valid using regex for flexible matching
+    // Check if cached data exists using regex for flexible matching
     const existingData = await collection.findOne({
       mood: { $regex: moodRegex }, // Use regex to find moods that match
       language,
     });
 
-    const isCacheValid =
-      existingData &&
-      existingData.timestamp > Date.now() - CACHE_EXPIRATION_TIME;
-
-    if (isCacheValid) {
+    if (existingData) {
       console.log(`Cache hit for mood: ${mood}, language: ${language}`);
-      return existingData.videos; // Return cached data if valid
+      return existingData.videos; // Return cached data if it exists
     }
 
     console.log(
-      `Cache miss or expired for mood: ${mood}, language: ${language}. Fetching new data...`
+      `Cache miss for mood: ${mood}, language: ${language}. Fetching new data...`
     );
 
-    // Fetch new data if no valid cache is found
+    // Fetch new data if no cache is found
     const newVideos = await fetchSongsForMood(mood, language);
 
     // Update the cache with the new data
     await collection.updateOne(
       { mood, language }, // Filter condition
-      { $set: { videos: newVideos, timestamp: Date.now() } }, // New data and timestamp
+      { $set: { videos: newVideos, timestamp: Date.now() } }, // New data
       { upsert: true } // Insert if no existing document matches
     );
 
