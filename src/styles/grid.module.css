@@ -1,4 +1,3 @@
-
 .background,
 .pageContainer:after {
   background-size: cover;
@@ -132,7 +131,14 @@
     grid-row-gap: 2rem;
     padding: 3rem;
   }
- 
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
   }
   .moodBtn {
     padding-left: 3rem;
@@ -150,7 +156,15 @@
     1px -1px 0 rgba(0, 0, 0, 0.9), -1px 1px 0 rgba(0, 0, 0, 0.9);
   animation: 1.5s ease-in-out infinite glowEffect;
 }
-
+@keyframes glowEffect {
+  0%,
+  100% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px #fff;
+  }
+  50% {
+    text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8), 0 0 30px #fff;
+  }
+}
 @media (max-width: 1200px) {
   .heading1 {
     font-size: 2.5rem;
