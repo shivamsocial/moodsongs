@@ -30,12 +30,14 @@ const Navbar = ({ mood, moods }) => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <Image
-          src="/images/headphones.png"
-          alt="Mood Songs Logo"
-          width={50} // Adjust logo size for smaller screens
-          height={50}
-        />
+        <Link href="/">
+          <Image
+            src="/images/headphones.png"
+            alt="Mood Songs Logo"
+            width={50} // Adjust logo size for smaller screens
+            height={50}
+          />
+        </Link>
       </div>
       {/* Hamburger Icon */}
       <div
