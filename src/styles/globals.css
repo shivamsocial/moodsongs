@@ -4,20 +4,11 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   overflow-x: hidden;
-}
-
-body {
-  font-family: "Nunito", sans-serif;
-}
-
-body {
-  /* Apply linear gradient and background image */
+  font-family: Nunito, sans-serif;
+  font-display: swap;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
-    url("/images/background.jpg"); /* Make sure this path is correct */
-  color: white; /* Text color for all content inside body */
-
-  font-family: "Nunito", sans-serif; /* Global font-family */
+    url("/images/background.jpg");
+  color: #fff;
 }

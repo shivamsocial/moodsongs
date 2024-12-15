@@ -1,32 +1,48 @@
-/* General Text Styling */
-.loadingText,
-.errorText {
-  color: white;
+.background,
+.glassEffect,
+.pageContainer {
+  width: 100%;
+  display: flex;
+}
+
+.buttonNextPrev,
+.changeMoodButton {
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.noVideos,
+.queueHeading,
+.queueItem,
+.spinnerContainer,
+.videoInfo,
+.videoTitle {
+  text-align: center;
+}
+.videoInfo h4,
+.videoInfo p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.errorText,
+.loadingText {
+  color: #fff;
   font-size: 1.2rem;
   text-align: center;
 }
-
 .errorText {
   color: red;
 }
-
-/* Background Styling */
 .background {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
-    url("/images/background.jpg");
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))
+      center/cover fixed,
+    url("/images/background.jpg") center/cover fixed;
   min-height: 100vh;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Nunito", sans-serif;
   padding: 20px;
   overflow-x: hidden;
 }
-
 .background::before {
   content: "";
   position: absolute;
@@ -34,21 +50,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text contrast */
+  background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
-
-/* Page Container */
 .pageContainer {
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
   max-width: 1100px;
 }
-
-/* Mood and Now Playing Container */
 .moodAndPlayingContainer {
   display: flex;
   justify-content: space-between;
@@ -56,108 +66,46 @@
   width: 100%;
   max-width: 700px;
 }
-
-@media (max-width: 800px) {
-  .moodAndPlayingContainer {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* Heading Styling */
 .heading {
-  font-size: 2rem; /* Use rem for text size */
-  font-weight: bold;
-  color: greenyellow;
-
-  /* Create border around each letter with text-shadow */
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9),
-    /* Top-left border */ -1px -1px 0px rgba(0, 0, 0, 0.9),
-    /* Bottom-right border */ 1px -1px 0px rgba(0, 0, 0, 0.9),
-    /* Top-right border */ -1px 1px 0px rgba(0, 0, 0, 0.9); /* Bottom-left border */
-
-  /* Glow effect animation */
-  animation: glowEffect 1.5s ease-in-out infinite;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #adff2f;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.9), -1px -1px 0 rgba(0, 0, 0, 0.9),
+    1px -1px 0 rgba(0, 0, 0, 0.9), -1px 1px 0 rgba(0, 0, 0, 0.9);
+  animation: 1.5s ease-in-out infinite glowEffect;
 }
-
-/* Glow effect animation */
 @keyframes glowEffect {
-  0% {
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+  0%,
+  100% {
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px #fff;
   }
   50% {
-    text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8),
-      0 0 30px rgba(255, 255, 255, 1);
-  }
-  100% {
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 1);
+    text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.8), 0 0 30px #fff;
   }
 }
-
-@media (max-width: 800px) {
-  .heading {
-    font-size: 6vw; /* Dynamic resizing based on viewport width */
-    margin-top: 0px;
-  }
-}
-
-@media (max-width: 500px) {
-  .heading {
-    font-size: 5vw; /* Dynamic resizing for smaller screens */
-    margin-top: 0px;
-  }
-}
-
-/* Change Mood Button */
 .changeMoodButton {
   background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  color: white;
-  padding: 1px 15px 1px; /* Adjusted bottom padding to 3px */
+  color: #fff;
+  padding: 12px 10px;
   border-radius: 25px;
-  padding: 12px 10px 12px;
   text-decoration: none;
-  cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.5rem;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
   margin-left: 10px;
 }
-
 .changeMoodButton:hover {
   background-color: #dc143c;
   box-shadow: 0 0 15px #dc143c;
 }
-
-@media (max-width: 800px) {
-  .changeMoodButton {
-    margin-right: 30px;
-    margin-left: 0;
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 500px) {
-  .changeMoodButton {
-    margin-right: 30px;
-    margin-top: 55px;
-    margin-bottom: 45px;
-    font-size: 1rem;
-  }
-}
-
-/* Glass Effect Container */
 .glassEffect {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 1.5rem;
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  width: 100%;
   max-width: 1500px;
-  margin: 10px auto;
-  margin-right: 50px;
+  margin: 10px 50px 10px auto;
   min-height: 450px;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -165,30 +113,11 @@
   box-sizing: border-box;
   overflow: hidden;
 }
-
-@media (max-width: 800px) {
-  .glassEffect {
-    max-width: 90%;
-    padding: 1.5rem;
-    min-height: 300px;
-  }
-}
-
-@media (max-width: 500px) {
-  .glassEffect {
-    max-width: 90%;
-    padding: 1rem;
-    min-height: 250px;
-  }
-}
-
-/* Play button styles */
 .thumbnailContainer {
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
-
 .playButtonContainer {
   position: absolute;
   top: 40%;
@@ -203,58 +132,60 @@
   border-radius: 50%;
   cursor: pointer;
 }
-
 .playButton {
   width: 0;
   height: 0;
-  border-left: 15px solid white;
+  border-left: 15px solid #fff;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
-
-/* Video Frame */
-.videoFrame,
-.thumbnail {
+.thumbnail,
+.videoFrame {
   position: relative;
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16/9;
   border-radius: 10px;
   border: none;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   overflow: hidden;
 }
-
 .thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
-
-/* Video Title */
 .videoTitle {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #fff;
   margin-top: 15px;
-  text-align: center;
 }
-
 @media (max-width: 800px) {
+  .moodAndPlayingContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .heading {
+    font-size: 6vw;
+    margin-top: 0;
+  }
+  .changeMoodButton {
+    margin-right: 30px;
+    margin-left: 0;
+    font-size: 1.2rem;
+  }
+  .glassEffect {
+    max-width: 90%;
+    padding: 1.5rem;
+    min-height: 300px;
+  }
   .videoTitle {
     font-size: 1rem;
   }
 }
-
-@media (max-width: 500px) {
-  .videoTitle {
-    font-size: 0.8rem;
-  }
-}
-
-/* Button Container */
 .buttonContainer {
   display: flex;
   justify-content: space-between;
@@ -262,7 +193,6 @@
   margin-top: 30px;
   gap: 180px;
 }
-
 @media (max-width: 768px) {
   .buttonNextPrev {
     font-size: 0.9rem;
@@ -273,196 +203,178 @@
     gap: 35px;
   }
 }
-
 @media (max-width: 500px) {
+  .heading {
+    font-size: 5vw;
+    margin-top: 0;
+  }
+  .changeMoodButton {
+    margin-right: 30px;
+    margin-top: 55px;
+    margin-bottom: 45px;
+    font-size: 1rem;
+  }
+  .glassEffect {
+    max-width: 90%;
+    padding: 1rem;
+    min-height: 250px;
+  }
+  .videoTitle {
+    font-size: 0.8rem;
+  }
   .buttonNextPrev {
     font-size: 0.8rem;
     padding: 8px;
   }
 }
-
-/* Button Styling */
+.buttonNextPrev,
+.languageText,
+.noVideos {
+  color: #fff;
+  font-size: 1.2rem;
+}
+.buttonNextPrev,
+.spinnerText {
+  padding: 10px;
+  font-weight: 700;
+}
 .buttonNextPrev {
   flex: 1;
   backdrop-filter: blur(10px);
   background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  color: white;
-  padding: 10px;
   border-radius: 12px;
-  font-family: "Nunito", sans-serif;
-  font-weight: bold;
-  font-size: 1.2rem;
   border: none;
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
+.slider,
+.slider:before {
+  transition: 0.4s;
+  position: absolute;
+}
 .buttonNextPrev:hover {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(255, 65, 108, 0.5);
 }
-
 .buttonNextPrev:active {
   transform: translateY(0);
   box-shadow: 0 3px 10px rgba(255, 65, 108, 0.4);
 }
-
 .buttonNextPrev:disabled {
   background: #a8a8a8;
-  color: #dddddd;
+  color: #ddd;
   cursor: not-allowed;
   box-shadow: none;
 }
-
 .buttonNextPrev:focus {
-  outline: 3px solid #2196f3;
+  outline: #2196f3 solid 3px;
   outline-offset: 2px;
 }
-
-/* Language Toggle */
 .languageToggleContainer {
   display: flex;
   align-items: center;
   margin-top: 20px;
 }
-
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 26px;
 }
-
 .switchInput {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 .slider {
-  position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: red;
-  transition: 0.4s;
   border-radius: 34px;
 }
-
+.spinner,
+.spinnerContainer {
+  position: fixed;
+  z-index: 9999;
+}
 .slider:before {
-  position: absolute;
   content: "";
   height: 20px;
   width: 20px;
   border-radius: 50%;
   left: 5px;
   bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
+  background-color: #fff;
+}
+.spinner,
+.spinner::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 input:checked + .slider {
   background-color: #2196f3;
 }
-
 input:checked + .slider:before {
   transform: translateX(24px);
 }
-
 .languageText {
   margin-left: 15px;
-  font-size: 1.2rem;
-  color: white;
-  font-weight: bold;
+  font-weight: 700;
 }
-
-/* No Videos Message */
-.noVideos {
-  color: white;
-  text-align: center;
-  font-size: 1.2rem;
-}
-
-/* Ensure no horizontal scrolling on small screens */
 @media (max-width: 500px) {
   .languageText {
     font-size: 0.8rem;
   }
 }
-
-/* Add this to your grid.module.css */
 .spinner {
-  border: 6px solid #f3f3f3; /* Light background */
-  border-top: 6px solid #3498db; /* Blue spinner */
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
   border-radius: 50%;
   width: 60px;
   height: 60px;
-  position: fixed; /* Ensure spinner stays fixed in the center */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the spinner */
-  z-index: 9999; /* Ensure it is above other elements */
-  animation: spin 1.5s linear infinite; /* Apply spin animation */
+  animation: 1.5s linear infinite spin;
 }
-
-/* Spinning effect */
 @keyframes spin {
   0% {
-    transform: translate(-50%, -50%) rotate(0deg); /* Rotate the spinner */
+    transform: translate(-50%, -50%) rotate(0);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(360deg); /* Complete a full 360° rotation */
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
-
-/* Spinner Container */
 .spinnerContainer {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9); /* Full-screen black background */
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Ensure it's above all other content */
-  text-align: center; /* Center text under the spinner */
 }
-
-/* Spinner Text Styling */
 .spinnerText {
-  font-size: 1.5rem; /* Smaller font size */
-  color: #f5f5f5; /* Light color for visibility */
-  margin-top: 190px; /* Space between spinner and text */
-  font-weight: 500; /* Slightly bold */
-  background-color: black;
-  font-weight: bold;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  margin-top: 190px;
+  background-color: #000;
   width: 100%;
   height: 100%;
-  padding: 10px;
 }
-
-/* Optional: Add glow effect to the spinner for a more dynamic look */
 .spinner::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
   width: 80px;
   height: 80px;
-  background: rgba(52, 152, 219, 0.2); /* Blue glow */
+  background: rgba(52, 152, 219, 0.2);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulseGlow 1.5s ease-in-out infinite;
+  animation: 1.5s ease-in-out infinite pulseGlow;
 }
-
-/* Glow pulse effect */
 @keyframes pulseGlow {
   0%,
   100% {
@@ -473,40 +385,34 @@ input:checked + .slider:before {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
   }
-} /* General Styles */
-/* General Styling for Queue Section */
+}
 .queueSection {
   margin-top: 40px;
   width: 100%;
   background-color: #1a1a1a;
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Deeper shadow for a more modern look */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   overflow-x: auto;
   white-space: nowrap;
-  transition: all 0.3s ease; /* Smooth transition */
+  transition: 0.3s;
 }
-
-/* Header Styling */
 .queueHeading {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #ffffff;
-  text-align: center;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: 3px;
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  -webkit-background-clip: text; /* Vendor prefix for WebKit-based browsers (Chrome, Safari) */
-  background-clip: text; /* Standard property for better compatibility */
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: transform 0.3s ease; /* Smooth animation */
+  transition: transform 0.3s;
 }
-
 .queueHeading:hover {
-  transform: scale(1.05); /* Subtle scale on hover */
+  transform: scale(1.05);
 }
-/* Queue Item Styling */
 .queueItem {
   display: inline-block;
   padding: 10px;
@@ -514,121 +420,88 @@ input:checked + .slider:before {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   margin-right: 20px;
-  width: 150px !important; /* Adjusted width for better visuals */
-  background-color: black;
-  transition: all 0.3s ease-in-out;
+  width: 150px !important;
+  background-color: #000;
+  transition: 0.3s ease-in-out;
   position: relative;
-  text-align: center; /* Center text and content within the card */
 }
-
 .queueItem:hover {
-  background-color: black;
-  transform: translateY(-5px) scale(1.05); /* Floating effect */
+  background-color: #000;
+  transform: translateY(-5px) scale(1.05);
 }
-
 .queueItem.active {
-  background-color: #444444;
+  background-color: #444;
   color: #fff;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3); /* Active item highlight */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
 }
-
-/* Thumbnail Styling */
 .thumbnailQueue {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Maintain aspect ratio, crop to cover the space */
-  border-radius: 10px; /* Rounded corners */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: block; /* Block display ensures the image fills the container properly */
-  margin: 0 auto; /* Center the image horizontally */
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: block;
+  margin: 0 auto;
 }
-
-/* Hover effect for thumbnails */
 .thumbnailQueue:hover {
-  transform: scale(1.1); /* Zoom effect */
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); /* Glowing hover effect */
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
-
-/* Video Info (Title & Channel) */
 .videoInfo {
-  text-align: center;
-
   color: #fff;
 }
-
 .videoInfo h4 {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
-  color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Truncate text that overflows */
+  color: #fff;
   max-width: 100%;
   transition: color 0.3s ease-in-out;
 }
-
 .videoInfo h4:hover {
-  color: #ff5722; /* Hover color change */
+  color: #ff5722;
 }
-
 .videoInfo p {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
-
-/* Mobile and Tablet Styling */
 @media (max-width: 768px) {
   .queueSection {
     padding: 20px;
   }
-
   .queueItem {
-    width: 160px; /* Smaller width on smaller screens */
+    width: 160px;
     margin-right: 12px;
   }
-
   .thumbnailQueue {
-    height: 112px; /* Adjusted thumbnail size */
+    height: 112px;
   }
-
   .videoInfo h4 {
     font-size: 0.95rem;
   }
-
   .videoInfo p {
     font-size: 0.8rem;
   }
 }
-
-/* TV Styling (Larger fonts and space) */
 @media (min-width: 1200px) {
   .queueSection {
     padding: 35px;
     margin-top: 60px;
   }
-
   .queueHeading {
-    font-size: 3.2rem; /* Larger heading */
+    font-size: 3.2rem;
   }
-
   .queueItem {
-    width: 320px; /* Wider items on larger screens */
+    width: 320px;
     margin-right: 25px;
     padding: 25px;
   }
-
   .thumbnailQueue {
-    height: 180px; /* Larger thumbnails */
+    height: 180px;
   }
-
   .videoInfo h4 {
     font-size: 1.4rem;
   }
-
   .videoInfo p {
     font-size: 1.1rem;
   }

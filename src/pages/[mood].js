@@ -296,6 +296,7 @@ const MoodPage = ({ videos, totalCount }) => {
             name="description"
             content={`Explore the top ${mood} Mood Songs & Music Playlist vibes on Mood Songs. Watch the best ${mood} songs and discover music for every mood on Mood Songs.`}
           />
+          <meta name="robots" content="index, follow" />
           <meta property="og:type" content="video.other" />
           <meta
             property="og:title"
