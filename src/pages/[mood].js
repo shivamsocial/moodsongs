@@ -136,7 +136,6 @@ export async function getStaticProps({ params, locale }) {
   }
 
   const moodName = mood.replace("-songs", ""); // Clean the mood name
-  const timestamp = new Date().getTime();
 
   try {
     // Make your API request for videos based on mood and language
@@ -144,7 +143,6 @@ export async function getStaticProps({ params, locale }) {
       params: {
         mood: moodName,
         language: locale, // Pass the locale directly to get the right language
-        timestamp,
       },
     });
 
@@ -233,14 +231,12 @@ const MoodPage = ({ videos, totalCount }) => {
       setLoadingQueue(true);
 
       try {
-        const timestamp = new Date().getTime();
         const moodName = mood.replace("-songs", "");
 
         const { data } = await axios.get(`${API_URL}/api/mood`, {
           params: {
             mood: moodName,
             language: currentLanguage,
-            timestamp,
           },
         });
 
