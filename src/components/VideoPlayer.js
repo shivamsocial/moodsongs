@@ -132,7 +132,7 @@ const VideoPlayer = ({
           {/* Show Thumbnail and Play Button */}
           {!isIframeVisible ? (
             <div className={styles.thumbnail} onClick={handleIframeClick}>
-              <Image
+              <img
                 src={`https://img.youtube.com/vi/${video?.id}/hqdefault.jpg`}
                 alt="Video Thumbnail"
                 className={styles.thumbnail}
