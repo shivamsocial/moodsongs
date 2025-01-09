@@ -18,7 +18,11 @@ class MyDocument extends Document {
         {/* Dynamically set the lang attribute */}
         <Head>
           {/* Google Analytics gtag.js Script */}
-
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6578867983427163"
+            crossOrigin="anonymous"
+          ></script>
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=G-NLD3F8R8M8`}
