@@ -103,7 +103,8 @@
   padding: 1.5rem;
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  max-width: 1500px;
+  max-width: 1200px;
+
   margin: 10px 50px 10px auto;
   min-height: 450px;
   flex-direction: column;
