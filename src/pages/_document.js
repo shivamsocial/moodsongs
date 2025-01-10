@@ -21,6 +21,7 @@ class MyDocument extends Document {
           {/* Google Analytics gtag.js Script */}
           <Script
             async
+            strategy="beforeInteractive"
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6578867983427163"
             crossOrigin="anonymous"
           ></Script>
